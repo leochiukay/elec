@@ -18,4 +18,16 @@ public interface ProtocalConstant {
      */
     byte END_FRAM = 0x16;
 
+    /**
+     * 预链接-登录
+     */
+    byte LINK_LOGIN = 0x0;
+    /**
+     * 预链接-登出
+     */
+    byte LINK_LOGOUT = 0x2;
+    /**
+     * 预链接-心跳
+     */
+    byte LINK_HEART_BEAT = 0x1;
 }
