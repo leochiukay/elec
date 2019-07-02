@@ -1,7 +1,8 @@
-package com.telek.elec.protocal.apdu.server;
+package com.telek.elec.protocal.apdu.connection;
 
-import com.telek.elec.protocal.apdu.Response;
+import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.constant.APDUSequence;
+import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class ServerConnectionResponse extends Server implements Response {
+public class ConnectionResponse extends CodecAPDU implements Connection {
     /**
      * 服务器厂商代码-4字节
      */
@@ -88,21 +89,12 @@ public class ServerConnectionResponse extends Server implements Response {
     protected int timeStamp;
 
 
-    public ServerConnectionResponse() {
+    public ConnectionResponse() {
         this.apduSequence = APDUSequence.CONNECTION_RESPONSE;
     }
 
-    public void decodeHexToThis(String hexString) {
-        log.info(this.getClass().getSimpleName() + "-应用层连接响应apdu-" + hexString);
-        if (hexString.length() != 150) {
-            log.error(this.getClass().getSimpleName() + "-帧数据错误，长度不符合-" + hexString);
-        }
-        String id = hexString.substring(0, 2);
-        if (Integer.parseInt(id, 16) != APDUSequence.CONNECTION_RESPONSE.getId()) {
-            log.error(this.getClass().getSimpleName() + "-帧数据错误，response ID错误-" + hexString);
-        }
-
-        this.piid = Integer.parseInt(hexString.substring(2, 4), 16);
+    @Override
+    public void decodeSpecialHexToThis(String hexString) {
         this.code = Long.parseLong(hexString.substring(4, 12), 16);
         this.version = Long.parseLong(hexString.substring(12, 20), 16);
         this.versionDate = Long.parseLong(hexString.substring(20, 32), 16);
@@ -121,5 +113,29 @@ public class ServerConnectionResponse extends Server implements Response {
         this.authObj = Integer.parseInt(hexString.substring(144, 146), 16);
         this.followReport = Integer.parseInt(hexString.substring(146, 148), 16);
         this.timeStamp = Integer.parseInt(hexString.substring(148), 16);
+    }
+
+    @Override
+    protected String encodeThisSpecialToHex() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(code), 8));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(version), 8));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(versionDate), 12));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(hardwareVersion), 8));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(hardwareVersionDate), 12));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(expandInfo), 16));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(expectVersion), 4));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(protocolConformance), 16));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(functionConformance), 32));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(sendMaxSize), 4));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(receiveMaxSize), 4));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(windowMaxSize), 2));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(maxApduSize), 4));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(expectOverTime), 8));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(responsesObj), 2));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(authObj), 2));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(followReport), 2));
+        sb.append(StringUtils.subLastNumStr(Long.toHexString(timeStamp), 2));
+        return sb.toString();
     }
 }

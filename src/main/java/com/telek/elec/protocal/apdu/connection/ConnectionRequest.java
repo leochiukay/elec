@@ -1,8 +1,6 @@
-package com.telek.elec.protocal.apdu.client;
+package com.telek.elec.protocal.apdu.connection;
 
-import org.apache.commons.lang3.text.StrBuilder;
-
-import com.telek.elec.protocal.apdu.Request;
+import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.util.StringUtils;
 
@@ -12,7 +10,7 @@ import lombok.Data;
  * 客户端应用链接请求
  */
 @Data
-public class ClientConnectionRequest extends Client implements Request {
+public class ConnectionRequest extends CodecAPDU implements Connection {
     /**
      * 期望的应用层协议版本号-2字节
      */
@@ -54,16 +52,13 @@ public class ClientConnectionRequest extends Client implements Request {
      */
     protected int timeStamp;
 
-    public ClientConnectionRequest() {
+    public ConnectionRequest() {
         this.apduSequence = APDUSequence.CONNECTION_REQUEST;
     }
 
     @Override
-    public String encodeThisToHex() {
-        StrBuilder sb = new StrBuilder();
-        String common = super.encodeHexCommon();
-        sb.append(common);
-
+    protected String encodeThisSpecialToHex() {
+        StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.expectVersion), 4));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(this.protocolConformance), 16));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(this.functionConformance), 32));
@@ -75,5 +70,19 @@ public class ClientConnectionRequest extends Client implements Request {
         sb.append(StringUtils.subLastNumStr(Long.toHexString(this.authObject), 2));
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.timeStamp), 2));
         return sb.toString();
+    }
+
+    @Override
+    protected void decodeSpecialHexToThis(String hexString) {
+        this.expectVersion = Integer.parseInt(hexString.substring(4, 8), 16);
+        this.protocolConformance = Integer.parseInt(hexString.substring(8, 24), 16);
+        this.functionConformance = Integer.parseInt(hexString.substring(24, 56), 16);
+        this.sendMaxSize = Integer.parseInt(hexString.substring(56, 60), 16);
+        this.receiveMaxSize = Integer.parseInt(hexString.substring(60, 64), 16);
+        this.windowMaxSize = Integer.parseInt(hexString.substring(64, 66), 16);
+        this.maxApduSize = Integer.parseInt(hexString.substring(66, 70), 16);
+        this.expectOverTime = Integer.parseInt(hexString.substring(70, 78), 16);
+        this.authObject = Integer.parseInt(hexString.substring(78, 80), 16);
+        this.timeStamp = Integer.parseInt(hexString.substring(80, 82), 16);
     }
 }

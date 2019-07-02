@@ -2,11 +2,12 @@ package com.telek.elec.protocal.apdu.link;
 
 import java.util.Calendar;
 
-import org.apache.commons.lang3.text.StrBuilder;
-
-import com.telek.elec.protocal.apdu.Request;
+import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.apdu.codec.DecoderUtils;
+import com.telek.elec.protocal.apdu.codec.EncoderUtils;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.LinkType;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -18,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class LinkRequest extends Link implements Request {
+public class LinkRequest extends CodecAPDU implements Link {
     /**
      * 类型-1字节
      * 登录     （0），
@@ -33,13 +34,13 @@ public class LinkRequest extends Link implements Request {
     /**
      * 请求时间-年-2字节
      * year          long-unsigned，
-     *   month         unsigned，
-     *   day_of_month  unsigned，
-     *   day_of_week   unsigned，
-     *   hour          unsigned，
-     *   minute        unsigned，
-     *   second        unsigned，
-     *   milliseconds  long-unsigned
+     * month         unsigned，
+     * day_of_month  unsigned，
+     * day_of_week   unsigned，
+     * hour          unsigned，
+     * minute        unsigned，
+     * second        unsigned，
+     * milliseconds  long-unsigned
      */
     private Calendar requestTime;
 
@@ -48,48 +49,35 @@ public class LinkRequest extends Link implements Request {
     }
 
     @Override
-    public String encodeThisToHex() {
-        StrBuilder sb = new StrBuilder();
-        // request id
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.apduSequence.getId()), 2));
-        // 服务序号-优先级-ACD  PIID-ACD
-        if (this.piid > 0xff) {
-            this.piid = 0xff;
-        }
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.piid), 2));
-        // 请求类型  ENUMERATED
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.linkType.getCode()), 2));
-        // 心跳周期  long-unsigned
+    protected void encodeValidateSpecial() throws EncodeException {
         if (this.heartBeat > 0xffff) {
             this.heartBeat = 0xffff;
         }
+    }
+
+    @Override
+    protected String encodeThisSpecialToHex() {
+        StringBuilder sb = new StringBuilder();
+        // 请求类型  ENUMERATED
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.linkType.getCode()), 2));
+        // 心跳周期  long-unsigned
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.heartBeat), 4));
         // 请求时间
-        Calendar cal = Calendar.getInstance();
-        this.requestTime = cal;
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH) + 1;
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        int week = cal.get(Calendar.DAY_OF_WEEK) - 1;
-        if (week == 0) {
-            week = 7;
-        }
-        int hour = cal.get(Calendar.HOUR_OF_DAY);
-        int minutes = cal.get(Calendar.MINUTE);
-        int second = cal.get(Calendar.SECOND);
-        int millis = cal.get(Calendar.MILLISECOND);
-
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(year), 4));
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(month), 2));
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(day), 2));
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(week), 2));
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(hour), 2));
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(minutes), 2));
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(second), 2));
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(millis), 4));
-
-        log.info(this.getClass().getSimpleName() + "--预连接请求APDU--" + sb.toString());
-
+        sb.append(EncoderUtils.encodeToDateTimeHex(requestTime));
         return sb.toString();
+    }
+
+    @Override
+    protected void decodeSpecialHexToThis(String hexString) {
+        int linkType = Integer.parseInt(hexString.substring(4, 6), 16);
+        for (LinkType value : LinkType.values()) {
+            int code = value.getCode();
+            if (code == linkType) {
+                this.linkType = value;
+                break;
+            }
+        }
+        this.heartBeat = Integer.parseInt(hexString.substring(6, 10), 16);
+        this.requestTime = DecoderUtils.decodeDateTimeHex(hexString.substring(10));
     }
 }

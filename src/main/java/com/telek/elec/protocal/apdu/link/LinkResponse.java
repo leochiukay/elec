@@ -2,8 +2,11 @@ package com.telek.elec.protocal.apdu.link;
 
 import java.util.Calendar;
 
-import com.telek.elec.protocal.apdu.Response;
+import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.apdu.codec.DecoderUtils;
+import com.telek.elec.protocal.apdu.codec.EncoderUtils;
 import com.telek.elec.protocal.constant.APDUSequence;
+import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class LinkResponse extends Link implements Response {
+public class LinkResponse extends CodecAPDU implements Link {
     /**
      * 结果-1字节
      * 时钟可信标志——用于表示响应方的时钟是否可信（准确），0：不可信，1：可信。
@@ -40,58 +43,28 @@ public class LinkResponse extends Link implements Response {
 
     /**
      * 解码
+     *
      * @param hexString
      */
-    public void decodeHexToThis(String hexString) {
-        log.info(this.getClass().getSimpleName() + "--预连接响应APDU--" + hexString);
-
-        if (hexString.length() != 66) {
-            log.error(this.getClass().getSimpleName() + "--预连接帧数据错误，长度不符合--" + hexString);
-            return;
-        }
-
-        String id = hexString.substring(0, 2);
-        if (Integer.parseInt(id, 16) != APDUSequence.LINK_RESPONSE.getId()) {
-            log.error(this.getClass().getSimpleName() + "--帧数据错误，response ID错误--" + hexString);
-            return;
-        }
-
-        this.apduSequence = APDUSequence.LINK_RESPONSE;
-
-        String piid = hexString.substring(2, 4);
-        this.piid = Integer.parseInt(piid, 16);
-
+    @Override
+    protected void decodeSpecialHexToThis(String hexString) {
         String result = hexString.substring(4, 6);
         this.result = Integer.parseInt(result, 16);
-
         String requestTimeStr = hexString.substring(6, 26);
-        this.requestTime = timeByteStrToCal(requestTimeStr);
+        this.requestTime = DecoderUtils.decodeDateTimeHex(requestTimeStr);
         String receivedTimeStr = hexString.substring(26, 46);
-        this.receivedTime = timeByteStrToCal(receivedTimeStr);
+        this.receivedTime = DecoderUtils.decodeDateTimeHex(receivedTimeStr);
         String responseTimeStr = hexString.substring(46);
-        this.responseTime = timeByteStrToCal(responseTimeStr);
+        this.responseTime = DecoderUtils.decodeDateTimeHex(responseTimeStr);
     }
 
-    /**
-     * 通过时间byte字符串解析为calendar
-     * @param s
-     * @return
-     */
-    private Calendar timeByteStrToCal(String s) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, Integer.parseInt(s.substring(0, 4), 16));
-        cal.set(Calendar.MONTH, Integer.parseInt(s.substring(4, 6), 16) - 1);
-        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(s.substring(6, 8), 16));
-        int week = Integer.parseInt(s.substring(8, 10), 16) + 1;
-        if (week == 8) {
-            week = 1;
-        }
-        cal.set(Calendar.DAY_OF_WEEK, week);
-        cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(s.substring(10, 12), 16));
-        cal.set(Calendar.MINUTE, Integer.parseInt(s.substring(12, 14), 16));
-        cal.set(Calendar.SECOND, Integer.parseInt(s.substring(14, 16), 16));
-        cal.set(Calendar.MILLISECOND, Integer.parseInt(s.substring(16), 16));
-        return cal;
+    @Override
+    protected String encodeThisSpecialToHex() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(result), 2));
+        sb.append(EncoderUtils.encodeToDateTimeHex(requestTime));
+        sb.append(EncoderUtils.encodeToDateTimeHex(receivedTime));
+        sb.append(EncoderUtils.encodeToDateTimeHex(responseTime));
+        return sb.toString();
     }
-
 }
