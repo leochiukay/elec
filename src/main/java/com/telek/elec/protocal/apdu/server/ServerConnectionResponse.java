@@ -1,5 +1,6 @@
 package com.telek.elec.protocal.apdu.server;
 
+import com.telek.elec.protocal.apdu.Response;
 import com.telek.elec.protocal.constant.APDUSequence;
 
 import lombok.Data;
@@ -12,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class ServerConnectionResponse extends Server {
+public class ServerConnectionResponse extends Server implements Response {
     /**
      * 服务器厂商代码-4字节
      */
@@ -81,40 +82,44 @@ public class ServerConnectionResponse extends Server {
      * FollowReport-1字节
      */
     private int followReport;
+    /**
+     * 时间标签-1字节
+     */
+    protected int timeStamp;
 
 
     public ServerConnectionResponse() {
         this.apduSequence = APDUSequence.CONNECTION_RESPONSE;
     }
 
-    public void decodeByteStr(String byteStr) {
-        log.info(this.getClass().getSimpleName() + "-应用层连接响应apdu-" + byteStr);
-        if (byteStr.length() != 150) {
-            log.error(this.getClass().getSimpleName() + "-帧数据错误，长度不符合-" + byteStr);
+    public void decodeHexToThis(String hexString) {
+        log.info(this.getClass().getSimpleName() + "-应用层连接响应apdu-" + hexString);
+        if (hexString.length() != 150) {
+            log.error(this.getClass().getSimpleName() + "-帧数据错误，长度不符合-" + hexString);
         }
-        String id = byteStr.substring(0, 2);
+        String id = hexString.substring(0, 2);
         if (Integer.parseInt(id, 16) != APDUSequence.CONNECTION_RESPONSE.getId()) {
-            log.error(this.getClass().getSimpleName() + "-帧数据错误，response ID错误-" + byteStr);
+            log.error(this.getClass().getSimpleName() + "-帧数据错误，response ID错误-" + hexString);
         }
 
-        this.piid = Integer.parseInt(byteStr.substring(2, 4), 16);
-        this.code = Long.parseLong(byteStr.substring(4, 12), 16);
-        this.version = Long.parseLong(byteStr.substring(12, 20), 16);
-        this.versionDate = Long.parseLong(byteStr.substring(20, 32), 16);
-        this.hardwareVersion = Long.parseLong(byteStr.substring(32, 40), 16);
-        this.hardwareVersionDate = Long.parseLong(byteStr.substring(40, 52), 16);
-        this.expandInfo = Long.parseLong(byteStr.substring(52, 68), 16);
-        this.expectVersion = Integer.parseInt(byteStr.substring(68, 72), 16);
-        this.protocolConformance = Long.parseLong(byteStr.substring(72, 88), 16);
-        this.functionConformance = Long.parseLong(byteStr.substring(88, 120), 16);
-        this.sendMaxSize = Integer.parseInt(byteStr.substring(120, 124), 16);
-        this.receiveMaxSize = Integer.parseInt(byteStr.substring(124, 128), 16);
-        this.windowMaxSize = Integer.parseInt(byteStr.substring(128, 130), 16);
-        this.maxApduSize = Integer.parseInt(byteStr.substring(130, 134), 16);
-        this.expectOverTime = Long.parseLong(byteStr.substring(134, 142), 16);
-        this.responsesObj = Integer.parseInt(byteStr.substring(142, 144), 16);
-        this.authObj = Integer.parseInt(byteStr.substring(144, 146), 16);
-        this.followReport = Integer.parseInt(byteStr.substring(146, 148), 16);
-        this.timeStamp = Integer.parseInt(byteStr.substring(148), 16);
+        this.piid = Integer.parseInt(hexString.substring(2, 4), 16);
+        this.code = Long.parseLong(hexString.substring(4, 12), 16);
+        this.version = Long.parseLong(hexString.substring(12, 20), 16);
+        this.versionDate = Long.parseLong(hexString.substring(20, 32), 16);
+        this.hardwareVersion = Long.parseLong(hexString.substring(32, 40), 16);
+        this.hardwareVersionDate = Long.parseLong(hexString.substring(40, 52), 16);
+        this.expandInfo = Long.parseLong(hexString.substring(52, 68), 16);
+        this.expectVersion = Integer.parseInt(hexString.substring(68, 72), 16);
+        this.protocolConformance = Long.parseLong(hexString.substring(72, 88), 16);
+        this.functionConformance = Long.parseLong(hexString.substring(88, 120), 16);
+        this.sendMaxSize = Integer.parseInt(hexString.substring(120, 124), 16);
+        this.receiveMaxSize = Integer.parseInt(hexString.substring(124, 128), 16);
+        this.windowMaxSize = Integer.parseInt(hexString.substring(128, 130), 16);
+        this.maxApduSize = Integer.parseInt(hexString.substring(130, 134), 16);
+        this.expectOverTime = Long.parseLong(hexString.substring(134, 142), 16);
+        this.responsesObj = Integer.parseInt(hexString.substring(142, 144), 16);
+        this.authObj = Integer.parseInt(hexString.substring(144, 146), 16);
+        this.followReport = Integer.parseInt(hexString.substring(146, 148), 16);
+        this.timeStamp = Integer.parseInt(hexString.substring(148), 16);
     }
 }

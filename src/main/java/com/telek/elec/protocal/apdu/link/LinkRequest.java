@@ -4,9 +4,9 @@ import java.util.Calendar;
 
 import org.apache.commons.lang3.text.StrBuilder;
 
-import com.sun.istack.internal.Nullable;
+import com.telek.elec.protocal.apdu.Request;
 import com.telek.elec.protocal.constant.APDUSequence;
-import com.telek.elec.protocal.constant.ProtocalConstant;
+import com.telek.elec.protocal.constant.LinkType;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -18,14 +18,14 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class LinkRequest extends Link {
+public class LinkRequest extends Link implements Request {
     /**
      * 类型-1字节
      * 登录     （0），
      * 心跳     （1），
      * 退出登录 （2）
      */
-    private int type;
+    private LinkType linkType;
     /**
      * 心跳周期-2字节
      */
@@ -47,45 +47,21 @@ public class LinkRequest extends Link {
         this.apduSequence = APDUSequence.LINK_REQUEST;
     }
 
-    /**
-     * 登录
-     * @return
-     */
-    public String login(@Nullable Integer piid, @Nullable Integer heartBeat) {
-        return byteStr(piid, heartBeat, ProtocalConstant.LINK_LOGIN);
-    }
-
-    /**
-     * 退出
-     * @return
-     */
-    public String logout(@Nullable Integer piid, @Nullable Integer heartBeat) {
-        return byteStr(piid, heartBeat, ProtocalConstant.LINK_LOGOUT);
-    }
-
-    /**
-     * 心跳
-     * @return
-     */
-    public String heartBeat(@Nullable Integer piid, @Nullable Integer heartBeat) {
-        return byteStr(piid, heartBeat, ProtocalConstant.LINK_HEART_BEAT);
-    }
-
-    private String byteStr(@Nullable Integer piid, @Nullable Integer heartBeat, int type) {
+    @Override
+    public String encodeThisToHex() {
         StrBuilder sb = new StrBuilder();
         // request id
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.apduSequence.getId()), 2));
         // 服务序号-优先级-ACD  PIID-ACD
-        if (piid != null) {
-            this.piid = piid > 0xff ? 0xff : piid;
+        if (this.piid > 0xff) {
+            this.piid = 0xff;
         }
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.piid), 2));
         // 请求类型  ENUMERATED
-        this.type = type;
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.type), 2));
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.linkType.getCode()), 2));
         // 心跳周期  long-unsigned
-        if (heartBeat != null) {
-            this.heartBeat = heartBeat > 0xffff ? 0xffff : heartBeat;
+        if (this.heartBeat > 0xffff) {
+            this.heartBeat = 0xffff;
         }
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.heartBeat), 4));
         // 请求时间
@@ -116,5 +92,4 @@ public class LinkRequest extends Link {
 
         return sb.toString();
     }
-
 }

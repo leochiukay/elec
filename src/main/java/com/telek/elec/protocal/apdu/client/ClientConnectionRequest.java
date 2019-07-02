@@ -2,6 +2,7 @@ package com.telek.elec.protocal.apdu.client;
 
 import org.apache.commons.lang3.text.StrBuilder;
 
+import com.telek.elec.protocal.apdu.Request;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.util.StringUtils;
 
@@ -11,7 +12,7 @@ import lombok.Data;
  * 客户端应用链接请求
  */
 @Data
-public class ClientConnectionRequest extends Client {
+public class ClientConnectionRequest extends Client implements Request {
     /**
      * 期望的应用层协议版本号-2字节
      */
@@ -48,14 +49,21 @@ public class ClientConnectionRequest extends Client {
      * 认证请求对象-1字节
      */
     private int authObject;
+    /**
+     * 时间标签-1字节
+     */
+    protected int timeStamp;
 
     public ClientConnectionRequest() {
         this.apduSequence = APDUSequence.CONNECTION_REQUEST;
     }
 
     @Override
-    protected String assembleSpecial() {
+    public String encodeThisToHex() {
         StrBuilder sb = new StrBuilder();
+        String common = super.encodeHexCommon();
+        sb.append(common);
+
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.expectVersion), 4));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(this.protocolConformance), 16));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(this.functionConformance), 32));
@@ -65,11 +73,7 @@ public class ClientConnectionRequest extends Client {
         sb.append(StringUtils.subLastNumStr(Long.toHexString(this.maxApduSize), 4));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(this.expectOverTime), 8));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(this.authObject), 2));
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.timeStamp), 2));
         return sb.toString();
-    }
-
-    @Override
-    protected boolean hasTimeStampField() {
-        return true;
     }
 }

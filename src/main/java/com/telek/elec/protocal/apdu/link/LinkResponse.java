@@ -2,6 +2,7 @@ package com.telek.elec.protocal.apdu.link;
 
 import java.util.Calendar;
 
+import com.telek.elec.protocal.apdu.Response;
 import com.telek.elec.protocal.constant.APDUSequence;
 
 import lombok.Data;
@@ -13,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class LinkResponse extends Link {
+public class LinkResponse extends Link implements Response {
     /**
      * 结果-1字节
      * 时钟可信标志——用于表示响应方的时钟是否可信（准确），0：不可信，1：可信。
@@ -39,35 +40,35 @@ public class LinkResponse extends Link {
 
     /**
      * 解码
-     * @param byteStr
+     * @param hexString
      */
-    public void decodeByteStr(String byteStr) {
-        log.info(this.getClass().getSimpleName() + "--预连接响应APDU--" + byteStr);
+    public void decodeHexToThis(String hexString) {
+        log.info(this.getClass().getSimpleName() + "--预连接响应APDU--" + hexString);
 
-        if (byteStr.length() != 66) {
-            log.error(this.getClass().getSimpleName() + "--预连接帧数据错误，长度不符合--" + byteStr);
+        if (hexString.length() != 66) {
+            log.error(this.getClass().getSimpleName() + "--预连接帧数据错误，长度不符合--" + hexString);
             return;
         }
 
-        String id = byteStr.substring(0, 2);
+        String id = hexString.substring(0, 2);
         if (Integer.parseInt(id, 16) != APDUSequence.LINK_RESPONSE.getId()) {
-            log.error(this.getClass().getSimpleName() + "--帧数据错误，response ID错误--" + byteStr);
+            log.error(this.getClass().getSimpleName() + "--帧数据错误，response ID错误--" + hexString);
             return;
         }
 
         this.apduSequence = APDUSequence.LINK_RESPONSE;
 
-        String piid = byteStr.substring(2, 4);
+        String piid = hexString.substring(2, 4);
         this.piid = Integer.parseInt(piid, 16);
 
-        String result = byteStr.substring(4, 6);
+        String result = hexString.substring(4, 6);
         this.result = Integer.parseInt(result, 16);
 
-        String requestTimeStr = byteStr.substring(6, 26);
+        String requestTimeStr = hexString.substring(6, 26);
         this.requestTime = timeByteStrToCal(requestTimeStr);
-        String receivedTimeStr = byteStr.substring(26, 46);
+        String receivedTimeStr = hexString.substring(26, 46);
         this.receivedTime = timeByteStrToCal(receivedTimeStr);
-        String responseTimeStr = byteStr.substring(46);
+        String responseTimeStr = hexString.substring(46);
         this.responseTime = timeByteStrToCal(responseTimeStr);
     }
 

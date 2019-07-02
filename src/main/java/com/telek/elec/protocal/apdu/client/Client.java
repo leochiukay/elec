@@ -15,39 +15,15 @@ public abstract class Client extends APDU {
      * piid-1字节
      */
     protected int piid;
-    /**
-     * 时间标签-1字节
-     */
-    protected int timeStamp;
 
     /**
-     * 组装
+     * 组装公用字段
      * @return
      */
-    public String assembleByteStr(){
+    protected String encodeHexCommon(){
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.apduSequence.getId()), 2));
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.piid), 2));
-        String s = assembleSpecial();
-        sb.append(s);
-        if (hasTimeStampField()) {
-            sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.timeStamp), 2));
-        }
-
-        log.info(this.getClass().getSimpleName() + "--客户端应用层APDU--" + sb.toString());
-
         return sb.toString();
     }
-
-    /**
-     * 子类赋值
-     */
-    protected abstract String assembleSpecial();
-
-    /**
-     * 子类判断是否有时间标签字段
-     * @return
-     */
-    protected abstract boolean hasTimeStampField();
-
 }
