@@ -1,6 +1,6 @@
 package com.telek.elec.protocal.apdu.server;
 
-import com.telek.elec.protocal.constant.ProtocalSequence;
+import com.telek.elec.protocal.constant.APDUSequence;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -84,7 +84,7 @@ public class ServerConnectionResponse extends Server {
 
 
     public ServerConnectionResponse() {
-        this.id = ProtocalSequence.CONNECTION_RESPONSE;
+        this.apduSequence = APDUSequence.CONNECTION_RESPONSE;
     }
 
     public void decodeByteStr(String byteStr) {
@@ -93,7 +93,7 @@ public class ServerConnectionResponse extends Server {
             log.error(this.getClass().getSimpleName() + "-帧数据错误，长度不符合-" + byteStr);
         }
         String id = byteStr.substring(0, 2);
-        if (Integer.parseInt(id, 16) != ProtocalSequence.CONNECTION_RESPONSE) {
+        if (Integer.parseInt(id, 16) != APDUSequence.CONNECTION_RESPONSE.getId()) {
             log.error(this.getClass().getSimpleName() + "-帧数据错误，response ID错误-" + byteStr);
         }
 

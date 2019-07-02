@@ -2,7 +2,7 @@ package com.telek.elec.protocal.apdu.client;
 
 import org.apache.commons.lang3.text.StrBuilder;
 
-import com.telek.elec.protocal.constant.ProtocalSequence;
+import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -50,7 +50,7 @@ public class ClientConnectionRequest extends Client {
     private int authObject;
 
     public ClientConnectionRequest() {
-        this.id = ProtocalSequence.CONNECTION_REQUEST;
+        this.apduSequence = APDUSequence.CONNECTION_REQUEST;
     }
 
     @Override
@@ -66,5 +66,10 @@ public class ClientConnectionRequest extends Client {
         sb.append(StringUtils.subLastNumStr(Long.toHexString(this.expectOverTime), 8));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(this.authObject), 2));
         return sb.toString();
+    }
+
+    @Override
+    protected boolean hasTimeStampField() {
+        return true;
     }
 }

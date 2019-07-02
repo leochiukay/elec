@@ -1,11 +1,9 @@
 package com.telek.elec.protocal.apdu.server;
 
-public abstract class Server {
+import com.telek.elec.protocal.apdu.APDU;
 
-    /**
-     * 序列id-1字节
-     */
-    protected int id;
+public abstract class Server extends APDU {
+
     /**
      * piid-1字节
      */

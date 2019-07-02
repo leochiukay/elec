@@ -1,6 +1,6 @@
 package com.telek.elec.protocal.apdu.server;
 
-import com.telek.elec.protocal.constant.ProtocalSequence;
+import com.telek.elec.protocal.constant.APDUSequence;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ public class ServerReleaseResponse extends Server {
 
 
     public ServerReleaseResponse() {
-        this.id = ProtocalSequence.RELEASE_RESPONSE;
+        this.apduSequence = APDUSequence.RELEASE_RESPONSE;
     }
 
     public void decodeByteStr(String byteStr) {
@@ -25,7 +25,7 @@ public class ServerReleaseResponse extends Server {
             log.info(this.getClass().getSimpleName() + "-应用层断开连接apdu长度不符合-" + byteStr);
         }
         String id = byteStr.substring(0, 2);
-        if (Integer.parseInt(id, 16) != ProtocalSequence.RELEASE_RESPONSE) {
+        if (Integer.parseInt(id, 16) != APDUSequence.RELEASE_RESPONSE.getId()) {
             log.info(this.getClass().getSimpleName() + "-应用层断开连接apdu id错误-" + byteStr);
         }
 

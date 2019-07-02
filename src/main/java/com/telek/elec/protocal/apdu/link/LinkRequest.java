@@ -5,8 +5,8 @@ import java.util.Calendar;
 import org.apache.commons.lang3.text.StrBuilder;
 
 import com.sun.istack.internal.Nullable;
+import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.ProtocalConstant;
-import com.telek.elec.protocal.constant.ProtocalSequence;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -44,7 +44,7 @@ public class LinkRequest extends Link {
     private Calendar requestTime;
 
     public LinkRequest() {
-        this.id = ProtocalSequence.LINK_REQUEST;
+        this.apduSequence = APDUSequence.LINK_REQUEST;
     }
 
     /**
@@ -74,7 +74,7 @@ public class LinkRequest extends Link {
     private String byteStr(@Nullable Integer piid, @Nullable Integer heartBeat, int type) {
         StrBuilder sb = new StrBuilder();
         // request id
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.id), 2));
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.apduSequence.getId()), 2));
         // 服务序号-优先级-ACD  PIID-ACD
         if (piid != null) {
             this.piid = piid > 0xff ? 0xff : piid;

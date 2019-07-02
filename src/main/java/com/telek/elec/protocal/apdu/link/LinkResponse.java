@@ -2,7 +2,7 @@ package com.telek.elec.protocal.apdu.link;
 
 import java.util.Calendar;
 
-import com.telek.elec.protocal.constant.ProtocalSequence;
+import com.telek.elec.protocal.constant.APDUSequence;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ public class LinkResponse extends Link {
     private Calendar responseTime;
 
     public LinkResponse() {
-        this.id = ProtocalSequence.LINK_RESPONSE;
+        this.apduSequence = APDUSequence.LINK_RESPONSE;
     }
 
     /**
@@ -50,12 +50,12 @@ public class LinkResponse extends Link {
         }
 
         String id = byteStr.substring(0, 2);
-        if (Integer.parseInt(id, 16) != ProtocalSequence.LINK_RESPONSE) {
+        if (Integer.parseInt(id, 16) != APDUSequence.LINK_RESPONSE.getId()) {
             log.error(this.getClass().getSimpleName() + "--帧数据错误，response ID错误--" + byteStr);
             return;
         }
 
-        this.id = ProtocalSequence.LINK_RESPONSE;
+        this.apduSequence = APDUSequence.LINK_RESPONSE;
 
         String piid = byteStr.substring(2, 4);
         this.piid = Integer.parseInt(piid, 16);
