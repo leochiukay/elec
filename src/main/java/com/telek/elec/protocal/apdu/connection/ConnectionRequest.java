@@ -1,7 +1,9 @@
 package com.telek.elec.protocal.apdu.connection;
 
-import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.apdu.CommonCodecAPDU;
 import com.telek.elec.protocal.constant.APDUSequence;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -10,7 +12,7 @@ import lombok.Data;
  * 客户端应用链接请求
  */
 @Data
-public class ConnectionRequest extends CodecAPDU implements Connection {
+public class ConnectionRequest extends CommonCodecAPDU implements Connection {
     /**
      * 期望的应用层协议版本号-2字节
      */
@@ -74,15 +76,26 @@ public class ConnectionRequest extends CodecAPDU implements Connection {
 
     @Override
     protected void decodeSpecialHexToThis(String hexString) {
-        this.expectVersion = Integer.parseInt(hexString.substring(4, 8), 16);
-        this.protocolConformance = Integer.parseInt(hexString.substring(8, 24), 16);
-        this.functionConformance = Integer.parseInt(hexString.substring(24, 56), 16);
-        this.sendMaxSize = Integer.parseInt(hexString.substring(56, 60), 16);
-        this.receiveMaxSize = Integer.parseInt(hexString.substring(60, 64), 16);
-        this.windowMaxSize = Integer.parseInt(hexString.substring(64, 66), 16);
-        this.maxApduSize = Integer.parseInt(hexString.substring(66, 70), 16);
-        this.expectOverTime = Integer.parseInt(hexString.substring(70, 78), 16);
-        this.authObject = Integer.parseInt(hexString.substring(78, 80), 16);
-        this.timeStamp = Integer.parseInt(hexString.substring(80, 82), 16);
+        int index = this.decodeHexExcludeCommonBeginIndex;
+        this.expectVersion = Integer.parseInt(hexString.substring(index, index += 4), 16);
+        this.protocolConformance = Integer.parseInt(hexString.substring(index, index += 16), 16);
+        this.functionConformance = Integer.parseInt(hexString.substring(index, index += 32), 16);
+        this.sendMaxSize = Integer.parseInt(hexString.substring(index, index += 4), 16);
+        this.receiveMaxSize = Integer.parseInt(hexString.substring(index, index += 4), 16);
+        this.windowMaxSize = Integer.parseInt(hexString.substring(index, index += 2), 16);
+        this.maxApduSize = Integer.parseInt(hexString.substring(index, index += 4), 16);
+        this.expectOverTime = Integer.parseInt(hexString.substring(index, index += 8), 16);
+        this.authObject = Integer.parseInt(hexString.substring(index, index += 2), 16);
+        this.timeStamp = Integer.parseInt(hexString.substring(index, index += 2), 16);
+    }
+
+    @Override
+    protected void decodeValidateSpecial(String hexString) throws DecodeException {
+
+    }
+
+    @Override
+    protected void encodeValidateSpecial() throws EncodeException {
+
     }
 }

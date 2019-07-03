@@ -1,6 +1,5 @@
 package com.telek.elec.protocal.apdu.codec;
 
-import com.telek.elec.protocal.apdu.CommonAPDU;
 import com.telek.elec.protocal.exeception.DecodeException;
 
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
  * 解码apdu
  */
 @Slf4j
-public abstract class DecoderAPDU extends CommonAPDU {
+public abstract class DecoderAPDU extends EncoderAPDU {
 
     /**
      * 将十六进制解码成当前对象
@@ -22,8 +21,19 @@ public abstract class DecoderAPDU extends CommonAPDU {
         validate(hexString);
         // 解码通用属性
         decodeCommonHexToThis(hexString);
+        // 子类其它处理逻辑
+        subclassDecodeProcessing(hexString);
         // 子类自己解码
         decodeSpecialHexToThis(hexString);
+    }
+
+    /**
+     * 留给子类自己处理的逻辑
+     * @param hexString
+     * @return
+     */
+    protected Object subclassDecodeProcessing(String hexString){
+        return null;
     }
 
     /**

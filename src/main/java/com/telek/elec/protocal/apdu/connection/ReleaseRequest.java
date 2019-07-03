@@ -1,6 +1,6 @@
 package com.telek.elec.protocal.apdu.connection;
 
-import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.apdu.CommonCodecAPDU;
 import com.telek.elec.protocal.constant.APDUSequence;
 
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class ReleaseRequest extends CodecAPDU implements Release {
+public class ReleaseRequest extends CommonCodecAPDU implements Release {
 
     public ReleaseRequest() {
         this.apduSequence = APDUSequence.RELEASE_REQUEST;

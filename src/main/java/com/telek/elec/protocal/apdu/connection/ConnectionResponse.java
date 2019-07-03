@@ -1,7 +1,9 @@
 package com.telek.elec.protocal.apdu.connection;
 
-import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.apdu.CommonCodecAPDU;
 import com.telek.elec.protocal.constant.APDUSequence;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -14,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class ConnectionResponse extends CodecAPDU implements Connection {
+public class ConnectionResponse extends CommonCodecAPDU implements Connection {
     /**
      * 服务器厂商代码-4字节
      */
@@ -95,24 +97,25 @@ public class ConnectionResponse extends CodecAPDU implements Connection {
 
     @Override
     public void decodeSpecialHexToThis(String hexString) {
-        this.code = Long.parseLong(hexString.substring(4, 12), 16);
-        this.version = Long.parseLong(hexString.substring(12, 20), 16);
-        this.versionDate = Long.parseLong(hexString.substring(20, 32), 16);
-        this.hardwareVersion = Long.parseLong(hexString.substring(32, 40), 16);
-        this.hardwareVersionDate = Long.parseLong(hexString.substring(40, 52), 16);
-        this.expandInfo = Long.parseLong(hexString.substring(52, 68), 16);
-        this.expectVersion = Integer.parseInt(hexString.substring(68, 72), 16);
-        this.protocolConformance = Long.parseLong(hexString.substring(72, 88), 16);
-        this.functionConformance = Long.parseLong(hexString.substring(88, 120), 16);
-        this.sendMaxSize = Integer.parseInt(hexString.substring(120, 124), 16);
-        this.receiveMaxSize = Integer.parseInt(hexString.substring(124, 128), 16);
-        this.windowMaxSize = Integer.parseInt(hexString.substring(128, 130), 16);
-        this.maxApduSize = Integer.parseInt(hexString.substring(130, 134), 16);
-        this.expectOverTime = Long.parseLong(hexString.substring(134, 142), 16);
-        this.responsesObj = Integer.parseInt(hexString.substring(142, 144), 16);
-        this.authObj = Integer.parseInt(hexString.substring(144, 146), 16);
-        this.followReport = Integer.parseInt(hexString.substring(146, 148), 16);
-        this.timeStamp = Integer.parseInt(hexString.substring(148), 16);
+        int index = this.decodeHexExcludeCommonBeginIndex;
+        this.code = Long.parseLong(hexString.substring(index, index += 8), 16);
+        this.version = Long.parseLong(hexString.substring(index, index += 8), 16);
+        this.versionDate = Long.parseLong(hexString.substring(index, index += 12), 16);
+        this.hardwareVersion = Long.parseLong(hexString.substring(index, index += 8), 16);
+        this.hardwareVersionDate = Long.parseLong(hexString.substring(index, index += 12), 16);
+        this.expandInfo = Long.parseLong(hexString.substring(index, index += 16), 16);
+        this.expectVersion = Integer.parseInt(hexString.substring(index, index += 4), 16);
+        this.protocolConformance = Long.parseLong(hexString.substring(index, index += 16), 16);
+        this.functionConformance = Long.parseLong(hexString.substring(index, index += 32), 16);
+        this.sendMaxSize = Integer.parseInt(hexString.substring(index, index += 4), 16);
+        this.receiveMaxSize = Integer.parseInt(hexString.substring(index, index += 4), 16);
+        this.windowMaxSize = Integer.parseInt(hexString.substring(index, index += 2), 16);
+        this.maxApduSize = Integer.parseInt(hexString.substring(index, index += 4), 16);
+        this.expectOverTime = Long.parseLong(hexString.substring(index, index += 8), 16);
+        this.responsesObj = Integer.parseInt(hexString.substring(index, index += 2), 16);
+        this.authObj = Integer.parseInt(hexString.substring(index, index += 2), 16);
+        this.followReport = Integer.parseInt(hexString.substring(index, index += 2), 16);
+        this.timeStamp = Integer.parseInt(hexString.substring(index, index += 2), 16);
     }
 
     @Override
@@ -137,5 +140,15 @@ public class ConnectionResponse extends CodecAPDU implements Connection {
         sb.append(StringUtils.subLastNumStr(Long.toHexString(followReport), 2));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(timeStamp), 2));
         return sb.toString();
+    }
+
+    @Override
+    protected void decodeValidateSpecial(String hexString) throws DecodeException {
+
+    }
+
+    @Override
+    protected void encodeValidateSpecial() throws EncodeException {
+
     }
 }

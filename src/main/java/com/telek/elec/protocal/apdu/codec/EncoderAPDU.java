@@ -1,5 +1,6 @@
 package com.telek.elec.protocal.apdu.codec;
 
+import com.telek.elec.protocal.apdu.CommonAPDU;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
@@ -9,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  * 编码apdu
  */
 @Slf4j
-public abstract class EncoderAPDU extends DecoderAPDU {
+public abstract class EncoderAPDU extends CommonAPDU {
     /**
      * 将当前对象编码成十六进制字符串
      * @return
@@ -20,12 +21,18 @@ public abstract class EncoderAPDU extends DecoderAPDU {
         encodeValidate();
         // 编码通用属性
         StringBuilder sb = encodeCommonFieldToHex();
+        // 子类处理其它逻辑
+        subclassEncodeProcessing();
         String specialHex = encodeThisSpecialToHex();
         if (specialHex != null) {
             sb.append(specialHex);
         }
         log.info(this.getClass().getSimpleName() + "--请求APDU--" + sb.toString());
         return sb.toString();
+    }
+
+    protected Object subclassEncodeProcessing() {
+        return null;
     }
 
     /**

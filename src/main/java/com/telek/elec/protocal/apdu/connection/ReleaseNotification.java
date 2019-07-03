@@ -2,7 +2,7 @@ package com.telek.elec.protocal.apdu.connection;
 
 import java.util.Calendar;
 
-import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.apdu.CommonCodecAPDU;
 import com.telek.elec.protocal.apdu.codec.DecoderUtils;
 import com.telek.elec.protocal.apdu.codec.EncoderUtils;
 import com.telek.elec.protocal.constant.APDUSequence;
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class ReleaseNotification extends CodecAPDU implements Release {
+public class ReleaseNotification extends CommonCodecAPDU implements Release {
 
     /**
      * 连接时间
@@ -42,7 +42,8 @@ public class ReleaseNotification extends CodecAPDU implements Release {
 
     @Override
     protected void decodeSpecialHexToThis(String hexString) {
-        this.linkedTime = DecoderUtils.decodeDateTimeSHex(hexString.substring(4, 18));
-        this.currentTime = DecoderUtils.decodeDateTimeSHex(hexString.substring(18));
+        int index = this.decodeHexExcludeCommonBeginIndex;
+        this.linkedTime = DecoderUtils.decodeDateTimeSHex(hexString.substring(index, index += 14));
+        this.currentTime = DecoderUtils.decodeDateTimeSHex(hexString.substring(index, index += 14));
     }
 }

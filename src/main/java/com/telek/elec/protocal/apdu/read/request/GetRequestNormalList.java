@@ -1,11 +1,14 @@
 package com.telek.elec.protocal.apdu.read.request;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.telek.elec.protocal.apdu.model.OAD;
 import com.telek.elec.protocal.apdu.read.CommonGet;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.GetType;
+import com.telek.elec.protocal.exeception.EncodeException;
+import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
 
@@ -37,23 +40,44 @@ public class GetRequestNormalList extends CommonGet {
     private int timeStamp;
 
     public GetRequestNormalList() {
+        super(GetType.NORMAL_LIST);
         this.apduSequence = APDUSequence.GET_REQUEST;
-        this.getType = GetType.NORMAL_LIST;
     }
 
     @Override
     protected String encodeThisSpecialToHex() {
         StringBuilder sb = new StringBuilder();
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(oadSequence), 2));
+        if (oadSequence > 0 && oads != null) {
+            for (OAD oad : oads) {
+                sb.append(oad.encode());
+            }
+        }
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(timeStamp), 2));
         return sb.toString();
     }
 
     @Override
     protected void decodeSpecialHexToThis(String hexString) {
-        this.oadSequence = Integer.parseInt(hexString.substring(6, 8), 16);
-        int end = 8;
-        for (int i = 0; i < oadSequence; i++) {
+        int index = this.decodeHexExcludeCommonBeginIndex;
+        this.oadSequence = Integer.parseInt(hexString.substring(index, index += 2), 16);
 
+        if (oadSequence > 0) {
+            oads = new ArrayList<>(oadSequence);
+            for (int i = 0; i < oadSequence; i++) {
+                String oadHex = hexString.substring(index, index += 8);
+                OAD oad = new OAD();
+                oad.decode(oadHex);
+                oads.add(oad);
+            }
         }
-        this.timeStamp = Integer.parseInt(hexString.substring(end), 16);
+        this.timeStamp = Integer.parseInt(hexString.substring(index, index += 2), 16);
+    }
+
+    @Override
+    protected void encodeValidateSpecial() throws EncodeException {
+        if (oadSequence > 0 && (oads == null || oads.size() != oadSequence)) {
+            throw new EncodeException("oads个数有误");
+        }
     }
 }

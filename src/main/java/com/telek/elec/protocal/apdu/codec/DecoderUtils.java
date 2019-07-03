@@ -21,7 +21,7 @@ public class DecoderUtils {
         cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dateTimeHexString.substring(10, 12), 16));
         cal.set(Calendar.MINUTE, Integer.parseInt(dateTimeHexString.substring(12, 14), 16));
         cal.set(Calendar.SECOND, Integer.parseInt(dateTimeHexString.substring(14, 16), 16));
-        cal.set(Calendar.MILLISECOND, Integer.parseInt(dateTimeHexString.substring(16), 16));
+        cal.set(Calendar.MILLISECOND, Integer.parseInt(dateTimeHexString.substring(16, 20), 16));
         return cal;
     }
 

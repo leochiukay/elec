@@ -2,10 +2,12 @@ package com.telek.elec.protocal.apdu.link;
 
 import java.util.Calendar;
 
-import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.apdu.CommonCodecAPDU;
 import com.telek.elec.protocal.apdu.codec.DecoderUtils;
 import com.telek.elec.protocal.apdu.codec.EncoderUtils;
 import com.telek.elec.protocal.constant.APDUSequence;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -17,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class LinkResponse extends CodecAPDU implements Link {
+public class LinkResponse extends CommonCodecAPDU implements Link {
     /**
      * 结果-1字节
      * 时钟可信标志——用于表示响应方的时钟是否可信（准确），0：不可信，1：可信。
@@ -48,13 +50,14 @@ public class LinkResponse extends CodecAPDU implements Link {
      */
     @Override
     protected void decodeSpecialHexToThis(String hexString) {
-        String result = hexString.substring(4, 6);
+        int index = this.decodeHexExcludeCommonBeginIndex;
+        String result = hexString.substring(index, index += 2);
         this.result = Integer.parseInt(result, 16);
-        String requestTimeStr = hexString.substring(6, 26);
+        String requestTimeStr = hexString.substring(index, index += 20);
         this.requestTime = DecoderUtils.decodeDateTimeHex(requestTimeStr);
-        String receivedTimeStr = hexString.substring(26, 46);
+        String receivedTimeStr = hexString.substring(index, index += 20);
         this.receivedTime = DecoderUtils.decodeDateTimeHex(receivedTimeStr);
-        String responseTimeStr = hexString.substring(46);
+        String responseTimeStr = hexString.substring(index, index += 20);
         this.responseTime = DecoderUtils.decodeDateTimeHex(responseTimeStr);
     }
 
@@ -66,5 +69,23 @@ public class LinkResponse extends CodecAPDU implements Link {
         sb.append(EncoderUtils.encodeToDateTimeHex(receivedTime));
         sb.append(EncoderUtils.encodeToDateTimeHex(responseTime));
         return sb.toString();
+    }
+
+    @Override
+    protected void decodeValidateSpecial(String hexString) throws DecodeException {
+
+    }
+
+    @Override
+    protected void encodeValidateSpecial() throws EncodeException {
+        if (receivedTime == null) {
+            receivedTime = Calendar.getInstance();
+        }
+        if (requestTime == null) {
+            requestTime = Calendar.getInstance();
+        }
+        if (responseTime == null) {
+            responseTime = Calendar.getInstance();
+        }
     }
 }

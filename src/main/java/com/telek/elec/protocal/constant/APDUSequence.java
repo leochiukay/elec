@@ -23,7 +23,11 @@ public enum APDUSequence {
     GET_RESPONSE(0x85,"读取响应"),
 
     SET_REQUEST(0x6,"设置请求"),
+    SET_RESPONSE(0x86,"设置请求"),
+
     ACTION_REQUEST(0x7,"操作请求"),
+    ACTION_RESPONSE(0x87,"操作请求"),
+
     REPORT_RESPONSE(0x8,"上报应答"),
     PROXY_REQUEST(0x9,"代理请求");
 

@@ -1,21 +1,21 @@
-package com.telek.elec.protocal.apdu.read;
+package com.telek.elec.protocal.apdu.action;
 
 import com.telek.elec.protocal.apdu.CommonCodecAPDU;
-import com.telek.elec.protocal.constant.GetType;
+import com.telek.elec.protocal.constant.ActionType;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
 
 @Data
-public abstract class CommonGet extends CommonCodecAPDU implements Get {
+public abstract class CommonAction extends CommonCodecAPDU implements Action {
 
     /**
-     * 获取类型-1字节
+     * action类型-1字节
      */
-    protected GetType getType;
+    protected ActionType actionType;
 
-    public CommonGet(GetType getType) {
-        this.getType = getType;
+    public CommonAction(ActionType actionType) {
+        this.actionType = actionType;
     }
 
     @Override
@@ -24,7 +24,7 @@ public abstract class CommonGet extends CommonCodecAPDU implements Get {
         // 序号
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.apduSequence.getId()), 2));
         // 获取类型
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.getType.getType()), 2));
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.actionType.getType()), 2));
         // ppid
         if (hasPiidFied()) {
             sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.piid), 2));
@@ -39,10 +39,10 @@ public abstract class CommonGet extends CommonCodecAPDU implements Get {
      */
     @Override
     protected void decodeCommonHexToThis(String hexString) {
-        int getType = Integer.parseInt(hexString.substring(2, 4), 16);
-        for (GetType value : GetType.values()) {
-            if (getType == value.getType()) {
-                this.getType = value;
+        int actionType = Integer.parseInt(hexString.substring(2, 4), 16);
+        for (ActionType value : ActionType.values()) {
+            if (actionType == value.getType()) {
+                this.actionType = value;
                 break;
             }
         }
