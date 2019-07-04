@@ -3,10 +3,11 @@ package com.telek.elec.protocal.apdu.action.response;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.telek.elec.protocal.apdu.action.AbsAction;
+import com.telek.elec.protocal.apdu.ResTypeCodecAPDU;
+import com.telek.elec.protocal.apdu.action.Action;
 import com.telek.elec.protocal.apdu.model.ActionResponseData;
+import com.telek.elec.protocal.constant.APDUResType;
 import com.telek.elec.protocal.constant.APDUSequence;
-import com.telek.elec.protocal.constant.ActionType;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
@@ -14,7 +15,7 @@ import com.telek.elec.util.StringUtils;
 import lombok.Data;
 
 @Data
-public class ActionResponseNormalList extends AbsAction {
+public class ActionResponseNormalList extends ResTypeCodecAPDU implements Action {
 
     private int count;
 
@@ -29,7 +30,7 @@ public class ActionResponseNormalList extends AbsAction {
     private int timeStamp;
 
     public ActionResponseNormalList() {
-        super(ActionType.NORMAL_LIST);
+        super(APDUResType.ACTION_NORMAL_LIST);
         this.apduSequence = APDUSequence.ACTION_RESPONSE;
     }
 

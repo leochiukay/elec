@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.data.model.complex;
+package com.telek.elec.protocal.apdu.model;
 
 import com.telek.elec.protocal.constant.DARType;
 import com.telek.elec.util.StringUtils;
@@ -9,7 +9,7 @@ import lombok.Data;
  * dar信息
  */
 @Data
-public class DAR extends AbsComplexData {
+public class DAR extends AbsResult {
 
     private DARType dar;
 

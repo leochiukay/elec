@@ -1,28 +1,29 @@
-package com.telek.elec.protocal.apdu.read;
+package com.telek.elec.protocal.apdu;
 
-import com.telek.elec.protocal.apdu.CodecAPDU;
-import com.telek.elec.protocal.constant.GetType;
+import com.telek.elec.protocal.constant.APDUResType;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
 
 @Data
-public abstract class AbsGet extends CodecAPDU implements Get {
+public abstract class ResTypeCodecAPDU extends CodecAPDU {
 
     protected static final int TYPE_CHAR_LENGTH = 2;
 
     /**
-     * 获取类型-1字节
+     * 各种请求响应的小分类：eg 读取一个对象属性请求、读取若干个对象属性请求等
+     * 1字节
      */
-    protected GetType getType;
+    private APDUResType apduResType;
 
-    public AbsGet(GetType getType) {
+    public ResTypeCodecAPDU(APDUResType apduResType) {
+        this.apduResType = apduResType;
+
         int index = APDU_SEQUENCE_CHAR_LENGTH + TYPE_CHAR_LENGTH;
         if (hasPiidFied()) {
             index += PIID_CHAR_LENGTH;
         }
         this.decodeHexExcludeCommonBeginIndex = index;
-        this.getType = getType;
     }
 
     @Override
@@ -31,7 +32,7 @@ public abstract class AbsGet extends CodecAPDU implements Get {
         // 序号
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.apduSequence.getId()), APDU_SEQUENCE_CHAR_LENGTH));
         // 获取类型
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.getType.getType()), TYPE_CHAR_LENGTH));
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.apduResType.getType()), TYPE_CHAR_LENGTH));
         // ppid
         if (hasPiidFied()) {
             sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.piid), PIID_CHAR_LENGTH));
@@ -39,16 +40,16 @@ public abstract class AbsGet extends CodecAPDU implements Get {
         return sb;
     }
 
+    /**
+     * 解码通用属性
+     * @param hexString
+     * @return
+     */
     @Override
     protected void decodeCommonHexToThis(String hexString) {
         int begin = APDU_SEQUENCE_CHAR_LENGTH;
-        int getType = Integer.parseInt(hexString.substring(begin, begin += TYPE_CHAR_LENGTH), 16);
-        for (GetType value : GetType.values()) {
-            if (getType == value.getType()) {
-                this.getType = value;
-                break;
-            }
-        }
+        int resType = Integer.parseInt(hexString.substring(begin, begin += TYPE_CHAR_LENGTH), 16);
+        this.apduResType = APDUResType.getResByType(resType, apduSequence.getApduType());
         if (hasPiidFied()) {
             this.piid = Integer.parseInt(hexString.substring(begin, begin + PIID_CHAR_LENGTH), 16);
         }

@@ -1,9 +1,10 @@
 package com.telek.elec.protocal.apdu.action.response;
 
-import com.telek.elec.protocal.apdu.action.AbsAction;
+import com.telek.elec.protocal.apdu.ResTypeCodecAPDU;
+import com.telek.elec.protocal.apdu.action.Action;
 import com.telek.elec.protocal.apdu.model.ActionResponseData;
+import com.telek.elec.protocal.constant.APDUResType;
 import com.telek.elec.protocal.constant.APDUSequence;
-import com.telek.elec.protocal.constant.ActionType;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
@@ -23,7 +24,7 @@ import lombok.Data;
  * 00 —— 没有时间标签
  */
 @Data
-public class ActionResponseNormal extends AbsAction {
+public class ActionResponseNormal extends ResTypeCodecAPDU implements Action {
 
     private ActionResponseData actionResponseData;
     /**
@@ -36,7 +37,7 @@ public class ActionResponseNormal extends AbsAction {
     private int timeStamp;
 
     public ActionResponseNormal() {
-        super(ActionType.NORMAL);
+        super(APDUResType.ACTION_NORMAL);
         this.apduSequence = APDUSequence.ACTION_RESPONSE;
     }
 

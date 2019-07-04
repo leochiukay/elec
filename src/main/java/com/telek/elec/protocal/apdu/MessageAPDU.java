@@ -1,15 +1,25 @@
 package com.telek.elec.protocal.apdu;
 
-import com.telek.elec.protocal.constant.APDUSequence;
+import com.telek.elec.protocal.constant.APDUResType;
+
+import lombok.Data;
 
 /**
  * 报文Apdu
  */
+@Data
 public class MessageAPDU extends APDU {
+
+    private static final String REGX = "(\\d*|[a-f])*";
+
     /**
      * apdu 完整16进制报文数据
      */
     private String hexMsg;
+    /**
+     * 各种请求响应的小分类：eg 读取一个对象属性请求、读取若干个对象属性请求等
+     */
+    private APDUResType apduResType;
 
     public MessageAPDU() {
     }
@@ -19,20 +29,15 @@ public class MessageAPDU extends APDU {
      * @param hexMsg
      * @return
      */
-    public MessageAPDU fixHexMsg(String hexMsg) {
-        if (hexMsg == null || hexMsg.length() < APDU_SEQUENCE_CHAR_LENGTH) {
-            throw new RuntimeException("hexMsg长度不符合");
-        }
+    public MessageAPDU resolveHex(String hexMsg) {
         String s = hexMsg.substring(0, APDU_SEQUENCE_CHAR_LENGTH);
-        if (!s.matches("\\d*")) {
-            throw new RuntimeException("hexMsg格式不符合");
-        }
         int i = Integer.parseInt(s, 16);
-        for (APDUSequence value : APDUSequence.values()) {
-            if (value.getId() == i) {
-                this.apduSequence = value;
-                break;
-            }
+        apduSequence = apduSequence.getByIdSequence(i);
+
+        if (apduSequence != null) {
+            s = hexMsg.substring(APDU_SEQUENCE_CHAR_LENGTH, APDU_SEQUENCE_CHAR_LENGTH + 2);
+            i = Integer.parseInt(s, 16);
+            this.apduResType = APDUResType.getResByType(i, apduSequence.getApduType());
         }
         return this;
     }

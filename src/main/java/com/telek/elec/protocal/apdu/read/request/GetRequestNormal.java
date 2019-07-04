@@ -1,9 +1,10 @@
 package com.telek.elec.protocal.apdu.read.request;
 
-import com.telek.elec.protocal.data.model.complex.OAD;
-import com.telek.elec.protocal.apdu.read.AbsGet;
+import com.telek.elec.protocal.apdu.ResTypeCodecAPDU;
+import com.telek.elec.protocal.apdu.read.Get;
+import com.telek.elec.protocal.constant.APDUResType;
 import com.telek.elec.protocal.constant.APDUSequence;
-import com.telek.elec.protocal.constant.GetType;
+import com.telek.elec.protocal.data.model.complex.OAD;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
@@ -20,7 +21,7 @@ import lombok.Data;
  * 00 —— 没有时间标签
  */
 @Data
-public class GetRequestNormal extends AbsGet {
+public class GetRequestNormal extends ResTypeCodecAPDU implements Get {
 
     private OAD oad;
     /**
@@ -29,7 +30,7 @@ public class GetRequestNormal extends AbsGet {
     private int timeStamp;
 
     public GetRequestNormal() {
-        super(GetType.NORMAL);
+        super(APDUResType.GET_NORMAL);
         this.apduSequence = APDUSequence.GET_REQUEST;
     }
 

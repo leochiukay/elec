@@ -9,7 +9,12 @@ import com.telek.elec.protocal.exeception.EncodeException;
 public interface IData {
 
     /**
-     * 编码
+     * 编码： 基本类型和复杂数据类型结构不一致
+     * 基本数据类型头两个字符串标识该数据类型 如：字符串，下面09即表示data_type
+     *  *                                      09 —— octet-string
+     *  *                                      06 —— SIZE(6)
+     *  *                                      12 34 56 78 90 12 —— 通信地址：123456789012
+     *  而复杂数据类型包下的不包括 该字段
      * @return
      */
     String encode() throws EncodeException;

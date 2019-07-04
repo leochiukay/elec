@@ -3,10 +3,11 @@ package com.telek.elec.protocal.apdu.set.request;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.telek.elec.protocal.apdu.ResTypeCodecAPDU;
 import com.telek.elec.protocal.apdu.model.SetRequestData;
-import com.telek.elec.protocal.apdu.set.AbsSet;
+import com.telek.elec.protocal.apdu.set.Set;
+import com.telek.elec.protocal.constant.APDUResType;
 import com.telek.elec.protocal.constant.APDUSequence;
-import com.telek.elec.protocal.constant.SetType;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
@@ -27,7 +28,7 @@ import lombok.Data;
  *  00 —— 没有时间标签
  */
 @Data
-public class SetRequestNormalList extends AbsSet {
+public class SetRequestNormalList extends ResTypeCodecAPDU implements Set {
     /**
      * oad个数-1字节
      */
@@ -42,7 +43,7 @@ public class SetRequestNormalList extends AbsSet {
     private int timeStamp;
 
     public SetRequestNormalList() {
-        super(SetType.NORMAL_LIST);
+        super(APDUResType.SET_NORMAL_LIST);
         this.apduSequence = APDUSequence.SET_REQUEST;
     }
 
