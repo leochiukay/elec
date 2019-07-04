@@ -1,9 +1,10 @@
 package com.telek.elec.protocal.apdu.read.request;
 
 import com.telek.elec.protocal.apdu.model.OAD;
-import com.telek.elec.protocal.apdu.read.CommonGet;
+import com.telek.elec.protocal.apdu.read.AbsGet;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.GetType;
+import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
@@ -19,7 +20,7 @@ import lombok.Data;
  * 00 —— 没有时间标签
  */
 @Data
-public class GetRequestNormal extends CommonGet {
+public class GetRequestNormal extends AbsGet {
 
     private OAD oad;
     /**
@@ -33,7 +34,7 @@ public class GetRequestNormal extends CommonGet {
     }
 
     @Override
-    protected String encodeThisSpecialToHex() {
+    protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         if (oad != null) {
             sb.append(oad.encode());
@@ -43,7 +44,7 @@ public class GetRequestNormal extends CommonGet {
     }
 
     @Override
-    protected void decodeSpecialHexToThis(String hexString) {
+    protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
         int index = this.decodeHexExcludeCommonBeginIndex;
         OAD oad = new OAD();
         oad.decode(hexString.substring(index, index += 8));

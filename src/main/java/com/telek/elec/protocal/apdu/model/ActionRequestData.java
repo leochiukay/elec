@@ -1,25 +1,24 @@
 package com.telek.elec.protocal.apdu.model;
 
-import com.telek.elec.protocal.constant.DataType;
-import com.telek.elec.util.StringUtils;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 
 import lombok.Data;
 
 /**
  * 设置请求的数据信息
- * 40 00 02 00 —— OAD
- * 1C —— Data：类型28：date_time_s
- * 07 E0 01 14 10 1B 0B—— 时间：2016-01-20 16：27：11
+ * 00 10 01 00 —— OMD
+ *  * 0F 00 ——参数Data， integer(0)
  */
 @Data
-public class ActionRequestData implements IResult {
+public class ActionRequestData extends IResult {
 
     private OMD omd;
 
-    private ActionData data;
+    private DataInfo data;
 
     @Override
-    public String encode() {
+    protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         if (omd != null) {
             sb.append(omd.encode());
@@ -31,60 +30,15 @@ public class ActionRequestData implements IResult {
     }
 
     @Override
-    public void decode(String onlyThisHexStr) {
-        if (onlyThisHexStr == null) {
-            return;
-        }
+    protected int decodeSpecial(String hexString) throws DecodeException {
         int index = 0;
         OMD omd = new OMD();
-        omd.decode(onlyThisHexStr.substring(index, index += 8));
+        int modCharLen = omd.decode(hexString.substring(index, index += 8));
         this.omd = omd;
-        String data = onlyThisHexStr.substring(index);
-        ActionData actionData = new ActionData();
-        actionData.decode(data);
+        String data = hexString.substring(index);
+        DataInfo actionData = new DataInfo();
+        int dataCharLen = actionData.decode(data);
         this.data = actionData;
-    }
-
-    /**
-     * 0F 00
-     * ——参数Data， integer(0)
-     */
-    @Data
-    public static class ActionData implements IResult {
-        /**
-         * 数据类型
-         */
-        private DataType dataType;
-        /**
-         * 具体数据
-         */
-        private Object obj;
-
-        @Override
-        public String encode() {
-            StringBuilder sb = new StringBuilder();
-            sb.append(StringUtils.subLastNumStr(Integer.toHexString(dataType.getCode()), 16));
-            // todo
-            return sb.toString();
-        }
-
-        @Override
-        public void decode(String onlyThisHexStr) {
-            if (onlyThisHexStr == null) {
-                return;
-            }
-            int index = 0;
-            int dataType = Integer.parseInt(onlyThisHexStr.substring(index, index += 2), 16);
-            for (DataType value : DataType.values()) {
-                if (value.getCode() == dataType) {
-                    this.dataType = value;
-                    break;
-                }
-            }
-
-            // todo
-            String data = onlyThisHexStr.substring(index);
-        }
-
+        return dataCharLen + modCharLen;
     }
 }

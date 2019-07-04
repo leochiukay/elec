@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.apdu.data;
+package com.telek.elec.protocal.data.model;
 
 import java.util.Calendar;
 
@@ -19,6 +19,8 @@ import lombok.Data;
 @Data
 public class DateTimeS extends IData {
 
+    private static final int CHAR_LENGTH = 14;
+
     /**
      * 7字节
      */
@@ -29,6 +31,11 @@ public class DateTimeS extends IData {
     }
 
     @Override
+    protected int calculateSpecialCharLength() {
+        return CHAR_LENGTH;
+    }
+
+    @Override
     protected String encodeSpecial() {
         return EncoderUtils.encodeToDateTimeSHex(calendar);
     }
@@ -36,6 +43,6 @@ public class DateTimeS extends IData {
     @Override
     protected int decodeSpecial(String hexExcludeDataType) {
         calendar = DecoderUtils.decodeDateTimeSHex(hexExcludeDataType);
-        return 14;
+        return CHAR_LENGTH;
     }
 }

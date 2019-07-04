@@ -19,7 +19,7 @@ public class ReleaseRequest extends CommonCodecAPDU implements Release {
 
     @Override
     protected String encodeThisSpecialToHex() {
-        return null;
+        return "";
     }
 
     @Override

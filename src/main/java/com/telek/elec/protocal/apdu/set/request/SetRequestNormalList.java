@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.telek.elec.protocal.apdu.model.SetRequestData;
-import com.telek.elec.protocal.apdu.set.CommonSet;
+import com.telek.elec.protocal.apdu.set.AbsSet;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.SetType;
+import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
@@ -26,9 +27,9 @@ import lombok.Data;
  *  00 —— 没有时间标签
  */
 @Data
-public class SetRequestNormalList extends CommonSet {
+public class SetRequestNormalList extends AbsSet {
     /**
-     * oad个数
+     * oad个数-1字节
      */
     private int dataCount;
     /**
@@ -46,7 +47,7 @@ public class SetRequestNormalList extends CommonSet {
     }
 
     @Override
-    protected String encodeThisSpecialToHex() {
+    protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(dataCount), 16));
         if (dataCount > 0 && setDatas != null) {
@@ -59,7 +60,7 @@ public class SetRequestNormalList extends CommonSet {
     }
 
     @Override
-    protected void decodeSpecialHexToThis(String hexString) {
+    protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
         int index = this.decodeHexExcludeCommonBeginIndex;
         this.dataCount = Integer.parseInt(hexString.substring(index, index += 2), 16);
         if (dataCount > 0) {
@@ -75,8 +76,8 @@ public class SetRequestNormalList extends CommonSet {
 
     @Override
     protected void encodeValidateSpecial() throws EncodeException {
-        if (dataCount > 0 && (setDatas == null || setDatas.size() != dataCount)) {
-            throw new EncodeException("setdata个数有误");
+        if (dataCount < 0 || (dataCount > 0 && (setDatas == null || setDatas.size() != dataCount))) {
+            throw new EncodeException("setDatas个数有误");
         }
     }
 }

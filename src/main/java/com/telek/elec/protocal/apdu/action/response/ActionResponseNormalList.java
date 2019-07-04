@@ -3,16 +3,17 @@ package com.telek.elec.protocal.apdu.action.response;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.telek.elec.protocal.apdu.action.CommonAction;
+import com.telek.elec.protocal.apdu.action.AbsAction;
 import com.telek.elec.protocal.apdu.model.ActionResponseData;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.ActionType;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
 
 @Data
-public class ActionResponseNormalList extends CommonAction {
+public class ActionResponseNormalList extends AbsAction {
 
     private int count;
 
@@ -32,7 +33,7 @@ public class ActionResponseNormalList extends CommonAction {
     }
 
     @Override
-    protected String encodeThisSpecialToHex() {
+    protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(count), 2));
         if (count > 0 && actionResponseDatas.size() > 0) {

@@ -11,6 +11,12 @@ public class StringUtils {
      * @return
      */
     public static String subLastNumStr(String s, int lastNum) {
+        if (s == null) {
+            s = "";
+        }
+        if (lastNum < 0) {
+            lastNum = 0;
+        }
         int length = s.length();
         int minus = length - lastNum;
         if (minus == 0) {

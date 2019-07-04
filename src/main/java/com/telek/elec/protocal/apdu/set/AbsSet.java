@@ -7,14 +7,21 @@ import com.telek.elec.util.StringUtils;
 import lombok.Data;
 
 @Data
-public abstract class CommonSet extends CommonCodecAPDU implements Set {
+public abstract class AbsSet extends CommonCodecAPDU implements Set {
+
+    protected static final int TYPE_CHAR_LENGTH = 2;
 
     /**
      * 设置类型-1字节
      */
     protected SetType setType;
 
-    public CommonSet(SetType setType) {
+    public AbsSet(SetType setType) {
+        int index = APDU_SEQUENCE_CHAR_LENGTH + TYPE_CHAR_LENGTH;
+        if (hasPiidFied()) {
+            index += PIID_CHAR_LENGTH;
+        }
+        this.decodeHexExcludeCommonBeginIndex = index;
         this.setType = setType;
     }
 
@@ -22,12 +29,12 @@ public abstract class CommonSet extends CommonCodecAPDU implements Set {
     protected StringBuilder encodeCommonFieldToHex() {
         StringBuilder sb = new StringBuilder();
         // 序号
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.apduSequence.getId()), 2));
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.apduSequence.getId()), APDU_SEQUENCE_CHAR_LENGTH));
         // 获取类型
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.setType.getType()), 2));
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.setType.getType()), TYPE_CHAR_LENGTH));
         // ppid
         if (hasPiidFied()) {
-            sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.piid), 2));
+            sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.piid), PIID_CHAR_LENGTH));
         }
         return sb;
     }
@@ -39,7 +46,8 @@ public abstract class CommonSet extends CommonCodecAPDU implements Set {
      */
     @Override
     protected void decodeCommonHexToThis(String hexString) {
-        int getType = Integer.parseInt(hexString.substring(2, 4), 16);
+        int begin = APDU_SEQUENCE_CHAR_LENGTH;
+        int getType = Integer.parseInt(hexString.substring(begin, begin += TYPE_CHAR_LENGTH), 16);
         for (SetType value : SetType.values()) {
             if (getType == value.getType()) {
                 this.setType = value;
@@ -47,17 +55,7 @@ public abstract class CommonSet extends CommonCodecAPDU implements Set {
             }
         }
         if (hasPiidFied()) {
-            this.piid = Integer.parseInt(hexString.substring(4, 6), 16);
+            this.piid = Integer.parseInt(hexString.substring(begin, begin + PIID_CHAR_LENGTH), 16);
         }
-    }
-
-    @Override
-    protected Object subclassDecodeProcessing(String hexString) {
-        int index = 4;
-        if (hasPiidFied()) {
-            index = 6;
-        }
-        this.decodeHexExcludeCommonBeginIndex = index;
-        return null;
     }
 }

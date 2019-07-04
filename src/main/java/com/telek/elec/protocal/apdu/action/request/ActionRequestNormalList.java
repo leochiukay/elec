@@ -3,16 +3,18 @@ package com.telek.elec.protocal.apdu.action.request;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.telek.elec.protocal.apdu.action.CommonAction;
+import com.telek.elec.protocal.apdu.action.AbsAction;
 import com.telek.elec.protocal.apdu.model.ActionRequestData;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.ActionType;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
 
 @Data
-public class ActionRequestNormalList extends CommonAction {
+public class ActionRequestNormalList extends AbsAction {
     /**
      * 操作个数
      */
@@ -32,7 +34,7 @@ public class ActionRequestNormalList extends CommonAction {
     }
 
     @Override
-    protected String encodeThisSpecialToHex() {
+    protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(count), 2));
         if (count > 0 && actionRequestDatas.size() > 0) {
@@ -45,7 +47,7 @@ public class ActionRequestNormalList extends CommonAction {
     }
 
     @Override
-    protected void decodeSpecialHexToThis(String hexString) {
+    protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
         int index = this.decodeHexExcludeCommonBeginIndex;
         this.count = Integer.parseInt(hexString.substring(index, index += 2), 16);
         if (count > 0) {

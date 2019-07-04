@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.telek.elec.protocal.apdu.model.OAD;
-import com.telek.elec.protocal.apdu.read.CommonGet;
+import com.telek.elec.protocal.apdu.read.AbsGet;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.GetType;
+import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
@@ -25,7 +26,7 @@ import lombok.Data;
  * 00 —— 没有时间标签
  */
 @Data
-public class GetRequestNormalList extends CommonGet {
+public class GetRequestNormalList extends AbsGet {
     /**
      * oad个数-1字节
      */
@@ -45,7 +46,7 @@ public class GetRequestNormalList extends CommonGet {
     }
 
     @Override
-    protected String encodeThisSpecialToHex() {
+    protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(oadSequence), 2));
         if (oadSequence > 0 && oads != null) {
@@ -58,7 +59,7 @@ public class GetRequestNormalList extends CommonGet {
     }
 
     @Override
-    protected void decodeSpecialHexToThis(String hexString) {
+    protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
         int index = this.decodeHexExcludeCommonBeginIndex;
         this.oadSequence = Integer.parseInt(hexString.substring(index, index += 2), 16);
 
@@ -76,8 +77,8 @@ public class GetRequestNormalList extends CommonGet {
 
     @Override
     protected void encodeValidateSpecial() throws EncodeException {
-        if (oadSequence > 0 && (oads == null || oads.size() != oadSequence)) {
-            throw new EncodeException("oads个数有误");
+        if (oadSequence < 0 || (oadSequence > 0 && (oads == null || oads.size() != oadSequence))) {
+            throw new EncodeException("oadSequence和oads个数不匹配");
         }
     }
 }

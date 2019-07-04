@@ -1,9 +1,11 @@
 package com.telek.elec.protocal.apdu.set.request;
 
 import com.telek.elec.protocal.apdu.model.SetRequestData;
-import com.telek.elec.protocal.apdu.set.CommonSet;
+import com.telek.elec.protocal.apdu.set.AbsSet;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.SetType;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -20,7 +22,7 @@ import lombok.Data;
  * 00 —— 没有时间标签
  */
 @Data
-public class SetRequestNormal extends CommonSet {
+public class SetRequestNormal extends AbsSet {
     /**
      * 设置数据
      */
@@ -36,7 +38,7 @@ public class SetRequestNormal extends CommonSet {
     }
 
     @Override
-    protected String encodeThisSpecialToHex() {
+    protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(setData.encode());
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(timeStamp), 2));
@@ -44,7 +46,7 @@ public class SetRequestNormal extends CommonSet {
     }
 
     @Override
-    protected void decodeSpecialHexToThis(String hexString) {
+    protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
         int index = this.decodeHexExcludeCommonBeginIndex;
         SetRequestData setData = new SetRequestData();
         setData.decode(hexString.substring(index, hexString.length() - 2));

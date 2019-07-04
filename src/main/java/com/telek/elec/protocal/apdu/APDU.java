@@ -10,8 +10,10 @@ import lombok.Data;
 @Data
 public abstract class APDU {
 
+    protected static final int APDU_SEQUENCE_CHAR_LENGTH = 2;
+
     /**
-     * 请求响应类型
+     * 请求响应类型-1字节
      */
     protected APDUSequence apduSequence;
 

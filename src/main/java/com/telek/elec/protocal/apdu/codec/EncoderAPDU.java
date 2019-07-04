@@ -60,7 +60,7 @@ public abstract class EncoderAPDU extends CommonAPDU {
      * 子类编码自己特有的属性
      * @return
      */
-    protected abstract String encodeThisSpecialToHex();
+    protected abstract String encodeThisSpecialToHex() throws EncodeException;
 
     /**
      * 编码通用属性
@@ -69,10 +69,10 @@ public abstract class EncoderAPDU extends CommonAPDU {
     protected StringBuilder encodeCommonFieldToHex() {
         StringBuilder sb = new StringBuilder();
         // 序号
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.apduSequence.getId()), 2));
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.apduSequence.getId()), APDU_SEQUENCE_CHAR_LENGTH));
         // ppid
         if (hasPiidFied()) {
-            sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.piid), 2));
+            sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.piid), PIID_CHAR_LENGTH));
         }
         return sb;
     }

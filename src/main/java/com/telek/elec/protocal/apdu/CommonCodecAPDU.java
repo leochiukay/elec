@@ -10,13 +10,11 @@ public abstract class CommonCodecAPDU extends CodecAPDU {
      */
     protected int decodeHexExcludeCommonBeginIndex;
 
-    @Override
-    protected Object subclassDecodeProcessing(String hexString) {
-        int index = 2;
+    public CommonCodecAPDU() {
+        int index = APDU_SEQUENCE_CHAR_LENGTH;
         if (hasPiidFied()) {
-            index = 4;
+            index += PIID_CHAR_LENGTH;
         }
         this.decodeHexExcludeCommonBeginIndex = index;
-        return null;
     }
 }

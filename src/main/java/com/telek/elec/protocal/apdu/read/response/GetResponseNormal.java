@@ -1,9 +1,11 @@
 package com.telek.elec.protocal.apdu.read.response;
 
 import com.telek.elec.protocal.apdu.model.GetResultNormal;
-import com.telek.elec.protocal.apdu.read.CommonGet;
+import com.telek.elec.protocal.apdu.read.AbsGet;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.GetType;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -23,7 +25,7 @@ import lombok.Data;
  * 00 —— 没有时间标签
  */
 @Data
-public class GetResponseNormal extends CommonGet {
+public class GetResponseNormal extends AbsGet {
     /**
      * 结果
      */
@@ -43,7 +45,7 @@ public class GetResponseNormal extends CommonGet {
     }
 
     @Override
-    protected String encodeThisSpecialToHex() {
+    protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(getResultNormal.encode());
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(followReport), 2));
@@ -52,7 +54,7 @@ public class GetResponseNormal extends CommonGet {
     }
 
     @Override
-    protected void decodeSpecialHexToThis(String hexString) {
+    protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
         int hexLength = hexString.length();
         int index = this.decodeHexExcludeCommonBeginIndex;
         GetResultNormal getResultNormal = new GetResultNormal();

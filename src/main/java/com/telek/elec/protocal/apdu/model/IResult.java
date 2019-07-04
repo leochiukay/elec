@@ -1,17 +1,53 @@
 package com.telek.elec.protocal.apdu.model;
 
-public interface IResult {
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
+
+public abstract class IResult {
 
     /**
      * 将当前对象编码成十六进制字符串
      * @return
      */
-    String encode();
+    public String encode() throws EncodeException {
+        validateEncode();
+        return encodeSpecial();
+    }
 
     /**
      * 将该字符串解码成当前对象
-     * @param onlyThisHexStr 仅截取当前需要解码长度的字符串，不包括对象以外的其它多余字符串
+     * @param hexString
+     * @return 返回该对象所占字符串长度
      */
-    void decode(String onlyThisHexStr);
+    public int decode(String hexString) throws DecodeException {
+        validateDecode();
+        return decodeSpecial(hexString);
+    }
 
+    /**
+     * 子类解码
+     * @return
+     */
+    protected abstract String encodeSpecial() throws EncodeException;
+
+    /**
+     * 子类解码
+     * @param hexString
+     * @return
+     */
+    protected abstract int decodeSpecial(String hexString) throws DecodeException;
+
+    /**
+     * 编码校验
+     * @throws EncodeException
+     */
+    protected void validateEncode() throws EncodeException {
+    }
+
+    /**
+     * 解码校验
+     * @throws EncodeException
+     */
+    protected void validateDecode() throws DecodeException {
+    }
 }

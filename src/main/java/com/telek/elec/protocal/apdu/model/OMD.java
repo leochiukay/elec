@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OMD implements IResult {
+public class OMD extends IResult {
 
     /**
      * 对象标识OI，标识终端中对象唯一名称的编码，2字节。如0010-正向有功电能
@@ -32,7 +32,7 @@ public class OMD implements IResult {
     private int model;
 
     @Override
-    public String encode() {
+    protected String encodeSpecial() {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(oi), 4));
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(index), 2));
@@ -41,12 +41,10 @@ public class OMD implements IResult {
     }
 
     @Override
-    public void decode(String onlyThisHexStr) {
-        if (onlyThisHexStr == null || onlyThisHexStr.length() != 8) {
-            return;
-        }
-        this.oi = Integer.parseInt(onlyThisHexStr.substring(0, 4), 16);
-        this.index = Integer.parseInt(onlyThisHexStr.substring(4, 6), 16);
-        this.model = Integer.parseInt(onlyThisHexStr.substring(6), 16);
+    protected int decodeSpecial(String hexString) {
+        this.oi = Integer.parseInt(hexString.substring(0, 4), 16);
+        this.index = Integer.parseInt(hexString.substring(4, 6), 16);
+        this.model = Integer.parseInt(hexString.substring(6), 16);
+        return 8;
     }
 }

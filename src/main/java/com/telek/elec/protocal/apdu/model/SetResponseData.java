@@ -1,6 +1,8 @@
 package com.telek.elec.protocal.apdu.model;
 
 import com.telek.elec.protocal.constant.DARType;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -11,7 +13,7 @@ import lombok.Data;
  * 00 —— DAR1，0成功
  */
 @Data
-public class SetResponseData implements IResult {
+public class SetResponseData extends IResult {
 
     private OAD oad;
     /**
@@ -20,7 +22,7 @@ public class SetResponseData implements IResult {
     private DARType dar;
 
     @Override
-    public String encode() {
+    protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(oad.encode());
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(dar.getCode()), 2));
@@ -28,20 +30,18 @@ public class SetResponseData implements IResult {
     }
 
     @Override
-    public void decode(String onlyThisHexStr) {
-        if (onlyThisHexStr == null) {
-            return;
-        }
+    protected int decodeSpecial(String hexString) throws DecodeException {
         int index = 0;
         OAD oad = new OAD();
-        oad.decode(onlyThisHexStr.substring(index, index += 8));
+        int oadCharLen = oad.decode(hexString.substring(index, index += 8));
         this.oad = oad;
-        int dar = Integer.parseInt(onlyThisHexStr.substring(index, index += 2), 16);
+        int dar = Integer.parseInt(hexString.substring(index, index += 2), 16);
         for (DARType value : DARType.values()) {
             if (dar == value.getCode()) {
                 this.dar = value;
                 break;
             }
         }
+        return oadCharLen + 2;
     }
 }

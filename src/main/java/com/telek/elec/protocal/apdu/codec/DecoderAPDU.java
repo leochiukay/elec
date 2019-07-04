@@ -43,7 +43,7 @@ public abstract class DecoderAPDU extends EncoderAPDU {
      */
     protected void decodeCommonHexToThis(String hexString) {
         if (hasPiidFied()) {
-            String piid = hexString.substring(2, 4);
+            String piid = hexString.substring(2, APDU_SEQUENCE_CHAR_LENGTH + PIID_CHAR_LENGTH);
             this.piid = Integer.parseInt(piid, 16);
         }
     }
@@ -84,6 +84,6 @@ public abstract class DecoderAPDU extends EncoderAPDU {
     /**
      * 子类解码自己特有属性
      */
-    protected abstract void decodeSpecialHexToThis(String hexString);
+    protected abstract void decodeSpecialHexToThis(String hexString) throws DecodeException;
 
 }

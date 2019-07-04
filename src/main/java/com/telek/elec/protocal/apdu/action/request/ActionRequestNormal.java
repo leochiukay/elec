@@ -1,9 +1,11 @@
 package com.telek.elec.protocal.apdu.action.request;
 
-import com.telek.elec.protocal.apdu.action.CommonAction;
+import com.telek.elec.protocal.apdu.action.AbsAction;
 import com.telek.elec.protocal.apdu.model.ActionRequestData;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.ActionType;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -20,7 +22,7 @@ import lombok.Data;
  * 00 —— 没有时间标签
  */
 @Data
-public class ActionRequestNormal extends CommonAction {
+public class ActionRequestNormal extends AbsAction {
     /**
      * 设置数据
      */
@@ -36,7 +38,7 @@ public class ActionRequestNormal extends CommonAction {
     }
 
     @Override
-    protected String encodeThisSpecialToHex() {
+    protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(actionRequestData.encode());
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(timeStamp), 2));
@@ -44,7 +46,7 @@ public class ActionRequestNormal extends CommonAction {
     }
 
     @Override
-    protected void decodeSpecialHexToThis(String hexString) {
+    protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
         int index = this.decodeHexExcludeCommonBeginIndex;
         ActionRequestData actionRequestData = new ActionRequestData();
         actionRequestData.decode(hexString.substring(index, hexString.length() - 2));

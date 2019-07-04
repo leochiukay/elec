@@ -2,7 +2,6 @@ package com.telek.elec.protocal.apdu.connection;
 
 import com.telek.elec.protocal.apdu.CommonCodecAPDU;
 import com.telek.elec.protocal.constant.APDUSequence;
-import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
@@ -11,8 +10,22 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 服务端应用链接响应:
- * 82 00 54 4F 50 53 30 31 30 32 31 36 30 37 33 31 30 31 30 32 31 36 30 37 33 31 00 00 00 00 00 00 00 00 00 10 FF FF FF
- * FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 04 00 04 00 01 04 00 00 00 00 64 00 00 00 00
+ * 8响应：82 00 54 4F 50 53 30 31 30 32 31 36 30 37 33 31 30 31 30 32 31 36 30 37 33 31 00 00 00 00 00 00 00 00 00 10 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 04 00 04 00 01 04 00 00 00 00 64 00 00 00 00
+ * 82 —— [130] CONNECT-Response
+ * 00 —— PIID-ACD
+ * 54 4F 50 53 30 31 30 32 31 36 30 37 33 31 30 31 30 32 31 36 30 37 33 31 00 00 00 00 00 00 00 00 —— 厂商版本信息：厂商代码（size(4)）+ 软件版本号（size(4)）+软件版本日期（size(6)）+硬件版本号（size(4)）+硬件版本日期（size(6)）+厂家扩展信息（size(8)）
+ * 00 10 —— 期望的应用层协议版本号
+ * FF FF FF FF FF FF FF FF —— ProtocolConformance
+ * FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF —— FunctionConformance
+ * 04 00 —— 服务器发送帧最大尺寸
+ * 04 00 —— 服务器接收帧最大尺寸
+ * 01    —— 服务器接收帧最大窗口尺寸
+ * 04 00 —— 服务器最大可处理APDU尺寸
+ * 00 00 00 64 —— 期望的应用连接超时时间
+ * 00 —— 连接响应对象   允许建立应用连接     （0）
+ * 00 —— 认证附加信息   OPTIONAL=0 表示没有
+ * 00 —— FollowReport  OPTIONAL=0表示没有上报信息
+ * 00 —— 没有时间标签
  */
 @Data
 @Slf4j
@@ -40,7 +53,7 @@ public class ConnectionResponse extends CommonCodecAPDU implements Connection {
     /**
      * 服务器厂商扩展信心-8字节
      */
-    private long expandInfo;
+    private String expandInfo;
     /**
      * 期望的应用层协议版本-2字节
      */
@@ -48,11 +61,11 @@ public class ConnectionResponse extends CommonCodecAPDU implements Connection {
     /**
      * 期望的协议一致性块-8字节
      */
-    private long protocolConformance;
+    private String protocolConformance;
     /**
      * 期望的功能一致性块-16字节
      */
-    private long functionConformance;
+    private String functionConformance;
     /**
      * 服务器发送帧最大尺寸-2字节
      */
@@ -103,10 +116,10 @@ public class ConnectionResponse extends CommonCodecAPDU implements Connection {
         this.versionDate = Long.parseLong(hexString.substring(index, index += 12), 16);
         this.hardwareVersion = Long.parseLong(hexString.substring(index, index += 8), 16);
         this.hardwareVersionDate = Long.parseLong(hexString.substring(index, index += 12), 16);
-        this.expandInfo = Long.parseLong(hexString.substring(index, index += 16), 16);
+        this.expandInfo = hexString.substring(index, index += 16);
         this.expectVersion = Integer.parseInt(hexString.substring(index, index += 4), 16);
-        this.protocolConformance = Long.parseLong(hexString.substring(index, index += 16), 16);
-        this.functionConformance = Long.parseLong(hexString.substring(index, index += 32), 16);
+        this.protocolConformance = hexString.substring(index, index += 16);
+        this.functionConformance = hexString.substring(index, index += 32);
         this.sendMaxSize = Integer.parseInt(hexString.substring(index, index += 4), 16);
         this.receiveMaxSize = Integer.parseInt(hexString.substring(index, index += 4), 16);
         this.windowMaxSize = Integer.parseInt(hexString.substring(index, index += 2), 16);
@@ -126,10 +139,10 @@ public class ConnectionResponse extends CommonCodecAPDU implements Connection {
         sb.append(StringUtils.subLastNumStr(Long.toHexString(versionDate), 12));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(hardwareVersion), 8));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(hardwareVersionDate), 12));
-        sb.append(StringUtils.subLastNumStr(Long.toHexString(expandInfo), 16));
+        sb.append(StringUtils.subLastNumStr(expandInfo, 16));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(expectVersion), 4));
-        sb.append(StringUtils.subLastNumStr(Long.toHexString(protocolConformance), 16));
-        sb.append(StringUtils.subLastNumStr(Long.toHexString(functionConformance), 32));
+        sb.append(StringUtils.subLastNumStr(protocolConformance, 16));
+        sb.append(StringUtils.subLastNumStr(functionConformance, 32));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(sendMaxSize), 4));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(receiveMaxSize), 4));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(windowMaxSize), 2));
@@ -143,12 +156,12 @@ public class ConnectionResponse extends CommonCodecAPDU implements Connection {
     }
 
     @Override
-    protected void decodeValidateSpecial(String hexString) throws DecodeException {
-
-    }
-
-    @Override
     protected void encodeValidateSpecial() throws EncodeException {
-
+        if (this.functionConformance == null) {
+            this.functionConformance = "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF";
+        }
+        if (this.protocolConformance == null) {
+            this.protocolConformance = "FFFFFFFFFFFFFFFF";
+        }
     }
 }

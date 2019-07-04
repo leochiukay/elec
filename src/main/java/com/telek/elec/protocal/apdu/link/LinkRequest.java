@@ -7,7 +7,6 @@ import com.telek.elec.protocal.apdu.codec.DecoderUtils;
 import com.telek.elec.protocal.apdu.codec.EncoderUtils;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.LinkType;
-import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
@@ -16,7 +15,16 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 服务端发起预链接请求:
+ * 预连接
+ * H.1.1　登录
  * 01 00 00 00 B4 07 E0 05 13 04 08 05 00 00 A4
+ * 01 —— [1] LINK-Request
+ * 00 —— PIID-ACD
+ * 00 —— 请求类型：建立连接（0）
+ * 00 B4 —— 心跳周期：180s
+ * 07 E0 05 13 04 08 05 00 00 A4 —— 请求时间date_time：2016-05-19 08：05：00：0164
+ * CS CS —— 帧校验
+ * 16 —— 结束符
  */
 @Data
 @Slf4j
@@ -33,15 +41,7 @@ public class LinkRequest extends CommonCodecAPDU implements Link {
      */
     private int heartBeat;
     /**
-     * 请求时间-年-2字节
-     * year          long-unsigned，
-     * month         unsigned，
-     * day_of_month  unsigned，
-     * day_of_week   unsigned，
-     * hour          unsigned，
-     * minute        unsigned，
-     * second        unsigned，
-     * milliseconds  long-unsigned
+     * 请求时间-date_time-20字节
      */
     private Calendar requestTime;
 
@@ -74,11 +74,6 @@ public class LinkRequest extends CommonCodecAPDU implements Link {
         }
         this.heartBeat = Integer.parseInt(hexString.substring(index, index += 4), 16);
         this.requestTime = DecoderUtils.decodeDateTimeHex(hexString.substring(index, index + 20));
-    }
-
-    @Override
-    protected void decodeValidateSpecial(String hexString) throws DecodeException {
-
     }
 
     @Override

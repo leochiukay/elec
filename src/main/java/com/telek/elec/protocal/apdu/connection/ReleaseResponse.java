@@ -2,7 +2,6 @@ package com.telek.elec.protocal.apdu.connection;
 
 import com.telek.elec.protocal.apdu.CommonCodecAPDU;
 import com.telek.elec.protocal.constant.APDUSequence;
-import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -20,17 +19,8 @@ public class ReleaseResponse extends CommonCodecAPDU implements Release {
      */
     private int success;
 
-
     public ReleaseResponse() {
         this.apduSequence = APDUSequence.RELEASE_RESPONSE;
-    }
-
-    @Override
-    protected void decodeValidateSpecial(String hexString) throws DecodeException {
-        if (hexString.length() != 6) {
-            log.info(this.getClass().getSimpleName() + "-应用层断开连接apdu长度不符合-");
-            throw new DecodeException("应用层断开连接apdu长度不符合");
-        }
     }
 
     @Override

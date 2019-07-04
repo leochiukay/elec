@@ -1,7 +1,7 @@
 package com.telek.elec.protocal.apdu.model;
 
-import com.telek.elec.protocal.constant.DataType;
-import com.telek.elec.util.StringUtils;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 
 import lombok.Data;
 
@@ -12,14 +12,14 @@ import lombok.Data;
  * 07 E0 01 14 10 1B 0B—— 时间：2016-01-20 16：27：11
  */
 @Data
-public class SetRequestData implements IResult {
+public class SetRequestData extends IResult {
 
     private OAD oad;
 
-    private SetData data;
+    private DataInfo data;
 
     @Override
-    public String encode() {
+    protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         if (oad != null) {
             sb.append(oad.encode());
@@ -31,60 +31,15 @@ public class SetRequestData implements IResult {
     }
 
     @Override
-    public void decode(String onlyThisHexStr) {
-        if (onlyThisHexStr == null) {
-            return;
-        }
+    protected int decodeSpecial(String hexString) throws DecodeException {
         int index = 0;
         OAD oad = new OAD();
-        oad.decode(onlyThisHexStr.substring(index, index += 8));
+        int oadLength = oad.decode(hexString.substring(index, index += 8));
         this.oad = oad;
-        String data = onlyThisHexStr.substring(index);
-        SetData resultData = new SetData();
-        resultData.decode(data);
+        String data = hexString.substring(index);
+        DataInfo resultData = new DataInfo();
+        int dataLength = resultData.decode(data);
         this.data = resultData;
-    }
-
-    /**
-     * 1C —— Data：类型28：date_time_s
-     * 07 E0 01 14 10 1B 0B—— 时间：2016-01-20 16：27：11
-     */
-    @Data
-    public static class SetData implements IResult {
-        /**
-         * 数据类型
-         */
-        private DataType dataType;
-        /**
-         * 具体数据
-         */
-        private Object obj;
-
-        @Override
-        public String encode() {
-            StringBuilder sb = new StringBuilder();
-            sb.append(StringUtils.subLastNumStr(Integer.toHexString(dataType.getCode()), 16));
-            // todo
-            return sb.toString();
-        }
-
-        @Override
-        public void decode(String onlyThisHexStr) {
-            if (onlyThisHexStr == null) {
-                return;
-            }
-            int index = 0;
-            int dataType = Integer.parseInt(onlyThisHexStr.substring(index, index += 2), 16);
-            for (DataType value : DataType.values()) {
-                if (value.getCode() == dataType) {
-                    this.dataType = value;
-                    break;
-                }
-            }
-
-            // todo
-            String data = onlyThisHexStr.substring(index);
-        }
-
+        return dataLength + oadLength;
     }
 }

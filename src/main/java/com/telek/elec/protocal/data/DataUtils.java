@@ -1,8 +1,8 @@
-package com.telek.elec.protocal.apdu.data;
+package com.telek.elec.protocal.data;
 
 import com.telek.elec.protocal.constant.DataType;
 
-public class DataUtil {
+public class DataUtils {
 
     /**
      * 通过值获取该数据类型

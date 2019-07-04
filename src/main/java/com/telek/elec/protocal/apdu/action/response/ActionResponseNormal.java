@@ -1,9 +1,11 @@
 package com.telek.elec.protocal.apdu.action.response;
 
-import com.telek.elec.protocal.apdu.action.CommonAction;
+import com.telek.elec.protocal.apdu.action.AbsAction;
 import com.telek.elec.protocal.apdu.model.ActionResponseData;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.ActionType;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -21,7 +23,7 @@ import lombok.Data;
  * 00 —— 没有时间标签
  */
 @Data
-public class ActionResponseNormal extends CommonAction {
+public class ActionResponseNormal extends AbsAction {
 
     private ActionResponseData actionResponseData;
     /**
@@ -39,7 +41,7 @@ public class ActionResponseNormal extends CommonAction {
     }
 
     @Override
-    protected String encodeThisSpecialToHex() {
+    protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         if (actionResponseData != null) {
             sb.append(actionResponseData.encode());
@@ -50,7 +52,7 @@ public class ActionResponseNormal extends CommonAction {
     }
 
     @Override
-    protected void decodeSpecialHexToThis(String hexString) {
+    protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
         int length = hexString.length();
         ActionResponseData actionResponseData = new ActionResponseData();
         actionResponseData.decode(hexString.substring(this.decodeHexExcludeCommonBeginIndex, length - 4));

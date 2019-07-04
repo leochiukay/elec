@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 public abstract class CommonAPDU extends APDU {
 
+    protected static final int PIID_CHAR_LENGTH = 2;
+
     /**
      * piid-1字节
      */

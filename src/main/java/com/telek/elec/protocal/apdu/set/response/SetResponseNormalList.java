@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.telek.elec.protocal.apdu.model.SetResponseData;
-import com.telek.elec.protocal.apdu.set.CommonSet;
+import com.telek.elec.protocal.apdu.set.AbsSet;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.SetType;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -26,7 +28,7 @@ import lombok.Data;
  * 00 —— 没有时间标签
  */
 @Data
-public class SetResponseNormalList extends CommonSet {
+public class SetResponseNormalList extends AbsSet {
     /**
      * 结果个数-1字节
      */
@@ -48,7 +50,7 @@ public class SetResponseNormalList extends CommonSet {
     }
 
     @Override
-    protected String encodeThisSpecialToHex() {
+    protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(dataCount), 2));
         if (dataCount > 0 && responseDatas != null) {
@@ -62,7 +64,7 @@ public class SetResponseNormalList extends CommonSet {
     }
 
     @Override
-    protected void decodeSpecialHexToThis(String hexString) {
+    protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
         int index = this.decodeHexExcludeCommonBeginIndex;
         this.dataCount = Integer.parseInt(hexString.substring(index, index += 2), 16);
         if (dataCount > 0) {

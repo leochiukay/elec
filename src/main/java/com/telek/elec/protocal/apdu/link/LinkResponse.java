@@ -6,7 +6,6 @@ import com.telek.elec.protocal.apdu.CommonCodecAPDU;
 import com.telek.elec.protocal.apdu.codec.DecoderUtils;
 import com.telek.elec.protocal.apdu.codec.EncoderUtils;
 import com.telek.elec.protocal.constant.APDUSequence;
-import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
@@ -16,6 +15,12 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 客户端预链接响应:
  * 81 00 80 07 E0 05 13 04 08 05 00 00 89 07 E0 05 13 04 08 05 01 02 5F 07 E0 05 13 04 08 05 02 02 DA
+ * 81 —— [129] LINK-Response
+ * 00 —— PIID
+ * 80 —— 结果Result：可信，成功
+ * 07 E0 05 13 04 08 05 00 00 89 —— 请求时间date_time：2016-05-19 08：05：00：137
+ * 07 E0 05 13 04 08 05 01 02 5F —— 收到时间date_time：2016-05-19 08：05：01：607
+ * 07 E0 05 13 04 08 05 02 02 DA —— 响应时间date_time：2016-05-19 08：05：02：730
  */
 @Data
 @Slf4j
@@ -51,14 +56,10 @@ public class LinkResponse extends CommonCodecAPDU implements Link {
     @Override
     protected void decodeSpecialHexToThis(String hexString) {
         int index = this.decodeHexExcludeCommonBeginIndex;
-        String result = hexString.substring(index, index += 2);
-        this.result = Integer.parseInt(result, 16);
-        String requestTimeStr = hexString.substring(index, index += 20);
-        this.requestTime = DecoderUtils.decodeDateTimeHex(requestTimeStr);
-        String receivedTimeStr = hexString.substring(index, index += 20);
-        this.receivedTime = DecoderUtils.decodeDateTimeHex(receivedTimeStr);
-        String responseTimeStr = hexString.substring(index, index += 20);
-        this.responseTime = DecoderUtils.decodeDateTimeHex(responseTimeStr);
+        this.result = Integer.parseInt(hexString.substring(index, index += 2), 16);
+        this.requestTime = DecoderUtils.decodeDateTimeHex(hexString.substring(index, index += 20));
+        this.receivedTime = DecoderUtils.decodeDateTimeHex(hexString.substring(index, index += 20));
+        this.responseTime = DecoderUtils.decodeDateTimeHex(hexString.substring(index, index += 20));
     }
 
     @Override
@@ -69,11 +70,6 @@ public class LinkResponse extends CommonCodecAPDU implements Link {
         sb.append(EncoderUtils.encodeToDateTimeHex(receivedTime));
         sb.append(EncoderUtils.encodeToDateTimeHex(responseTime));
         return sb.toString();
-    }
-
-    @Override
-    protected void decodeValidateSpecial(String hexString) throws DecodeException {
-
     }
 
     @Override
