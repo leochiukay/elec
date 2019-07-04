@@ -2,12 +2,12 @@ package com.telek.elec.protocal.apdu;
 
 import com.telek.elec.protocal.constant.APDUSequence;
 
-import lombok.Data;
+import lombok.Getter;
 
 /**
  * 请求/响应 apdu顶层类
  */
-@Data
+@Getter
 public abstract class APDU {
 
     protected static final int APDU_SEQUENCE_CHAR_LENGTH = 2;

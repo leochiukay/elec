@@ -2,7 +2,7 @@ package com.telek.elec.protocal.apdu.connection;
 
 import java.util.Calendar;
 
-import com.telek.elec.protocal.apdu.CommonCodecAPDU;
+import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.codec.DecoderUtils;
 import com.telek.elec.protocal.apdu.codec.EncoderUtils;
 import com.telek.elec.protocal.constant.APDUSequence;
@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class ReleaseNotification extends CommonCodecAPDU implements Release {
+public class ReleaseNotification extends CodecAPDU implements Release {
 
     /**
      * 连接时间

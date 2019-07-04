@@ -2,7 +2,7 @@ package com.telek.elec.protocal.apdu.link;
 
 import java.util.Calendar;
 
-import com.telek.elec.protocal.apdu.CommonCodecAPDU;
+import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.codec.DecoderUtils;
 import com.telek.elec.protocal.apdu.codec.EncoderUtils;
 import com.telek.elec.protocal.constant.APDUSequence;
@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class LinkResponse extends CommonCodecAPDU implements Link {
+public class LinkResponse extends CodecAPDU implements Link {
     /**
      * 结果-1字节
      * 时钟可信标志——用于表示响应方的时钟是否可信（准确），0：不可信，1：可信。

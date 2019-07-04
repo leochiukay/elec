@@ -1,13 +1,13 @@
 package com.telek.elec.protocal.apdu.action;
 
-import com.telek.elec.protocal.apdu.CommonCodecAPDU;
+import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.constant.ActionType;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
 
 @Data
-public abstract class AbsAction extends CommonCodecAPDU implements Action {
+public abstract class AbsAction extends CodecAPDU implements Action {
 
     protected static final int TYPE_CHAR_LENGTH = 2;
 

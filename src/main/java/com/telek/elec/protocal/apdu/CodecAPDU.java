@@ -10,6 +10,19 @@ import lombok.Data;
 public abstract class CodecAPDU extends Codec {
 
     /**
+     * 除了通用属性以外的十六进制解码开始下标位置
+     */
+    protected int decodeHexExcludeCommonBeginIndex;
+
+    public CodecAPDU() {
+        int index = APDU_SEQUENCE_CHAR_LENGTH;
+        if (hasPiidFied()) {
+            index += PIID_CHAR_LENGTH;
+        }
+        this.decodeHexExcludeCommonBeginIndex = index;
+    }
+
+    /**
      * 解码
      * 1、作为服务端，将请求的十六进制字符串解码成该对象
      * 2、作为客户端，将服务端响应的十六进制响应数据解码到该对象

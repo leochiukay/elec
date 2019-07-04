@@ -1,6 +1,6 @@
 package com.telek.elec.protocal.apdu.connection;
 
-import com.telek.elec.protocal.apdu.CommonCodecAPDU;
+import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
@@ -24,7 +24,7 @@ import lombok.Data;
  * 00 —— 没有时间标签
  */
 @Data
-public class ConnectionRequest extends CommonCodecAPDU implements Connection {
+public class ConnectionRequest extends CodecAPDU implements Connection {
     /**
      * 期望的应用层协议版本号-2字节
      */

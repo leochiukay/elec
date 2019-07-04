@@ -1,6 +1,6 @@
 package com.telek.elec.protocal.apdu.connection;
 
-import com.telek.elec.protocal.apdu.CommonCodecAPDU;
+import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.util.StringUtils;
 
@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class ReleaseResponse extends CommonCodecAPDU implements Release {
+public class ReleaseResponse extends CodecAPDU implements Release {
 
     /**
      * 是否成功-1字节

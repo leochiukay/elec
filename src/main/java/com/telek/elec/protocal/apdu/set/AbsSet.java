@@ -1,13 +1,13 @@
 package com.telek.elec.protocal.apdu.set;
 
-import com.telek.elec.protocal.apdu.CommonCodecAPDU;
+import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.constant.SetType;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
 
 @Data
-public abstract class AbsSet extends CommonCodecAPDU implements Set {
+public abstract class AbsSet extends CodecAPDU implements Set {
 
     protected static final int TYPE_CHAR_LENGTH = 2;
 

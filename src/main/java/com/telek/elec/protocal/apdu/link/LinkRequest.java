@@ -2,7 +2,7 @@ package com.telek.elec.protocal.apdu.link;
 
 import java.util.Calendar;
 
-import com.telek.elec.protocal.apdu.CommonCodecAPDU;
+import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.codec.DecoderUtils;
 import com.telek.elec.protocal.apdu.codec.EncoderUtils;
 import com.telek.elec.protocal.constant.APDUSequence;
@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class LinkRequest extends CommonCodecAPDU implements Link {
+public class LinkRequest extends CodecAPDU implements Link {
     /**
      * 类型-1字节
      * 登录     （0），

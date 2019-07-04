@@ -1,6 +1,6 @@
 package com.telek.elec.protocal.apdu.connection;
 
-import com.telek.elec.protocal.apdu.CommonCodecAPDU;
+import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class ConnectionResponse extends CommonCodecAPDU implements Connection {
+public class ConnectionResponse extends CodecAPDU implements Connection {
     /**
      * 服务器厂商代码-4字节
      */
