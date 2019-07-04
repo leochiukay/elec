@@ -1,6 +1,6 @@
 package com.telek.elec.protocal.apdu.model.factory;
 
-import com.telek.elec.protocal.apdu.model.OAD;
+import com.telek.elec.protocal.data.model.complex.OAD;
 
 /**
  * 获取不同oad的工厂类

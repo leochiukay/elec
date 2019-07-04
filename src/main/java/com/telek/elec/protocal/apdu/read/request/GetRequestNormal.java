@@ -1,6 +1,6 @@
 package com.telek.elec.protocal.apdu.read.request;
 
-import com.telek.elec.protocal.apdu.model.OAD;
+import com.telek.elec.protocal.data.model.complex.OAD;
 import com.telek.elec.protocal.apdu.read.AbsGet;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.GetType;

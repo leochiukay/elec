@@ -1,6 +1,7 @@
 package com.telek.elec.protocal.apdu.model;
 
 import com.telek.elec.protocal.constant.DARType;
+import com.telek.elec.protocal.data.model.complex.OMD;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
@@ -13,7 +14,7 @@ import lombok.Data;
  * 00 —— Data OPTIONAL=0 表示没有数据
  */
 @Data
-public class ActionResponseData extends IResult {
+public class ActionResponseData extends AbsResult {
 
     private OMD omd;
     /**
@@ -38,7 +39,7 @@ public class ActionResponseData extends IResult {
     protected int decodeSpecial(String hexString) throws DecodeException {
         int index = 0;
         OMD omd = new OMD();
-        omd.decode(hexString.substring(index, index += 8));
+        int omdCharLen = omd.decode(hexString.substring(index, index += 8));
         this.omd = omd;
         int dar = Integer.parseInt(hexString.substring(index, index += 2), 16);
         for (DARType value : DARType.values()) {
@@ -50,6 +51,6 @@ public class ActionResponseData extends IResult {
         DataInfo dataInfo = new DataInfo();
         dataInfo.decode(hexString.substring(index));
         this.data = dataInfo;
-        return 8 + 2 + 2;
+        return omdCharLen + 2 + data.getData().getCharLength();
     }
 }

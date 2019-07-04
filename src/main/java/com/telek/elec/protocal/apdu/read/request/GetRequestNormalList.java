@@ -3,7 +3,7 @@ package com.telek.elec.protocal.apdu.read.request;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.telek.elec.protocal.apdu.model.OAD;
+import com.telek.elec.protocal.data.model.complex.OAD;
 import com.telek.elec.protocal.apdu.read.AbsGet;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.GetType;

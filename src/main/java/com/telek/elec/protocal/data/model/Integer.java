@@ -9,7 +9,7 @@ import lombok.Data;
  * 整数
  */
 @Data
-public class Integer extends IData {
+public class Integer extends AbsBasicData {
     /**
      * 1字节
      */

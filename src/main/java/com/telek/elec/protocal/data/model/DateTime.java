@@ -19,7 +19,7 @@ import lombok.Data;
  *   milliseconds  long-unsigned
  */
 @Data
-public class DateTime extends IData {
+public class DateTime extends AbsBasicData {
 
     private static final int CHAR_LENGTH = 20;
 

@@ -6,7 +6,7 @@ import com.telek.elec.util.StringUtils;
 import lombok.Data;
 
 @Data
-public class Unsigned extends IData {
+public class Unsigned extends AbsBasicData {
 
     private static final int CHAR_LENGTH = 2;
 

@@ -1,5 +1,6 @@
 package com.telek.elec.protocal.apdu.model;
 
+import com.telek.elec.protocal.data.model.complex.OAD;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
@@ -14,7 +15,7 @@ import lombok.Data;
  * 12 34 56 78 90 12 —— 通信地址：123456789012
  */
 @Data
-public class GetResultNormal extends IResult {
+public class GetResultNormal extends AbsResult {
     /**
      * 对象属性描述符-4字节
      */

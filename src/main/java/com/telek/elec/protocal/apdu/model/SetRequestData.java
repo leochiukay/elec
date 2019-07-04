@@ -1,5 +1,6 @@
 package com.telek.elec.protocal.apdu.model;
 
+import com.telek.elec.protocal.data.model.complex.OAD;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
@@ -12,7 +13,7 @@ import lombok.Data;
  * 07 E0 01 14 10 1B 0B—— 时间：2016-01-20 16：27：11
  */
 @Data
-public class SetRequestData extends IResult {
+public class SetRequestData extends AbsResult {
 
     private OAD oad;
 

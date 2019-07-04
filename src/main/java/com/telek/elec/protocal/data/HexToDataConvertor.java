@@ -3,7 +3,7 @@ package com.telek.elec.protocal.data;
 import com.telek.elec.protocal.data.model.DateTime;
 import com.telek.elec.protocal.data.model.DateTimeS;
 import com.telek.elec.protocal.data.model.DoubleLongUnsigned;
-import com.telek.elec.protocal.data.model.IData;
+import com.telek.elec.protocal.data.model.AbsBasicData;
 import com.telek.elec.protocal.data.model.Long;
 import com.telek.elec.protocal.data.model.LongUnsigned;
 import com.telek.elec.protocal.data.model.Null;
@@ -28,14 +28,14 @@ public class HexToDataConvertor {
      * @param hex
      * @return
      */
-    public static IData hexToData(String hex) {
+    public static AbsBasicData hexToData(String hex) {
         if (hex == null) {
             return null;
         }
         // 1 获取该数据的数据类型
         int dataType = java.lang.Integer.parseInt(hex.substring(0, 2), 16);
         // 2 解码十六进制字符串
-        IData iData = null;
+        AbsBasicData iData = null;
         if (dataType == DataType.NULL.getCode()) {
             iData = new Null();
         }

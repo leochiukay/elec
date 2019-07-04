@@ -1,7 +1,7 @@
 package com.telek.elec.protocal.apdu.model;
 
 import com.telek.elec.protocal.data.HexToDataConvertor;
-import com.telek.elec.protocal.data.model.IData;
+import com.telek.elec.protocal.data.model.AbsBasicData;
 
 import lombok.Data;
 
@@ -13,9 +13,9 @@ import lombok.Data;
  *      * 12 34 56 78 90 12 —— 通信地址：123456789012
  */
 @Data
-public class DataInfo extends IResult {
+public class DataInfo extends AbsResult {
 
-    private IData data;
+    private AbsBasicData data;
 
     @Override
     protected String encodeSpecial() {

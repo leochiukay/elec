@@ -17,7 +17,7 @@ import lombok.Data;
  *   second        unsigned
  */
 @Data
-public class DateTimeS extends IData {
+public class DateTimeS extends AbsBasicData {
 
     private static final int CHAR_LENGTH = 14;
 

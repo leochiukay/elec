@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.apdu.model;
+package com.telek.elec.protocal.data.model.complex;
 
 import com.telek.elec.util.StringUtils;
 
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OAD extends IResult {
+public class OAD extends AbsComplexData {
 
     /**
      * 对象标识OI，标识终端中对象唯一名称的编码，2字节。如0010-正向有功电能
@@ -40,9 +40,9 @@ public class OAD extends IResult {
     @Override
     protected String encodeSpecial() {
         StringBuilder sb = new StringBuilder();
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(oi), 4));
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(attr), 2));
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(index), 2));
+        sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(oi), 4));
+        sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(attr), 2));
+        sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(index), 2));
         return sb.toString();
     }
 
@@ -53,9 +53,9 @@ public class OAD extends IResult {
      */
     @Override
     protected int decodeSpecial(String hexString) {
-        this.oi = Integer.parseInt(hexString.substring(0, 4), 16);
-        this.attr = Integer.parseInt(hexString.substring(4, 6), 16);
-        this.index = Integer.parseInt(hexString.substring(6, 8), 16);
+        this.oi = java.lang.Integer.parseInt(hexString.substring(0, 4), 16);
+        this.attr = java.lang.Integer.parseInt(hexString.substring(4, 6), 16);
+        this.index = java.lang.Integer.parseInt(hexString.substring(6, 8), 16);
         return 8;
     }
 

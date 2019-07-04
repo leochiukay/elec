@@ -1,6 +1,6 @@
 package com.telek.elec.protocal.data;
 
-import com.telek.elec.protocal.data.model.IData;
+import com.telek.elec.protocal.data.model.AbsBasicData;
 
 import lombok.Data;
 
@@ -15,7 +15,7 @@ public class DataToHexConvertor {
      * @param data
      * @return
      */
-    public static String dataToHex(IData data) {
+    public static String dataToHex(AbsBasicData data) {
         if (data == null) {
             return "";
         }

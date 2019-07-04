@@ -7,6 +7,7 @@ import com.telek.elec.protocal.apdu.action.AbsAction;
 import com.telek.elec.protocal.apdu.model.ActionResponseData;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.ActionType;
+import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
@@ -47,14 +48,18 @@ public class ActionResponseNormalList extends AbsAction {
     }
 
     @Override
-    protected void decodeSpecialHexToThis(String hexString) {
+    protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
         int index = this.decodeHexExcludeCommonBeginIndex;
         int length = hexString.length();
         this.count = Integer.parseInt(hexString.substring(index, index += 2), 16);
         if (count > 0) {
             this.actionResponseDatas = new ArrayList<>(count);
             for (int i = 0; i < count; i++) {
-                // todo
+                String s = hexString.substring(index);
+                ActionResponseData responseData = new ActionResponseData();
+                int charLen = responseData.decode(s);
+                this.actionResponseDatas.add(responseData);
+                index += charLen;
             }
         }
         this.followReport = Integer.parseInt(hexString.substring(length - 4, length - 2), 16);

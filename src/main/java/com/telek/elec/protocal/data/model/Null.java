@@ -5,7 +5,7 @@ import com.telek.elec.protocal.constant.DataType;
 import lombok.Data;
 
 @Data
-public class Null extends IData {
+public class Null extends AbsBasicData {
 
     public Null() {
         super(DataType.NULL);

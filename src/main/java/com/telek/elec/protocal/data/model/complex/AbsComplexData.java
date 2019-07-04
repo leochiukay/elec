@@ -1,14 +1,19 @@
-package com.telek.elec.protocal.apdu.model;
+package com.telek.elec.protocal.data.model.complex;
 
+import com.telek.elec.protocal.data.model.IData;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
-public abstract class IResult {
+/**
+ * 复杂数据类型
+ */
+public abstract class AbsComplexData implements IData {
 
     /**
      * 将当前对象编码成十六进制字符串
      * @return
      */
+    @Override
     public String encode() throws EncodeException {
         validateEncode();
         return encodeSpecial();
@@ -19,6 +24,7 @@ public abstract class IResult {
      * @param hexString
      * @return 返回该对象所占字符串长度
      */
+    @Override
     public int decode(String hexString) throws DecodeException {
         validateDecode();
         return decodeSpecial(hexString);
@@ -50,4 +56,5 @@ public abstract class IResult {
      */
     protected void validateDecode() throws DecodeException {
     }
+
 }

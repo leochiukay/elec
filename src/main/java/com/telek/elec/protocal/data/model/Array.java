@@ -17,7 +17,7 @@ import lombok.Data;
  *  12 09 6D —— 元素3：类型18：long-unsigned 241.3V C相
  */
 @Data
-public class Array extends IData {
+public class Array extends AbsBasicData {
 
     private static final int SIZE_CHAR_LENGTH = 2;
 
@@ -28,7 +28,7 @@ public class Array extends IData {
     /**
      * 表示数组里的元素
      */
-    private List<IData> datas;
+    private List<AbsBasicData> datas;
 
     public Array() {
         super(DataType.ARRAY);
@@ -38,7 +38,7 @@ public class Array extends IData {
     protected int calculateSpecialCharLength() {
         int length = SIZE_CHAR_LENGTH;
         if (datas != null) {
-            for (IData data : datas) {
+            for (AbsBasicData data : datas) {
                 // 计算字符长度
                 data.encode();
                 length += data.getCharLength();
@@ -52,7 +52,7 @@ public class Array extends IData {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(size), 2));
         if (size > 0 && datas != null && datas.size() > 0) {
-            for (IData data : datas) {
+            for (AbsBasicData data : datas) {
                 sb.append(data.encode());
             }
         }
@@ -70,7 +70,7 @@ public class Array extends IData {
             for (int i = 0; i < size; i++) {
                 // 获取里面的元素类型
                 String hex = hexExcludeDataType.substring(charLength);
-                IData data = HexToDataConvertor.hexToData(hex);
+                AbsBasicData data = HexToDataConvertor.hexToData(hex);
                 if (data != null) {
                     this.datas.add(data);
                     int thisCharLength = data.getCharLength();

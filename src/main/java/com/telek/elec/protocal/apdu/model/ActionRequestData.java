@@ -1,5 +1,6 @@
 package com.telek.elec.protocal.apdu.model;
 
+import com.telek.elec.protocal.data.model.complex.OMD;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
@@ -11,7 +12,7 @@ import lombok.Data;
  *  * 0F 00 ——参数Data， integer(0)
  */
 @Data
-public class ActionRequestData extends IResult {
+public class ActionRequestData extends AbsResult {
 
     private OMD omd;
 
