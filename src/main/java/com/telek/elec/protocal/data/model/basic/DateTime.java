@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.data.model;
+package com.telek.elec.protocal.data.model.basic;
 
 import java.util.Calendar;
 
@@ -9,25 +9,27 @@ import com.telek.elec.protocal.constant.DataType;
 import lombok.Data;
 
 /**
- * year          long-unsigned，
+ *   year          long-unsigned，
  *   month         unsigned，
- *   day           unsigned，
+ *   day_of_month  unsigned，
+ *   day_of_week   unsigned，
  *   hour          unsigned，
  *   minute        unsigned，
- *   second        unsigned
+ *   second        unsigned，
+ *   milliseconds  long-unsigned
  */
 @Data
-public class DateTimeS extends AbsBasicData {
+public class DateTime extends AbsBasicData {
 
-    private static final int CHAR_LENGTH = 14;
+    private static final int CHAR_LENGTH = 20;
 
     /**
-     * 7字节
+     * 10字节
      */
     private Calendar calendar;
 
-    public DateTimeS() {
-        super(DataType.DATE_TIME_S);
+    public DateTime() {
+        this.dataType = DataType.DATE_TIME;
     }
 
     @Override
@@ -37,12 +39,12 @@ public class DateTimeS extends AbsBasicData {
 
     @Override
     protected String encodeSpecial() {
-        return EncoderUtils.encodeToDateTimeSHex(calendar);
+        return EncoderUtils.encodeToDateTimeHex(calendar);
     }
 
     @Override
     protected int decodeSpecial(String hexExcludeDataType) {
-        calendar = DecoderUtils.decodeDateTimeSHex(hexExcludeDataType);
+        calendar = DecoderUtils.decodeDateTimeHex(hexExcludeDataType);
         return CHAR_LENGTH;
     }
 }

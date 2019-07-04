@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.data.model;
+package com.telek.elec.protocal.data.model.basic;
 
 import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.util.StringUtils;
@@ -6,7 +6,7 @@ import com.telek.elec.util.StringUtils;
 import lombok.Data;
 
 @Data
-public class DoubleLongUnsigned extends AbsBasicData {
+public class DoubleLongUnsigned extends NumericalData {
 
     private static final int CHAR_LENGTH = 8;
 
@@ -16,7 +16,7 @@ public class DoubleLongUnsigned extends AbsBasicData {
     private long value;
 
     public DoubleLongUnsigned() {
-        super(DataType.DOUBLE_LONG_UNSIGNED);
+        this.dataType = DataType.DOUBLE_LONG_UNSIGNED;
     }
 
     @Override
@@ -33,5 +33,9 @@ public class DoubleLongUnsigned extends AbsBasicData {
     protected int decodeSpecial(String hexExcludeDataType) {
         this.value = java.lang.Long.parseLong(hexExcludeDataType.substring(0, CHAR_LENGTH), 16);
         return CHAR_LENGTH;
+    }
+
+    public double getValue() {
+        return value;
     }
 }

@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.data.model;
+package com.telek.elec.protocal.data.model.basic;
 
 import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.util.StringUtils;
@@ -27,7 +27,7 @@ public class OctString extends AbsBasicData {
     private String value;
 
     public OctString() {
-        super(DataType.OCTET_STRING);
+        this.dataType = DataType.OCTET_STRING;
     }
 
     @Override

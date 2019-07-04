@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.data.model;
+package com.telek.elec.protocal.data.model.basic;
 
 import com.telek.elec.protocal.constant.DataType;
 
@@ -8,7 +8,7 @@ import lombok.Data;
 public class Null extends AbsBasicData {
 
     public Null() {
-        super(DataType.NULL);
+        this.dataType = DataType.NULL;
     }
 
     @Override

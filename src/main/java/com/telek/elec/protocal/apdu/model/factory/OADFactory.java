@@ -1,6 +1,7 @@
 package com.telek.elec.protocal.apdu.model.factory;
 
 import com.telek.elec.protocal.data.model.complex.OAD;
+import com.telek.elec.protocal.data.model.complex.OI;
 
 /**
  * 获取不同oad的工厂类
@@ -12,7 +13,8 @@ public class OADFactory {
      * @return
      */
     public static OAD postalAddress() {
-        OAD oad = new OAD(0x4001, 0x02, 0x00);
+        OI oi = new OI(0x4001);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -21,7 +23,8 @@ public class OADFactory {
      * @return
      */
     public static OAD mbus() {
-        OAD oad = new OAD(0xf220, 0x02, 0x00);
+        OI oi = new OI(0xf220);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -30,7 +33,8 @@ public class OADFactory {
      * @return
      */
     public static OAD lora() {
-        OAD oad = new OAD(0xf222, 0x02, 0x00);
+        OI oi = new OI(0xf222);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -39,7 +43,8 @@ public class OADFactory {
      * @return
      */
     public static OAD streetLampControl() {
-        OAD oad = new OAD(0x4310, 0x02, 0x00);
+        OI oi = new OI(0x4310);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -48,7 +53,8 @@ public class OADFactory {
      * @return
      */
     public static OAD tempeEquipmentControl() {
-        OAD oad = new OAD(0x4311, 0x02, 0x00);
+        OI oi = new OI(0x4311);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -57,7 +63,8 @@ public class OADFactory {
      * @return
      */
     public static OAD chargingPileControl() {
-        OAD oad = new OAD(0x4312, 0x02, 0x00);
+        OI oi = new OI(0x4312);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -66,7 +73,8 @@ public class OADFactory {
      * @return
      */
     public static OAD intelligentSwitch() {
-        OAD oad = new OAD(0x4313, 0x02, 0x00);
+        OI oi = new OI(0x4313);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -75,7 +83,8 @@ public class OADFactory {
      * @return
      */
     public static OAD generationTime() {
-        OAD oad = new OAD(0x2600, 0x02, 0x00);
+        OI oi = new OI(0x2600);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -84,7 +93,8 @@ public class OADFactory {
      * @return
      */
     public static OAD ambientTemperature() {
-        OAD oad = new OAD(0x2601, 0x02, 0x00);
+        OI oi = new OI(0x2601);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -93,7 +103,8 @@ public class OADFactory {
      * @return
      */
     public static OAD componentTemperature() {
-        OAD oad = new OAD(0x2602, 0x02, 0x00);
+        OI oi = new OI(0x2602);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -102,7 +113,8 @@ public class OADFactory {
      * @return
      */
     public static OAD humidity() {
-        OAD oad = new OAD(0x2603, 0x02, 0x00);
+        OI oi = new OI(0x2603);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -111,7 +123,8 @@ public class OADFactory {
      * @return
      */
     public static OAD radiation() {
-        OAD oad = new OAD(0x2604, 0x02, 0x00);
+        OI oi = new OI(0x2604);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -120,7 +133,8 @@ public class OADFactory {
      * @return
      */
     public static OAD windSpeed() {
-        OAD oad = new OAD(0x2605, 0x02, 0x00);
+        OI oi = new OI(0x2605);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -129,7 +143,8 @@ public class OADFactory {
      * @return
      */
     public static OAD windDirection() {
-        OAD oad = new OAD(0x2606, 0x02, 0x00);
+        OI oi = new OI(0x2606);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -138,7 +153,8 @@ public class OADFactory {
      * @return
      */
     public static OAD speed() {
-        OAD oad = new OAD(0x2607, 0x02, 0x00);
+        OI oi = new OI(0x2607);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -147,7 +163,8 @@ public class OADFactory {
      * @return
      */
     public static OAD dr() {
-        OAD oad = new OAD(0x8120, 0x02, 0x00);
+        OI oi = new OI(0x8120);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -156,7 +173,8 @@ public class OADFactory {
      * @return
      */
     public static OAD wheelStopControlAirConditioning() {
-        OAD oad = new OAD(0x8121, 0x02, 0x00);
+        OI oi = new OI(0x8121);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -165,7 +183,8 @@ public class OADFactory {
      * @return
      */
     public static OAD tempControlAirConditioningPeriod() {
-        OAD oad = new OAD(0x8122, 0x02, 0x00);
+        OI oi = new OI(0x8122);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 

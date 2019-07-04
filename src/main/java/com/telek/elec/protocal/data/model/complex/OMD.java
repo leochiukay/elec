@@ -1,25 +1,22 @@
 package com.telek.elec.protocal.data.model.complex;
 
+import com.telek.elec.protocal.constant.DataType;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 4字节
  * 00 10 01 00 —— OMD
  */
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class OMD extends AbsComplexData {
 
-    /**
-     * 对象标识OI，标识终端中对象唯一名称的编码，2字节。如0010-正向有功电能
-     *
-     */
-    private int oi;
+    private OI oi;
     /**
      * 1字节
      * 方法标识——即对象方法编号。
@@ -31,20 +28,26 @@ public class OMD extends AbsComplexData {
      */
     private int model;
 
+    public OMD() {
+        this.dataType = DataType.OMD;
+    }
+
     @Override
-    protected String encodeSpecial() {
+    protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
-        sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(oi), 4));
+        sb.append(oi.encode());
         sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(index), 2));
         sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(model), 2));
         return sb.toString();
     }
 
     @Override
-    protected int decodeSpecial(String hexString) {
-        this.oi = java.lang.Integer.parseInt(hexString.substring(0, 4), 16);
-        this.index = java.lang.Integer.parseInt(hexString.substring(4, 6), 16);
-        this.model = java.lang.Integer.parseInt(hexString.substring(6), 16);
+    protected int decodeSpecial(String hexString) throws DecodeException {
+        OI oi = new OI();
+        int oiCharLen = oi.decode(hexString);
+        this.oi = oi;
+        this.index = java.lang.Integer.parseInt(hexString.substring(oiCharLen, oiCharLen += 2), 16);
+        this.model = java.lang.Integer.parseInt(hexString.substring(oiCharLen, oiCharLen += 2), 16);
         return 8;
     }
 }

@@ -1,13 +1,13 @@
 package com.telek.elec.protocal.data.model.complex;
 
-import com.telek.elec.protocal.data.model.IData;
+import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
 /**
  * 复杂数据类型
  */
-public abstract class AbsComplexData implements IData {
+public abstract class AbsComplexData extends AbsData {
 
     /**
      * 将当前对象编码成十六进制字符串

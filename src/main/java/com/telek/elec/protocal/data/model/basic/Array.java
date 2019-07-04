@@ -1,10 +1,13 @@
-package com.telek.elec.protocal.data.model;
+package com.telek.elec.protocal.data.model.basic;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.telek.elec.protocal.data.HexToDataConvertor;
 import com.telek.elec.protocal.constant.DataType;
+import com.telek.elec.protocal.data.model.AbsData;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -28,17 +31,17 @@ public class Array extends AbsBasicData {
     /**
      * 表示数组里的元素
      */
-    private List<AbsBasicData> datas;
+    private List<AbsData> datas;
 
     public Array() {
-        super(DataType.ARRAY);
+        this.dataType = DataType.ARRAY;
     }
 
     @Override
-    protected int calculateSpecialCharLength() {
+    protected int calculateSpecialCharLength() throws EncodeException {
         int length = SIZE_CHAR_LENGTH;
         if (datas != null) {
-            for (AbsBasicData data : datas) {
+            for (AbsData data : datas) {
                 // 计算字符长度
                 data.encode();
                 length += data.getCharLength();
@@ -48,11 +51,11 @@ public class Array extends AbsBasicData {
     }
 
     @Override
-    protected String encodeSpecial() {
+    protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(size), 2));
         if (size > 0 && datas != null && datas.size() > 0) {
-            for (AbsBasicData data : datas) {
+            for (AbsData data : datas) {
                 sb.append(data.encode());
             }
         }
@@ -60,7 +63,7 @@ public class Array extends AbsBasicData {
     }
 
     @Override
-    protected int decodeSpecial(String hexExcludeDataType) {
+    protected int decodeSpecial(String hexExcludeDataType) throws DecodeException {
         int charLength = SIZE_CHAR_LENGTH;
         this.size = java.lang.Integer.parseInt(hexExcludeDataType.substring(0, SIZE_CHAR_LENGTH), 16);
         if (size > 0) {
@@ -70,7 +73,7 @@ public class Array extends AbsBasicData {
             for (int i = 0; i < size; i++) {
                 // 获取里面的元素类型
                 String hex = hexExcludeDataType.substring(charLength);
-                AbsBasicData data = HexToDataConvertor.hexToData(hex);
+                AbsData data = HexToDataConvertor.hexToData(hex);
                 if (data != null) {
                     this.datas.add(data);
                     int thisCharLength = data.getCharLength();
