@@ -1,5 +1,10 @@
 package com.telek.elec;
 
+import java.util.Calendar;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import com.telek.elec.cache.TempCache;
 import com.telek.elec.netty.NettyStarter;
@@ -8,11 +13,8 @@ import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.connection.ConnectionRequest;
 import com.telek.elec.protocal.apdu.link.LinkResponse;
 import com.telek.elec.protocal.codec.Encoder;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
@@ -46,7 +48,7 @@ public class ProtocalSendHelper {
         byte[] datas = encoder.encode(sa, HexBin.decode(encodeStr), apdu, -1);
         if (sync) {
             //TODO
-            nettyStarter.syncSend(address, 0, datas);
+            // nettyStarter.syncSend(address, 0, datas);
         } else {
             nettyStarter.send(address, datas);
         }
