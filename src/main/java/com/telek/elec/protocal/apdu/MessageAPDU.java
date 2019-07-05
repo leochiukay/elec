@@ -1,6 +1,7 @@
 package com.telek.elec.protocal.apdu;
 
 import com.telek.elec.protocal.constant.APDUResType;
+import com.telek.elec.protocal.constant.APDUSequence;
 
 import lombok.Data;
 
@@ -28,7 +29,7 @@ public class MessageAPDU extends APDU {
      */
     public void resolveHex(String hexMsg) {
         int apduSequence = Integer.parseInt(hexMsg.substring(0, APDU_SEQUENCE_CHAR_LENGTH), 16);
-        this.apduSequence = this.apduSequence.getByIdSequence(apduSequence);
+        this.apduSequence = APDUSequence.getByIdSequence(apduSequence);
         if (this.apduSequence != null) {
             int resType = Integer.parseInt(hexMsg.substring(APDU_SEQUENCE_CHAR_LENGTH, APDU_SEQUENCE_CHAR_LENGTH + 2), 16);
             this.apduResType = APDUResType.getResByType(resType, this.apduSequence.getApduType());

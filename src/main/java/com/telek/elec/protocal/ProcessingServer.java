@@ -4,11 +4,12 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import com.telek.elec.ProtocalSendHelper;
 import com.telek.elec.netty.NettyContext;
 import com.telek.elec.netty.SyncWriteFuture;
-import com.telek.elec.protocal.apdu.APDUFactory;
 import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.apdu.factory.APDUFactory;
 import com.telek.elec.protocal.apdu.link.LinkRequest;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.util.SpringBeanContext;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -42,7 +43,7 @@ public class ProcessingServer implements Runnable {
 
         } else {
             byte[] data = resultPacket.getData();
-            CodecAPDU apdu = APDUFactory.getAPDU(data);
+            CodecAPDU apdu = APDUFactory.getAPDUHandler(data);
             try {
                 apdu.decode(HexBin.encode(data));
             } catch (DecodeException e) {

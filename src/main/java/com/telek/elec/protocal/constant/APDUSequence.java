@@ -40,7 +40,7 @@ public enum APDUSequence {
 
     private APDUType apduType;
 
-    public APDUSequence getByIdSequence(int apduSequence) {
+    public static APDUSequence getByIdSequence(int apduSequence) {
         for (APDUSequence value : APDUSequence.values()) {
             if (value.getId() == apduSequence) {
                 return value;
