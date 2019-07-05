@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.service.request;
+package com.telek.elec.protocal.service.request.apdufactory;
 
 import static com.telek.elec.protocal.service.RequestFactory.getActionRequestNormal;
 import static com.telek.elec.protocal.service.RequestFactory.getRequestNormal;
@@ -9,7 +9,7 @@ import com.telek.elec.protocal.apdu.factory.SmartSwitchFactory;
 /**
  * 智能开关
  */
-public class SmartSwitchRequestService {
+public class SmartSwitch {
 
     /**
      * 状态

@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.service.request;
+package com.telek.elec.protocal.service.request.apdufactory;
 
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.factory.AirConditionTempControlFactory;
@@ -8,7 +8,7 @@ import com.telek.elec.protocal.service.RequestFactory;
 /**
  * 空调时段温控oad/omd工厂类
  */
-public class AirConditionTempControlRequestService {
+public class AirConditionTempControl {
 
     public static final OI OI = new OI(0x8122);
 

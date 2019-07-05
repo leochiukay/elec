@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.service.request;
+package com.telek.elec.protocal.service.request.apdufactory;
 
 import static com.telek.elec.protocal.service.RequestFactory.getRequestNormal;
 
@@ -8,7 +8,7 @@ import com.telek.elec.protocal.apdu.factory.CommonOADFactory;
 /**
  * 发送请求的service
  */
-public class CommonRequestService {
+public class Common {
 
     /**
      * 读取通讯地址：4001 02 00

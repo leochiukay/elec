@@ -31,6 +31,7 @@ public class LinkService implements IResponseService {
         switch (linkType) {
             case LOGOUT:
                 TempCache.linkedInfo.remove(address);
+                TempCache.connectionInfo.remove(address);
                 break;
             case LOGIN:
             case HEART_BEAT:

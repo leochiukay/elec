@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.service.request;
+package com.telek.elec.protocal.service.request.apdufactory;
 
 import static com.telek.elec.protocal.service.RequestFactory.getRequestNormal;
 
@@ -9,7 +9,7 @@ import com.telek.elec.protocal.service.RequestFactory;
 /**
  * 空调轮停控制oad/omd工厂类
  */
-public class AirConditionControlRequestService {
+public class AirConditionControl {
 
     /**
      * 参数配合
