@@ -1,7 +1,5 @@
 package com.telek.elec;
 
-import java.util.Calendar;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,8 +8,6 @@ import com.telek.elec.cache.TempCache;
 import com.telek.elec.netty.NettyStarter;
 import com.telek.elec.protocal.Packet;
 import com.telek.elec.protocal.apdu.CodecAPDU;
-import com.telek.elec.protocal.apdu.connection.ConnectionRequest;
-import com.telek.elec.protocal.apdu.link.LinkResponse;
 import com.telek.elec.protocal.codec.Encoder;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,21 +18,7 @@ public class ProtocalSendHelper {
     @Autowired
     private NettyStarter nettyStarter;
 
-    public void sendLinkResponse(String address) throws Exception {
-        LinkResponse linkResponse = new LinkResponse();
-        linkResponse.setResult(1);
-        linkResponse.setReceivedTime(Calendar.getInstance());
-        linkResponse.setRequestTime(Calendar.getInstance());
-        linkResponse.setReceivedTime(Calendar.getInstance());
-        send2Service(address, linkResponse, false);
-    }
-
-    public void sendConnectionRequest(String address) {
-        ConnectionRequest connectionRequest = new ConnectionRequest();
-
-    }
-
-    private void send2Service(String address, CodecAPDU apdu, boolean sync) throws Exception {
+    public void send2Service(String address, CodecAPDU apdu, boolean sync) throws Exception {
         String encodeStr = apdu.encode();
         Packet.SA sa = TempCache.serviceAddressInfo.get(address);
         //TODO 暂时不考虑分帧问题

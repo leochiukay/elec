@@ -1,16 +1,16 @@
 package com.telek.elec.protocal.apdu.link;
 
+import java.util.Calendar;
+
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.codec.DecoderUtils;
 import com.telek.elec.protocal.apdu.codec.EncoderUtils;
 import com.telek.elec.protocal.constant.APDUSequence;
-import com.telek.elec.protocal.constant.LinkType;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
+
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Calendar;
 
 /**
  * 客户端预链接响应:
@@ -25,13 +25,6 @@ import java.util.Calendar;
 @Data
 @Slf4j
 public class LinkResponse extends CodecAPDU implements Link {
-    /**
-     * 类型-1字节
-     * 登录     （0），
-     * 心跳     （1），
-     * 退出登录 （2）
-     */
-    private LinkType linkType;
     /**
      * 结果-1字节
      * 时钟可信标志——用于表示响应方的时钟是否可信（准确），0：不可信，1：可信。

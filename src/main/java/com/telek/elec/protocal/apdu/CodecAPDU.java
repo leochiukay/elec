@@ -3,9 +3,6 @@ package com.telek.elec.protocal.apdu;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
-import lombok.Data;
-
-@Data
 public abstract class CodecAPDU extends DecoderAPDU {
 
     /**
