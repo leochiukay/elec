@@ -38,6 +38,12 @@ public class SetRequestNormal extends ResTypeCodecAPDU implements Set {
         this.apduSequence = APDUSequence.SET_REQUEST;
     }
 
+    public SetRequestNormal(SetRequestData setData, int timeStamp) {
+        this();
+        this.setData = setData;
+        this.timeStamp = timeStamp;
+    }
+
     @Override
     protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();

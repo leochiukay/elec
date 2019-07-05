@@ -5,7 +5,6 @@ import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -13,7 +12,6 @@ import lombok.Data;
  * 00 10 01 00 —— OMD
  */
 @Data
-@AllArgsConstructor
 public class OMD extends AbsComplexData {
 
     private static final int OMD_CHAR_LENGTH = 8;
@@ -32,6 +30,13 @@ public class OMD extends AbsComplexData {
 
     public OMD() {
         this.dataType = DataType.OMD;
+    }
+
+    public OMD(OI oi, int methodNum, int model) {
+        this();
+        this.oi = oi;
+        this.methodNum = methodNum;
+        this.model = model;
     }
 
     @Override

@@ -5,14 +5,12 @@ import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
  * 对象标识,4字节，如00100200。
  */
 @Data
-@AllArgsConstructor
 public class OAD extends AbsComplexData {
 
     private static final int OAD_CHAR_LENGTH = 8;
@@ -34,6 +32,13 @@ public class OAD extends AbsComplexData {
 
     public OAD() {
         this.dataType = DataType.OAD;
+    }
+
+    public OAD(OI oi, int attr, int index) {
+        this();
+        this.oi = oi;
+        this.attr = attr;
+        this.index = index;
     }
 
     /**

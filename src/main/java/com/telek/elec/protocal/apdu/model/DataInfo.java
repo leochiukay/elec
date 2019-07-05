@@ -19,6 +19,13 @@ public class DataInfo extends AbsResult {
 
     private AbsData data;
 
+    public DataInfo() {
+    }
+
+    public DataInfo(AbsData data) {
+        this.data = data;
+    }
+
     @Override
     protected String encodeSpecial() throws EncodeException {
         return data.encode();

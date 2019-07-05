@@ -5,34 +5,34 @@ import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
 
-/**
- * 整数
- */
 @Data
-public class Integer extends NumericalData {
-    /**
-     * 1字节
-     */
-    private byte value;
+public class DoubleLong extends NumericalData {
 
-    public Integer() {
-        this.dataType = DataType.INTEGER;
+    private static final int CHAR_LENGTH = 8;
+
+    /**
+     * 4字节
+     */
+    private int value;
+
+    public DoubleLong() {
+        this.dataType = DataType.DOUBLE_LONG_UNSIGNED;
     }
 
     @Override
     protected int calculateSpecialCharLength() {
-        return 2;
+        return CHAR_LENGTH;
     }
 
     @Override
     protected String encodeSpecial() {
-        return StringUtils.subLastNumStr(java.lang.Integer.toHexString(value), 2);
+        return StringUtils.subLastNumStr(java.lang.Long.toHexString(value), CHAR_LENGTH);
     }
 
     @Override
     protected int decodeSpecial(String hexExcludeDataType) {
-        this.value = java.lang.Byte.parseByte(hexExcludeDataType.substring(0, 2), 16);
-        return 2;
+        this.value = java.lang.Integer.parseInt(hexExcludeDataType.substring(0, CHAR_LENGTH), 16);
+        return CHAR_LENGTH;
     }
 
     public double getValue() {

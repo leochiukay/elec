@@ -34,6 +34,12 @@ public class GetRequestNormal extends ResTypeCodecAPDU implements Get {
         this.apduSequence = APDUSequence.GET_REQUEST;
     }
 
+    public GetRequestNormal(OAD oad, int timeStamp) {
+        this();
+        this.oad = oad;
+        this.timeStamp = timeStamp;
+    }
+
     @Override
     protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();

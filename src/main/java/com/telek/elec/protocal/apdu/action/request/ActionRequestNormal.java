@@ -38,6 +38,12 @@ public class ActionRequestNormal extends ResTypeCodecAPDU implements Action {
         this.apduSequence = APDUSequence.ACTION_REQUEST;
     }
 
+    public ActionRequestNormal(ActionRequestData actionRequestData, int timeStamp) {
+        this();
+        this.actionRequestData = actionRequestData;
+        this.timeStamp = timeStamp;
+    }
+
     @Override
     protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
