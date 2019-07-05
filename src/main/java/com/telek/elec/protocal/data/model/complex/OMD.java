@@ -16,12 +16,14 @@ import lombok.Data;
 @AllArgsConstructor
 public class OMD extends AbsComplexData {
 
+    private static final int OMD_CHAR_LENGTH = 8;
+
     private OI oi;
     /**
      * 1字节
      * 方法标识——即对象方法编号。
      */
-    private int index;
+    private int methodNum;
     /**
      * 1字节
      * 操作模式——值默认为0。
@@ -36,7 +38,7 @@ public class OMD extends AbsComplexData {
     protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(oi.encode());
-        sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(index), 2));
+        sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(methodNum), 2));
         sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(model), 2));
         return sb.toString();
     }
@@ -46,8 +48,13 @@ public class OMD extends AbsComplexData {
         OI oi = new OI();
         int oiCharLen = oi.decode(hexString);
         this.oi = oi;
-        this.index = java.lang.Integer.parseInt(hexString.substring(oiCharLen, oiCharLen += 2), 16);
+        this.methodNum = java.lang.Integer.parseInt(hexString.substring(oiCharLen, oiCharLen += 2), 16);
         this.model = java.lang.Integer.parseInt(hexString.substring(oiCharLen, oiCharLen += 2), 16);
-        return 8;
+        return OMD_CHAR_LENGTH;
+    }
+
+    @Override
+    protected void calculateCharLength() {
+        this.charLength = OMD_CHAR_LENGTH;
     }
 }

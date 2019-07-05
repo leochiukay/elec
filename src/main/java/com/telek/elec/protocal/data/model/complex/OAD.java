@@ -15,6 +15,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class OAD extends AbsComplexData {
 
+    private static final int OAD_CHAR_LENGTH = 8;
+
     private OI oi;
     /**
      * 属性:1字节
@@ -59,7 +61,12 @@ public class OAD extends AbsComplexData {
         this.oi = oi;
         this.attr = java.lang.Integer.parseInt(hexString.substring(oiCharLen, oiCharLen += 2), 16);
         this.index = java.lang.Integer.parseInt(hexString.substring(oiCharLen, oiCharLen += 2), 16);
-        return 8;
+        return OAD_CHAR_LENGTH;
+    }
+
+    @Override
+    protected void calculateCharLength() {
+        this.charLength = OAD_CHAR_LENGTH;
     }
 
 }

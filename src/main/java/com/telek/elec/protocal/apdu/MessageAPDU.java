@@ -21,23 +21,17 @@ public class MessageAPDU extends APDU {
      */
     private APDUResType apduResType;
 
-    public MessageAPDU() {
-    }
-
     /**
      * 通过16进制报文数据完善
      * @param hexMsg
      * @return
      */
     public MessageAPDU resolveHex(String hexMsg) {
-        String s = hexMsg.substring(0, APDU_SEQUENCE_CHAR_LENGTH);
-        int i = Integer.parseInt(s, 16);
-        apduSequence = apduSequence.getByIdSequence(i);
-
-        if (apduSequence != null) {
-            s = hexMsg.substring(APDU_SEQUENCE_CHAR_LENGTH, APDU_SEQUENCE_CHAR_LENGTH + 2);
-            i = Integer.parseInt(s, 16);
-            this.apduResType = APDUResType.getResByType(i, apduSequence.getApduType());
+        int apduSequence = Integer.parseInt(hexMsg.substring(0, APDU_SEQUENCE_CHAR_LENGTH), 16);
+        this.apduSequence = this.apduSequence.getByIdSequence(apduSequence);
+        if (this.apduSequence != null) {
+            int resType = Integer.parseInt(hexMsg.substring(APDU_SEQUENCE_CHAR_LENGTH, APDU_SEQUENCE_CHAR_LENGTH + 2), 16);
+            this.apduResType = APDUResType.getResByType(resType, this.apduSequence.getApduType());
         }
         return this;
     }
