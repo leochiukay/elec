@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import com.telek.elec.cache.TempCache;
 import com.telek.elec.protocal.Packet;
+import com.telek.elec.protocal.ProtocalSendHelper;
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.link.LinkRequest;
 import com.telek.elec.protocal.apdu.link.LinkResponse;
@@ -48,7 +49,7 @@ public class LinkService implements IResponseService {
         linkResponse.setResponseTime(Calendar.getInstance());
         linkResponse.setPiid(0);
         try {
-            sendHelper.send2Service(address, linkResponse, false);
+            ProtocalSendHelper.send2Service(address, linkResponse, false);
         } catch (Exception e) {
             e.printStackTrace();
         }

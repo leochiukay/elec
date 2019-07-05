@@ -3,12 +3,13 @@ package com.telek.elec.netty;
 import java.util.concurrent.TimeUnit;
 
 import com.telek.elec.protocal.Packet;
-import com.telek.elec.protocal.apdu.CodecAPDU;
-import io.netty.channel.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
@@ -20,14 +21,16 @@ import lombok.extern.slf4j.Slf4j;
  * netty启动器
  */
 @Slf4j
-@Component
 public class NettyStarter {
 
     /**
      * 端口
      */
-    @Value("${netty.server.port}")
-    private Integer server_port = 9999;
+    private Integer port;
+
+    public NettyStarter(Integer port) {
+        this.port = port;
+    }
 
     /**
      * 服务端netty管道
@@ -47,7 +50,7 @@ public class NettyStarter {
                                     .addLast(new V698ProtocalDecoder()).addLast(new V698ProtocalEncoder()).addLast(new NettyServerHandler());
                         }
                     });
-            ChannelFuture future = bootstrap.bind(server_port).sync();
+            ChannelFuture future = bootstrap.bind(port).sync();
             if (future.isSuccess()) {
                 log.info("启动 " + this.getClass().getSimpleName() + " 成功");
             }
@@ -67,7 +70,7 @@ public class NettyStarter {
         }
     }
 
-    public void send(String address, byte[] data) {
+    public static void send(String address, byte[] data) {
         String channelId = NettyContext.concentratorCache.get(address);
         Channel channel = NettyContext.clientChannel.get(channelId);
         if (channel == null) {
@@ -77,7 +80,7 @@ public class NettyStarter {
         channel.writeAndFlush(data);
     }
 
-    public Packet syncSend(String address, byte[] data) {
+    public static Packet syncSend(String address, byte[] data) {
         String channelId = NettyContext.concentratorCache.get(address);
         Channel channel = NettyContext.clientChannel.get(channelId);
         if (channel == null) {

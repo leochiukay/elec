@@ -1,8 +1,6 @@
 package com.telek.elec.protocal;
 
-import com.telek.elec.ProtocalSendHelper;
 import com.telek.elec.protocal.service.response.ResponseService;
-import com.telek.elec.util.SpringBeanContext;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class ProcessingServer implements Runnable {
-    private ProtocalSendHelper sendHelper = SpringBeanContext.getBean(ProtocalSendHelper.class);
+
     private Packet resultPacket;
 
     public ProcessingServer(Packet packet) {
@@ -33,8 +31,6 @@ public class ProcessingServer implements Runnable {
             } else {
                 byte blockFlag = data[0];
             }
-
-
         } else {
             new ResponseService(resultPacket).dealAndResponse();
         }

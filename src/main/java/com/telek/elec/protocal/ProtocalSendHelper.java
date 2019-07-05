@@ -1,24 +1,17 @@
-package com.telek.elec;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+package com.telek.elec.protocal;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import com.telek.elec.cache.TempCache;
 import com.telek.elec.netty.NettyStarter;
-import com.telek.elec.protocal.Packet;
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.codec.Encoder;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Component
 @Slf4j
 public class ProtocalSendHelper {
-    @Autowired
-    private NettyStarter nettyStarter;
 
-    public void send2Service(String address, CodecAPDU apdu, boolean sync) throws Exception {
+    public static void send2Service(String address, CodecAPDU apdu, boolean sync) throws Exception {
         String encodeStr = apdu.encode();
         Packet.SA sa = TempCache.serviceAddressInfo.get(address);
         //TODO 暂时不考虑分帧问题
@@ -32,7 +25,7 @@ public class ProtocalSendHelper {
             //TODO
             // nettyStarter.syncSend(address, 0, datas);
         } else {
-            nettyStarter.send(address, datas);
+            NettyStarter.send(address, datas);
         }
 //        }
         // 根据服务器的接收帧最大尺寸
