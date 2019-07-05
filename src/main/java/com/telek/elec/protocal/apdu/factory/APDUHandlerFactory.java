@@ -1,5 +1,6 @@
 package com.telek.elec.protocal.apdu.factory;
 
+import com.telek.elec.protocal.Packet;
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.MessageAPDU;
 import com.telek.elec.protocal.apdu.action.request.ActionRequestNormal;
@@ -23,11 +24,26 @@ import com.telek.elec.protocal.apdu.set.response.SetResponseNormalList;
 import com.telek.elec.protocal.constant.APDUResType;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.constant.APDUType;
+import com.telek.elec.util.ByteUtils;
 
 /**
  * 根据apdu_sequence获取处理的类
  */
 public class APDUHandlerFactory {
+
+    /**
+     * 获取处理不同类型apdu的工厂类
+     *
+     * @param packet
+     * @return
+     */
+    public static CodecAPDU getAPDUHandler(Packet packet) {
+        byte[] data = packet.getData();
+        String apduHexStr = ByteUtils.bytesToHexStr(data);
+        MessageAPDU messageAPDU = new MessageAPDU();
+        messageAPDU.resolveHex(apduHexStr);
+        return getAPDUHandler(messageAPDU);
+    }
 
     /**
      * 获取处理不同类型apdu的工厂类
