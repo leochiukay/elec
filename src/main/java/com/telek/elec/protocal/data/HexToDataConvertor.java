@@ -9,6 +9,7 @@ import com.telek.elec.protocal.data.model.basic.Long;
 import com.telek.elec.protocal.data.model.basic.LongUnsigned;
 import com.telek.elec.protocal.data.model.basic.Null;
 import com.telek.elec.protocal.data.model.basic.OctString;
+import com.telek.elec.protocal.data.model.basic.Structure;
 import com.telek.elec.protocal.data.model.basic.Unsigned;
 import com.telek.elec.protocal.data.model.basic.Enums;
 import com.telek.elec.protocal.data.model.complex.OAD;
@@ -66,6 +67,8 @@ public class HexToDataConvertor {
             iData = new OctString();
         } else if (dataType == DataType.ENUM.getCode()) {
             iData = new Enums();
+        } else if (dataType == DataType.STRUCTURE.getCode()) {
+            iData = new Structure();
         }
         /****************************************************/
         /**************复杂数据类型***************************/
