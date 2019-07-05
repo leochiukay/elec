@@ -17,4 +17,8 @@ public interface ProtocalConstant {
      * 编码末尾byte.
      */
     byte END_FRAM = 0x16;
+    /**
+     * 客户机地址.
+     */
+    int CLIENT_ADDRESS = 0;
 }
