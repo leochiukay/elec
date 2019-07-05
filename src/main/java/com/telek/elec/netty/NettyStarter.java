@@ -2,13 +2,13 @@ package com.telek.elec.netty;
 
 import java.util.concurrent.TimeUnit;
 
+import com.telek.elec.protocal.Packet;
+import com.telek.elec.protocal.apdu.CodecAPDU;
+import io.netty.channel.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
@@ -54,7 +54,7 @@ public class NettyStarter {
             channel = (ServerSocketChannel) future.channel();
             channel.closeFuture().sync();
         } catch (Exception e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
         } finally {
             bossGroup.shutdownGracefully();
             workGroup.shutdownGracefully();
@@ -65,5 +65,46 @@ public class NettyStarter {
             }
             start();
         }
+    }
+
+    public void send(String address, byte[] data) {
+        String channelId = NettyContext.concentratorCache.get(address);
+        Channel channel = NettyContext.clientChannel.get(channelId);
+        if (channel == null) {
+            log.error("找不到{}对应的channel,集中器地址{}", channelId, address);
+            return;
+        }
+        channel.writeAndFlush(data);
+    }
+
+    public Packet syncSend(String address, byte[] data) {
+        String channelId = NettyContext.concentratorCache.get(address);
+        Channel channel = NettyContext.clientChannel.get(channelId);
+        if (channel == null) {
+            log.error("找不到{}对应的channel,集中器地址{}", channelId, address);
+            return null;
+        }
+        String syncKey = address;
+        SyncWriteFuture future = new SyncWriteFuture();
+        NettyContext.syncKey.put(syncKey, future);
+        Packet resp = null;
+        try {
+            final String finalSyncKey = syncKey;
+            channel.writeAndFlush(data).addListener(new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture future) throws Exception {
+                    // 失败移除
+                    if (!future.isSuccess()) {
+                        NettyContext.syncKey.remove(finalSyncKey);
+                    }
+                }
+            }).sync();
+            resp = future.get(10000, TimeUnit.MILLISECONDS);
+        } catch (Exception e) {
+            log.error("采集数据异常", e);
+        } finally {
+            NettyContext.syncKey.remove(syncKey);
+        }
+        return resp;
     }
 }

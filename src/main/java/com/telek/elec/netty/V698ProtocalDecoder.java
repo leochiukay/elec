@@ -1,10 +1,13 @@
 package com.telek.elec.netty;
 
+import java.nio.ByteBuffer;
 import java.util.List;
 
+import com.telek.elec.protocal.Packet;
+import com.telek.elec.protocal.codec.Decoder;
+import com.telek.elec.protocal.constant.ProtocalConstant;
+import io.netty.util.ReferenceCountUtil;
 import org.apache.commons.codec.binary.Hex;
-
-import com.telek.elec.protocal.packet.Packet;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -28,27 +31,34 @@ public class V698ProtocalDecoder extends ByteToMessageDecoder {
 
     protected Object decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
         int readableBytes = in.readableBytes();
-        if (readableBytes <= 0) {
+        // 1.帧最短长度为10个字节
+        if (readableBytes <= 10) {
             return null;
         }
-        byte[] bs = new byte[readableBytes];
-        in.readBytes(bs);
-        log.info("接收数据为：" + Hex.encodeHexString(bs));
-        boolean validate = validate(bs);
-        if (!validate) {
+        in.markReaderIndex();
+        // 2.校验帧头
+        byte headFrame = in.readByte();
+        while (headFrame == 0xFF) {
+            headFrame = in.readByte();
+        }
+        if (headFrame != ProtocalConstant.START_FRAM) {
+            log.error("异常帧头", headFrame);
             return null;
         }
-        return new Packet();
-    }
-
-    /**
-     * 帧校验
-     * @param bs
-     * @return
-     */
-    private boolean validate(byte[] bs) {
-        // 头帧校验
-
-        return false;
+        // 3.判断帧的长度是否满足解包，防止netty粘包分包
+        byte[] lengthBytes = new byte[2];
+        in.readBytes(lengthBytes);
+        int length = ((lengthBytes[0] & 0xff)) + ((lengthBytes[1] & 0xff));
+        if (readableBytes < length + 2) {
+            in.resetReaderIndex();
+            return null;
+        }
+        in.resetReaderIndex();
+        ByteBuffer buffer = in.readRetainedSlice(length + 2).nioBuffer();
+        log.info("接收数据为：" + Hex.encodeHexString(buffer.array()));
+        ReferenceCountUtil.release(in);
+        // 4.解码
+        Decoder decoder = new Decoder();
+        return decoder.decode(buffer);
     }
 }
