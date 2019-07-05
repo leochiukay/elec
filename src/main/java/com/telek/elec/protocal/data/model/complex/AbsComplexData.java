@@ -5,7 +5,10 @@ import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
 /**
- * 复杂数据类型
+ * 复杂数据类型：和基本数据类型不同（没有头两个字符串表示数据类型，所有的字符串表示的是数据的值）
+ * eg：
+ * 4字节OAD
+ *  * 00 10 01 00--------0010,01,00
  */
 public abstract class AbsComplexData extends AbsData {
 
@@ -16,7 +19,9 @@ public abstract class AbsComplexData extends AbsData {
     @Override
     public String encode() throws EncodeException {
         validateEncode();
-        return encodeSpecial();
+        String res = encodeSpecial();
+        calculateCharLength();
+        return res;
     }
 
     /**
@@ -27,7 +32,9 @@ public abstract class AbsComplexData extends AbsData {
     @Override
     public int decode(String hexString) throws DecodeException {
         validateDecode();
-        return decodeSpecial(hexString);
+        int i = decodeSpecial(hexString);
+        this.charLength = i;
+        return i;
     }
 
     /**
@@ -56,5 +63,10 @@ public abstract class AbsComplexData extends AbsData {
      */
     protected void validateDecode() throws DecodeException {
     }
+
+    /**
+     * 计算字符串长度
+     */
+    protected abstract void calculateCharLength();
 
 }

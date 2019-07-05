@@ -9,7 +9,7 @@ import com.telek.elec.util.StringUtils;
 import lombok.Data;
 
 /**
- * 基本数据类型
+ * 基本数据类型: 头两个字符串表示该数据类型
  * eg：
  *  * 字符串
  *  * 09 —— octet-string

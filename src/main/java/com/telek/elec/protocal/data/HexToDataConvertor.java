@@ -24,20 +24,23 @@ import lombok.Data;
 public class HexToDataConvertor {
 
     /**
-     * 十六进制字符串转数据,头两位必须为类型十六进制，如果像复杂数据类型没有就自己补充
+     * 十六进制字符串转数据,无论是基本数据类型还是复杂数据类型
+     * 头两位必须为data_type类型十六进制，
+     * 如果像复杂数据类型没有就自己补充
+     *
      * 字符串
      *  * 09 —— octet-string
      *  * 06 —— SIZE(6)
      *  * 12 34 56 78 90 12 —— 通信地址：123456789012
-     * @param hex
+     * @param hexIncludeDataType
      * @return
      */
-    public static AbsData hexToData(String hex) throws DecodeException {
-        if (hex == null) {
+    public static AbsData hexToData(String hexIncludeDataType) throws DecodeException {
+        if (hexIncludeDataType == null) {
             return null;
         }
         // 1 获取该数据的数据类型
-        int dataType = java.lang.Integer.parseInt(hex.substring(0, 2), 16);
+        int dataType = java.lang.Integer.parseInt(hexIncludeDataType.substring(0, 2), 16);
         // 2 解码十六进制字符串
         AbsData iData = null;
         /****************************************************/
@@ -79,7 +82,7 @@ public class HexToDataConvertor {
         if (dataType == DataType.OAD.getCode()) {
             iData = new OAD();
         }
-        iData.decode(hex);
+        iData.decode(hexIncludeDataType);
         return iData;
     }
 
