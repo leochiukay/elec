@@ -52,7 +52,7 @@ public abstract class AbsBasicData extends AbsData {
         int type = java.lang.Integer.parseInt(hex.substring(0, DATA_TYPE_CHAR_LENGTH), 16);
         this.dataType = DataUtils.getDataType(type);
         res = DATA_TYPE_CHAR_LENGTH;
-        int charLength = res + decodeSpecial(hex.substring(2));
+        int charLength = res + decodeSpecial(hex.substring(DATA_TYPE_CHAR_LENGTH));
         this.charLength = charLength;
         return charLength;
     }
@@ -63,16 +63,4 @@ public abstract class AbsBasicData extends AbsData {
      */
     protected abstract int calculateSpecialCharLength() throws EncodeException;
 
-    /**
-     * 子类编码自己特有属性
-     * @return
-     */
-    protected abstract String encodeSpecial() throws EncodeException;
-
-    /**
-     * 子类解码自有属性
-     * @param hexExcludeDataType
-     * @return
-     */
-    protected abstract int decodeSpecial(String hexExcludeDataType) throws DecodeException;
 }

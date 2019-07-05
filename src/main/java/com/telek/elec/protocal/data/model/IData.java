@@ -1,8 +1,5 @@
 package com.telek.elec.protocal.data.model;
 
-import com.telek.elec.protocal.exeception.DecodeException;
-import com.telek.elec.protocal.exeception.EncodeException;
-
 /**
  * 数据类型的顶层包
  */
@@ -18,7 +15,7 @@ public interface IData {
      *  而复杂数据类型包下的不包括该字段 如 oad 4字节  00 10 01 00
      * @return
      */
-    String encode() throws EncodeException;
+    //String encode() throws EncodeException;
 
     /**
      * 解码:
@@ -31,6 +28,6 @@ public interface IData {
      *
      * @return 返回值为该对象所占用的整个字符串长度
      */
-    int decode(String hexString) throws DecodeException;
+    //int decode(String hexString) throws DecodeException;
 
 }

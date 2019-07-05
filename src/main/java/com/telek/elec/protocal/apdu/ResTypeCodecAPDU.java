@@ -5,6 +5,10 @@ import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
 
+/**
+ * 复杂的apdu,即:
+ *    各种请求响应的小分类：eg 读取一个对象属性请求、读取若干个对象属性请求等
+ */
 @Data
 public abstract class ResTypeCodecAPDU extends CodecAPDU {
 

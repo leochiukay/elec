@@ -1,11 +1,12 @@
 package com.telek.elec.protocal.data.model;
 
+import com.telek.elec.protocal.apdu.codec.AbsCodec;
 import com.telek.elec.protocal.constant.DataType;
 
 import lombok.Data;
 
 @Data
-public abstract class AbsData implements IData {
+public abstract class AbsData extends AbsCodec implements IData {
 
     protected static final int DATA_TYPE_CHAR_LENGTH = 2;
 

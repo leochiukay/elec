@@ -38,33 +38,6 @@ public abstract class AbsComplexData extends AbsData {
     }
 
     /**
-     * 子类解码
-     * @return
-     */
-    protected abstract String encodeSpecial() throws EncodeException;
-
-    /**
-     * 子类解码
-     * @param hexString
-     * @return
-     */
-    protected abstract int decodeSpecial(String hexString) throws DecodeException;
-
-    /**
-     * 编码校验
-     * @throws EncodeException
-     */
-    protected void validateEncode() throws EncodeException {
-    }
-
-    /**
-     * 解码校验
-     * @throws EncodeException
-     */
-    protected void validateDecode() throws DecodeException {
-    }
-
-    /**
      * 计算字符串长度
      */
     protected abstract void calculateCharLength();

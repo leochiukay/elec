@@ -6,7 +6,7 @@ import lombok.Data;
  * 除了序列号以外的通用属性
  */
 @Data
-public abstract class CommonAPDU extends APDU {
+public abstract class AbsAPDU extends APDU {
 
     protected static final int PIID_CHAR_LENGTH = 2;
 

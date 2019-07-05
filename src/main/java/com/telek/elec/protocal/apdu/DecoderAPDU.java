@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.apdu.codec;
+package com.telek.elec.protocal.apdu;
 
 import com.telek.elec.protocal.exeception.DecodeException;
 

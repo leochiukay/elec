@@ -1,9 +1,10 @@
 package com.telek.elec.protocal.apdu.model;
 
+import com.telek.elec.protocal.apdu.codec.AbsCodec;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
-public abstract class AbsResult {
+public abstract class AbsResult extends AbsCodec {
 
     /**
      * 将当前对象编码成十六进制字符串
@@ -22,32 +23,5 @@ public abstract class AbsResult {
     public int decode(String hexString) throws DecodeException {
         validateDecode();
         return decodeSpecial(hexString);
-    }
-
-    /**
-     * 子类解码
-     * @return
-     */
-    protected abstract String encodeSpecial() throws EncodeException;
-
-    /**
-     * 子类解码
-     * @param hexString
-     * @return
-     */
-    protected abstract int decodeSpecial(String hexString) throws DecodeException;
-
-    /**
-     * 编码校验
-     * @throws EncodeException
-     */
-    protected void validateEncode() throws EncodeException {
-    }
-
-    /**
-     * 解码校验
-     * @throws EncodeException
-     */
-    protected void validateDecode() throws DecodeException {
     }
 }

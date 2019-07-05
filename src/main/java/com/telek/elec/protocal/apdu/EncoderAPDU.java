@@ -1,6 +1,5 @@
-package com.telek.elec.protocal.apdu.codec;
+package com.telek.elec.protocal.apdu;
 
-import com.telek.elec.protocal.apdu.CommonAPDU;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
@@ -10,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
  * 编码apdu
  */
 @Slf4j
-public abstract class EncoderAPDU extends CommonAPDU {
+public abstract class EncoderAPDU extends AbsAPDU {
     /**
      * 将当前对象编码成十六进制字符串
      * @return
