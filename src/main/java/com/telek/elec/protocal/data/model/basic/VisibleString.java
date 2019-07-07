@@ -12,7 +12,7 @@ import lombok.Data;
  * 12 34 56 78 90 12 —— 通信地址：123456789012
  */
 @Data
-public class OctString extends AbsBasicData {
+public class VisibleString extends AbsBasicData {
 
     private static final int SIZE_CHAR_LENGTH = 2;
 
@@ -26,7 +26,7 @@ public class OctString extends AbsBasicData {
      */
     private String value;
 
-    public OctString() {
+    public VisibleString() {
         this.dataType = DataType.OCTET_STRING;
     }
 

@@ -9,9 +9,12 @@ import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
+import lombok.Data;
+
 /**
  * 数组类型的数据类型eg：数组，structure
  */
+@Data
 public abstract class AbsArraysData extends AbsBasicData {
 
     private static final int SIZE_CHAR_LENGTH = 2;

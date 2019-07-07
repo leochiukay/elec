@@ -2,13 +2,14 @@ package com.telek.elec.protocal.data;
 
 import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.protocal.data.model.AbsData;
+import com.telek.elec.protocal.data.model.basic.Comdcb;
 import com.telek.elec.protocal.data.model.basic.DateTime;
 import com.telek.elec.protocal.data.model.basic.DateTimeS;
 import com.telek.elec.protocal.data.model.basic.DoubleLongUnsigned;
 import com.telek.elec.protocal.data.model.basic.Long;
 import com.telek.elec.protocal.data.model.basic.LongUnsigned;
 import com.telek.elec.protocal.data.model.basic.Null;
-import com.telek.elec.protocal.data.model.basic.OctString;
+import com.telek.elec.protocal.data.model.basic.VisibleString;
 import com.telek.elec.protocal.data.model.basic.Structure;
 import com.telek.elec.protocal.data.model.basic.Unsigned;
 import com.telek.elec.protocal.data.model.basic.Enums;
@@ -64,11 +65,13 @@ public class HexToDataConvertor {
         } else if (dataType == DataType.DATE_TIME_S.getCode()) {
             iData = new DateTimeS();
         } else if (dataType == DataType.OCTET_STRING.getCode()) {
-            iData = new OctString();
+            iData = new VisibleString();
         } else if (dataType == DataType.ENUM.getCode()) {
             iData = new Enums();
         } else if (dataType == DataType.STRUCTURE.getCode()) {
             iData = new Structure();
+        } else if (dataType == DataType.COMDCB.getCode()) {
+            iData = new Comdcb();
         }
         /****************************************************/
         /**************复杂数据类型***************************/
