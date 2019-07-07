@@ -19,26 +19,6 @@ public class CommonOADFactory {
     }
 
     /**
-     * MBUS：F220
-     * @return
-     */
-    public static OAD mbus() {
-        OI oi = new OI(0xf220);
-        OAD oad = new OAD(oi, 0x02, 0x00);
-        return oad;
-    }
-
-    /**
-     * Lora：F221
-     * @return
-     */
-    public static OAD lora() {
-        OI oi = new OI(0xf222);
-        OAD oad = new OAD(oi, 0x02, 0x00);
-        return oad;
-    }
-
-    /**
      * 发电时间：2600
      * @return double-long-unsigned 单位：秒
      */

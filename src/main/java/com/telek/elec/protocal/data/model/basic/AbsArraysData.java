@@ -10,6 +10,8 @@ import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 import lombok.Data;
 
+import lombok.Data;
+
 /**
  * 数组类型的数据类型eg：数组，structure
  */
