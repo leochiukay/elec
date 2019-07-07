@@ -51,15 +51,6 @@ public class ResponseService implements IResponseService {
         IResponseService responseService = getResponseService(apdu);
         if (responseService != null) {
             responseService.dealAndResponse();
-        } else {
-            String syncKey = packet.getSa().getAddress();
-            SyncWriteFuture future = NettyContext.syncKey.get(syncKey);
-            if (future != null) {
-                future.setResult(packet);
-                return;
-            } else {
-                log.error("接收包超时，{}", packet);
-            }
         }
     }
 

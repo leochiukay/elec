@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ProtocalSendHelper {
 
-    public static void send2Service(String address, CodecAPDU apdu, boolean sync) throws Exception {
+    public static Packet send2Service(String address, CodecAPDU apdu, boolean sync) throws Exception {
         String encodeStr = apdu.encode();
         Packet.SA sa = TempCache.serviceAddressInfo.get(address);
         //TODO 暂时不考虑分帧问题
@@ -22,10 +22,10 @@ public class ProtocalSendHelper {
         Encoder encoder = new Encoder();
         byte[] datas = encoder.encode(sa, HexBin.decode(encodeStr), apdu, -1);
         if (sync) {
-            //TODO
-            // nettyStarter.syncSend(address, 0, datas);
+            return NettyStarter.syncSend(address, datas);
         } else {
             NettyStarter.send(address, datas);
+            return null;
         }
 //        }
         // 根据服务器的接收帧最大尺寸

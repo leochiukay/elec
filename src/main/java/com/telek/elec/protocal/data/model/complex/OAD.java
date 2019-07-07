@@ -7,6 +7,8 @@ import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
 
+import java.util.Objects;
+
 /**
  * 对象标识,4字节，如00100200。
  */
@@ -43,6 +45,7 @@ public class OAD extends AbsComplexData {
 
     /**
      * 将该对象编码为hex
+     *
      * @return
      */
     @Override
@@ -56,6 +59,7 @@ public class OAD extends AbsComplexData {
 
     /**
      * 将十六进制数据解码
+     *
      * @param hexString
      * @return
      */
@@ -74,4 +78,19 @@ public class OAD extends AbsComplexData {
         this.charLength = OAD_CHAR_LENGTH;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        OAD oad = (OAD) o;
+        return attr == oad.attr &&
+                index == oad.index &&
+                Objects.equals(oi, oad.oi);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), oi, attr, index);
+    }
 }

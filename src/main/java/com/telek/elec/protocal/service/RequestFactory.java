@@ -3,7 +3,9 @@ package com.telek.elec.protocal.service;
 import com.telek.elec.protocal.apdu.action.request.ActionRequestNormal;
 import com.telek.elec.protocal.apdu.model.ActionRequestData;
 import com.telek.elec.protocal.apdu.model.DataInfo;
+import com.telek.elec.protocal.apdu.model.SetRequestData;
 import com.telek.elec.protocal.apdu.read.request.GetRequestNormal;
+import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
 import com.telek.elec.protocal.data.model.basic.Null;
 import com.telek.elec.protocal.data.model.complex.OAD;
 import com.telek.elec.protocal.data.model.complex.OMD;
@@ -12,6 +14,7 @@ public class RequestFactory {
 
     /**
      * 根据omd获取操作请求
+     *
      * @param omd
      * @return
      */
@@ -28,6 +31,7 @@ public class RequestFactory {
 
     /**
      * 根据oad获取
+     *
      * @param oad
      * @return
      */
@@ -35,4 +39,11 @@ public class RequestFactory {
         return new GetRequestNormal(oad, 0);
     }
 
+    public static SetRequestNormal setRequestNormal(SetRequestData requestData) {
+        SetRequestNormal setRequestNormal = new SetRequestNormal();
+        setRequestNormal.setSetData(requestData);
+        setRequestNormal.setPiid(2);
+        setRequestNormal.setTimeStamp(0);
+        return setRequestNormal;
+    }
 }

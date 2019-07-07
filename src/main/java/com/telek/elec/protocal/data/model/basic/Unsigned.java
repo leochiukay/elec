@@ -19,6 +19,11 @@ public class Unsigned extends NumericalData {
         this.dataType = DataType.UNSIGNED;
     }
 
+    public Unsigned(short value) {
+        this.dataType = DataType.UNSIGNED;
+        this.value = value;
+    }
+
     @Override
     protected int calculateSpecialCharLength() {
         return CHAR_LENGTH;

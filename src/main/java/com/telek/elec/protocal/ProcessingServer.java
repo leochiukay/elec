@@ -1,5 +1,7 @@
 package com.telek.elec.protocal;
 
+import com.telek.elec.netty.NettyContext;
+import com.telek.elec.netty.SyncWriteFuture;
 import com.telek.elec.protocal.service.response.ResponseService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +34,14 @@ public class ProcessingServer implements Runnable {
                 byte blockFlag = data[0];
             }
         } else {
-            new ResponseService(resultPacket).dealAndResponse();
+            String syncKey = resultPacket.getSa().getAddress();
+            SyncWriteFuture future = NettyContext.syncKey.get(syncKey);
+            if (future != null) {
+                future.setResult(resultPacket);
+                return;
+            } else {
+                new ResponseService(resultPacket).dealAndResponse();
+            }
         }
     }
 

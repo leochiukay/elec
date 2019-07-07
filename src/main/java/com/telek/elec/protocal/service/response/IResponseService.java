@@ -9,5 +9,4 @@ public interface IResponseService {
      * 处理请求并响应
      */
     void dealAndResponse();
-
 }
