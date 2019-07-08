@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class OMD extends AbsData {
 
-    private static final int OMD_CHAR_LENGTH = 8;
+    public static final int OMD_CHAR_LENGTH = 8;
 
     private OI oi;
     /**

@@ -16,4 +16,13 @@ public enum  GetResultType {
 
     String msg;
 
+    public static GetResultType getByCode(int code) {
+        for (GetResultType value : values()) {
+            if (value.getCode() == code) {
+                return value;
+            }
+        }
+        return null;
+    }
+
 }
