@@ -2,17 +2,21 @@ package com.telek.elec.protocal.data;
 
 import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.protocal.data.model.AbsData;
+import com.telek.elec.protocal.data.model.basic.Array;
 import com.telek.elec.protocal.data.model.basic.Comdcb;
-import com.telek.elec.protocal.data.model.basic.DateTime;
-import com.telek.elec.protocal.data.model.basic.DateTimeS;
-import com.telek.elec.protocal.data.model.basic.DoubleLongUnsigned;
-import com.telek.elec.protocal.data.model.basic.Long;
-import com.telek.elec.protocal.data.model.basic.LongUnsigned;
-import com.telek.elec.protocal.data.model.basic.Null;
-import com.telek.elec.protocal.data.model.basic.VisibleString;
-import com.telek.elec.protocal.data.model.basic.Structure;
-import com.telek.elec.protocal.data.model.basic.Unsigned;
+import com.telek.elec.protocal.data.model.basic.date.DateTime;
+import com.telek.elec.protocal.data.model.basic.date.DateTimeS;
 import com.telek.elec.protocal.data.model.basic.Enums;
+import com.telek.elec.protocal.data.model.basic.Null;
+import com.telek.elec.protocal.data.model.basic.Structure;
+import com.telek.elec.protocal.data.model.basic.number.DoubleLong;
+import com.telek.elec.protocal.data.model.basic.number.DoubleLongUnsigned;
+import com.telek.elec.protocal.data.model.basic.number.Integer;
+import com.telek.elec.protocal.data.model.basic.number.Long;
+import com.telek.elec.protocal.data.model.basic.number.LongUnsigned;
+import com.telek.elec.protocal.data.model.basic.number.Unsigned;
+import com.telek.elec.protocal.data.model.basic.string.OctetString;
+import com.telek.elec.protocal.data.model.basic.string.VisibleString;
 import com.telek.elec.protocal.data.model.complex.OAD;
 import com.telek.elec.protocal.data.model.complex.OI;
 import com.telek.elec.protocal.data.model.complex.OMD;
@@ -44,49 +48,116 @@ public class HexToDataConvertor {
             return null;
         }
         // 1 获取该数据的数据类型
-        int dataType = java.lang.Integer.parseInt(hexIncludeDataType.substring(0, 2), 16);
+        int dataTypeInt = java.lang.Integer.parseInt(hexIncludeDataType.substring(0, 2), 16);
+        DataType dataType = DataUtils.getDataType(dataTypeInt);
+        if (dataType == null) {
+            return null;
+        }
         // 2 解码十六进制字符串
         AbsData iData = null;
-        /****************************************************/
-        /**************基本数据类型***************************/
-        /****************************************************/
-        if (dataType == DataType.NULL.getCode()) {
-            iData = new Null();
-        } else if (dataType == DataType.UNSIGNED.getCode()) {
-            iData = new Unsigned();
-        } else if (dataType == DataType.LONG.getCode()) {
-            iData = new Long();
-        } else if (dataType == DataType.LONG_UNSIGNED.getCode()) {
-            iData = new LongUnsigned();
-        } else if (dataType == DataType.DOUBLE_LONG_UNSIGNED.getCode()) {
-            iData = new DoubleLongUnsigned();
-        } else if (dataType == DataType.DATE_TIME.getCode()) {
-            iData = new DateTime();
-        } else if (dataType == DataType.DATE_TIME_S.getCode()) {
-            iData = new DateTimeS();
-        } else if (dataType == DataType.OCTET_STRING.getCode()) {
-            iData = new VisibleString();
-        } else if (dataType == DataType.ENUM.getCode()) {
-            iData = new Enums();
-        } else if (dataType == DataType.STRUCTURE.getCode()) {
-            iData = new Structure();
-        } else if (dataType == DataType.COMDCB.getCode()) {
-            iData = new Comdcb();
-        }
-        /****************************************************/
-        /**************复杂数据类型***************************/
-        /****************************************************/
-        else if (dataType == DataType.OI.getCode()) {
-            iData = new OI();
-        } else if (dataType == DataType.OMD.getCode()) {
-            iData = new OMD();
-        } else if (dataType == DataType.OAD.getCode()) {
-            iData = new OAD();
+        switch (dataType) {
+            case NULL:
+                iData = new Null();
+                break;
+            case ARRAY:
+                iData = new Array();
+                break;
+            case STRUCTURE:
+                iData = new Structure();
+                break;
+            case BOOL:
+                break;
+            case BIT_STRING:
+                break;
+            case DOUBLE_LONG:
+                iData = new DoubleLong();
+                break;
+            case DOUBLE_LONG_UNSIGNED:
+                iData = new DoubleLongUnsigned();
+                break;
+            case OCTET_STRING:
+                iData = new OctetString();
+                break;
+            case VISIBLE_STRING:
+                iData = new VisibleString();
+                break;
+            case UTF8_STRING:
+                break;
+            case INTEGER:
+                iData = new Integer();
+                break;
+            case LONG:
+                iData = new Long();
+                break;
+            case UNSIGNED:
+                iData = new Unsigned();
+                break;
+            case LONG_UNSIGNED:
+                iData = new LongUnsigned();
+                break;
+            case LONG64:
+                break;
+            case LONG64_UNSIGNED:
+                break;
+            case ENUM:
+                iData = new Enums();
+                break;
+            case FLOAT32:
+                break;
+            case FLOAT64:
+                break;
+            case DATE_TIME:
+                iData = new DateTime();
+                break;
+            case DATE:
+                break;
+            case TIME:
+                break;
+            case DATE_TIME_S:
+                iData = new DateTimeS();
+                break;
+            case OI:
+                iData = new OI();
+                break;
+            case OAD:
+                iData = new OAD();
+                break;
+            case ROAD:
+                break;
+            case OMD:
+                iData = new OMD();
+                break;
+            case TI:
+                break;
+            case TSA:
+                break;
+            case MAC:
+                break;
+            case RN:
+                break;
+            case REGION:
+                break;
+            case SCALER_UNIT:
+                break;
+            case RSD:
+                break;
+            case CSD:
+                break;
+            case MS:
+                break;
+            case SID:
+                break;
+            case SID_MAC:
+                break;
+            case COMDCB:
+                iData = new Comdcb();
+                break;
+            case RCSD:
+                break;
         }
         if (iData != null) {
             iData.decode(hexIncludeDataType);
         }
         return iData;
     }
-
 }

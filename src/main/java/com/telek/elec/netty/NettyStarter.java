@@ -52,7 +52,7 @@ public class NettyStarter {
                     });
             ChannelFuture future = bootstrap.bind(port).sync();
             if (future.isSuccess()) {
-                log.info("启动 " + this.getClass().getSimpleName() + " 成功");
+                log.info("启动 " + this.getClass().getSimpleName() + " 成功, port:" + port);
             }
             channel = (ServerSocketChannel) future.channel();
             channel.closeFuture().sync();

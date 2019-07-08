@@ -32,7 +32,10 @@ public enum APDUSequence {
     REPORT_NOTIFICATION(0x88, "上报通知", APDUType.REPORT),
 
     PROXY_REQUEST(0x09, "代理请求", APDUType.PROXY),
-    PROXY_RESPONSE(0x89, "代理响应", APDUType.PROXY);
+    PROXY_RESPONSE(0x89, "代理响应", APDUType.PROXY),
+
+    ERROR_CLIENT(110, "客户端异常响应", APDUType.ERROR),
+    ERROR_SERVER(238, "服务端异常响应", APDUType.ERROR);
 
     private int id;
 

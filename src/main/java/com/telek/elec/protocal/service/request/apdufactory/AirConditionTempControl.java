@@ -1,7 +1,15 @@
 package com.telek.elec.protocal.service.request.apdufactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.factory.AirConditionTempControlFactory;
+import com.telek.elec.protocal.data.model.basic.AbsBasicData;
+import com.telek.elec.protocal.data.model.basic.Array;
+import com.telek.elec.protocal.data.model.basic.number.Long;
+import com.telek.elec.protocal.data.model.basic.Structure;
+import com.telek.elec.protocal.data.model.basic.number.Unsigned;
 import com.telek.elec.protocal.data.model.complex.OI;
 import com.telek.elec.protocal.service.RequestFactory;
 
@@ -17,7 +25,12 @@ public class AirConditionTempControl {
      * =array 空调时段温控参数
      * 空调时段温控参数=structure
      * {
-     *   温度阈值（同4311属性5）
+     *   温度阈值（参数）
+     * 参数:=structure
+     * {
+     *   温度上限 long（单位：℃，换算：-1），
+     *   温度下限 long（单位：℃，换算：-1）
+     * }
      *   自动控制时段::=structure
      * {
      *    起始小时 unsigned，
@@ -29,8 +42,39 @@ public class AirConditionTempControl {
      * 属性2
      * @return enum{关闭（0），打开（1）
      */
-    public static CodecAPDU params() {
-        return RequestFactory.getRequestNormal(AirConditionTempControlFactory.params());
+    public static CodecAPDU params(Long tempUp, Long tempDown, Unsigned beginHour, Unsigned beginMinute,
+                                   Unsigned endHour, Unsigned endMinute) {
+        Structure temp = new Structure();
+        temp.setSize(2);
+        List<AbsBasicData> tempData = new ArrayList<>();
+        tempData.add(tempUp);
+        tempData.add(tempDown);
+        temp.setDatas(tempData);
+
+        Structure time = new Structure();
+        time.setSize(4);
+        List<AbsBasicData> timeDatas = new ArrayList<>(4);
+        timeDatas.add(beginHour);
+        timeDatas.add(beginMinute);
+        timeDatas.add(endHour);
+        timeDatas.add(endMinute);
+        time.setDatas(timeDatas);
+
+        Structure param = new Structure();
+        param.setSize(2);
+        List<AbsBasicData> paramStructures = new ArrayList<>(2);
+        paramStructures.add(temp);
+        paramStructures.add(time);
+        param.setDatas(paramStructures);
+
+        Array array = new Array();
+        array.setSize(1);
+        List<AbsBasicData> arrayDatas = new ArrayList<>(1);
+        arrayDatas.add(param);
+        array.setDatas(arrayDatas);
+
+
+        return RequestFactory.getSetRequestNormal(array, AirConditionTempControlFactory.params());
     }
 
     /**

@@ -9,7 +9,8 @@ import com.telek.elec.protocal.data.model.basic.AbsBasicData;
 import com.telek.elec.protocal.data.model.basic.Array;
 import com.telek.elec.protocal.data.model.basic.Comdcb;
 import com.telek.elec.protocal.data.model.basic.Enums;
-import com.telek.elec.protocal.data.model.basic.VisibleString;
+import com.telek.elec.protocal.data.model.basic.OADParams;
+import com.telek.elec.protocal.data.model.basic.string.VisibleString;
 import com.telek.elec.protocal.data.model.basic.Structure;
 import com.telek.elec.protocal.data.model.complex.OAD;
 import com.telek.elec.protocal.data.model.complex.OMD;
@@ -63,11 +64,11 @@ public abstract class AbsModbusLora {
      *
      * @return
      */
-    public static CodecAPDU portParam(OAD port, Comdcb portParam, Enums portFunction) {
+    public static CodecAPDU portParam(OADParams port, Comdcb portParam, Enums portFunction) {
         Structure structure = new Structure();
         structure.setSize(3);
         List<AbsBasicData> datas = new ArrayList<>(3);
-        //datas.add(port);
+        datas.add(port);
         datas.add(portParam);
         datas.add(portFunction);
         structure.setDatas(datas);

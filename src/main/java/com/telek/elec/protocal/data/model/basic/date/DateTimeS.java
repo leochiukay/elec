@@ -1,35 +1,39 @@
-package com.telek.elec.protocal.data.model.basic;
+package com.telek.elec.protocal.data.model.basic.date;
 
 import java.util.Calendar;
 
 import com.telek.elec.protocal.apdu.codec.DecoderUtils;
 import com.telek.elec.protocal.apdu.codec.EncoderUtils;
 import com.telek.elec.protocal.constant.DataType;
+import com.telek.elec.protocal.data.model.basic.AbsBasicData;
 
 import lombok.Data;
 
 /**
- *   year          long-unsigned，
+ * year          long-unsigned，
  *   month         unsigned，
- *   day_of_month  unsigned，
- *   day_of_week   unsigned，
+ *   day           unsigned，
  *   hour          unsigned，
  *   minute        unsigned，
- *   second        unsigned，
- *   milliseconds  long-unsigned
+ *   second        unsigned
  */
 @Data
-public class DateTime extends AbsBasicData {
+public class DateTimeS extends AbsBasicData {
 
-    private static final int CHAR_LENGTH = 20;
+    private static final int CHAR_LENGTH = 14;
 
     /**
-     * 10字节
+     * 7字节
      */
     private Calendar calendar;
 
-    public DateTime() {
-        this.dataType = DataType.DATE_TIME;
+    public DateTimeS(Calendar calendar) {
+        this();
+        this.calendar = calendar;
+    }
+
+    public DateTimeS() {
+        this.dataType = DataType.DATE_TIME_S;
     }
 
     @Override
@@ -39,12 +43,12 @@ public class DateTime extends AbsBasicData {
 
     @Override
     protected String encodeSpecial() {
-        return EncoderUtils.encodeToDateTimeHex(calendar);
+        return EncoderUtils.encodeToDateTimeSHex(calendar);
     }
 
     @Override
     protected int decodeSpecial(String hexExcludeDataType) {
-        calendar = DecoderUtils.decodeDateTimeHex(hexExcludeDataType);
+        calendar = DecoderUtils.decodeDateTimeSHex(hexExcludeDataType);
         return CHAR_LENGTH;
     }
 }

@@ -8,10 +8,9 @@ import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
 import com.telek.elec.protocal.data.model.basic.AbsBasicData;
 import com.telek.elec.protocal.data.model.basic.Array;
 import com.telek.elec.protocal.data.model.basic.Structure;
-import com.telek.elec.protocal.data.model.basic.Unsigned;
+import com.telek.elec.protocal.data.model.basic.number.Unsigned;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 

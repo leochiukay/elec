@@ -14,7 +14,8 @@ public enum APDUType {
     SET("set操作"),
     ACTION("action操作"),
     REPORT("report操作"),
-    PROXY("proxy操作");
+    PROXY("proxy操作"),
+    ERROR("异常");
 
     private String msg;
 

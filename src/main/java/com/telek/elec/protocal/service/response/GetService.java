@@ -3,22 +3,10 @@ package com.telek.elec.protocal.service.response;
 import com.telek.elec.protocal.Packet;
 import com.telek.elec.protocal.apdu.CodecAPDU;
 
-import com.telek.elec.protocal.apdu.factory.CommonOADFactory;
-import com.telek.elec.protocal.apdu.model.DataInfo;
-import com.telek.elec.protocal.apdu.model.GetResult;
-import com.telek.elec.protocal.apdu.model.GetResultNormal;
-import com.telek.elec.protocal.apdu.model.constant.GetResultType;
-import com.telek.elec.protocal.apdu.read.request.GetRequestNormal;
-import com.telek.elec.protocal.apdu.read.request.GetRequestNormalList;
-import com.telek.elec.protocal.apdu.read.response.GetResponseNormal;
-import com.telek.elec.protocal.data.model.AbsData;
-import com.telek.elec.protocal.data.model.basic.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -32,7 +20,7 @@ public class GetService implements IResponseService {
 
     @Override
     public void dealAndResponse() {
-        if (apdu instanceof GetResponseNormal) {
+        /*if (apdu instanceof GetResponseNormal) {
             GetResponseNormal response = (GetResponseNormal) apdu;
             GetResultNormal resultNormal = response.getGetResultNormal();
             GetResult getResult = resultNormal.getGetResult();
@@ -53,6 +41,6 @@ public class GetService implements IResponseService {
             }
         } else if (apdu instanceof GetRequestNormalList) {
 
-        }
+        }*/
     }
 }

@@ -1,5 +1,6 @@
 package com.telek.elec.init;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -13,6 +14,7 @@ import com.telek.elec.netty.NettyStarter;
 @Component
 public class NettyInit implements ApplicationListener<ContextRefreshedEvent> {
 
+    @Value("${netty.port}")
     private int port;
 
     @Override

@@ -1,12 +1,9 @@
 package com.telek.elec.web.service;
 
-import com.telek.elec.protocal.Packet;
-import com.telek.elec.protocal.apdu.factory.CommonOADFactory;
-import com.telek.elec.protocal.apdu.read.request.GetRequestNormal;
-import com.telek.elec.protocal.service.request.RequestService;
-import com.telek.elec.protocal.service.response.ResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.telek.elec.protocal.service.request.RequestService;
 
 /**
  * 读取操作
@@ -17,11 +14,11 @@ public class ReadService {
     private RequestService requestService;
 
     public void mbusProperties(String address) {
-        GetRequestNormal request = new GetRequestNormal();
+        /*GetRequestNormal request = new GetRequestNormal();
         request.setOad(CommonOADFactory.mbus());
         request.setPiid(1);
         Packet packet = requestService.syncSendRequest(request, address);
-        new ResponseService(packet).dealAndResponse();
+        new ResponseService(packet).dealAndResponse();*/
     }
 
 
