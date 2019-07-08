@@ -1,6 +1,9 @@
 package com.telek.elec.protocal.data.model.basic;
 
+import java.util.List;
+
 import com.telek.elec.protocal.constant.DataType;
+import com.telek.elec.protocal.data.model.AbsData;
 
 import lombok.Data;
 
@@ -16,5 +19,14 @@ public class Array extends AbsArraysData {
 
     public Array() {
         this.dataType = DataType.ARRAY;
+    }
+
+    public Array(List<AbsData> data) {
+        this();
+        if (data == null) {
+            this.size = 0;
+        } else {
+            this.datas = data;
+        }
     }
 }

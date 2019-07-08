@@ -1,18 +1,17 @@
-package com.telek.elec.protocal.data.model.complex;
+package com.telek.elec.protocal.data.model;
 
 import com.telek.elec.protocal.constant.DataType;
+import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
-
-import java.util.Objects;
 
 /**
  * 对象标识数据类型--2字节
  * 对象标识OI，标识终端中对象唯一名称的编码，2字节。如0010-正向有功电能
  */
 @Data
-public class OI extends AbsComplexData {
+public class OI extends AbsData {
 
     private static final int OI_CHAR_LENGTH = 4;
 
@@ -39,21 +38,7 @@ public class OI extends AbsComplexData {
     }
 
     @Override
-    protected void calculateCharLength() {
-        this.charLength = OI_CHAR_LENGTH;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        OI oi1 = (OI) o;
-        return oi == oi1.oi;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), oi);
+    protected int calculateSpecialCharLength() {
+        return OI_CHAR_LENGTH;
     }
 }

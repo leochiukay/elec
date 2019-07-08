@@ -8,8 +8,8 @@ import com.telek.elec.protocal.apdu.read.request.GetRequestNormal;
 import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
 import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.protocal.data.model.basic.Null;
-import com.telek.elec.protocal.data.model.complex.OAD;
-import com.telek.elec.protocal.data.model.complex.OMD;
+import com.telek.elec.protocal.data.model.OAD;
+import com.telek.elec.protocal.data.model.OMD;
 
 public class RequestFactory {
 

@@ -34,6 +34,15 @@ public class Comdcb extends AbsBasicData {
         this.dataType = DataType.COMDCB;
     }
 
+    public Comdcb(Enums baudRate, Enums calibration, Enums dataBit, Enums stopBit, Enums flowControl) {
+        this();
+        this.baudRate = baudRate;
+        this.calibration = calibration;
+        this.dataBit = dataBit;
+        this.stopBit = stopBit;
+        this.flowControl = flowControl;
+    }
+
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
         return CHAR_LENGTH;

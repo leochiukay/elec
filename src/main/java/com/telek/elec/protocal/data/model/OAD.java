@@ -1,7 +1,6 @@
-package com.telek.elec.protocal.data.model.basic;
+package com.telek.elec.protocal.data.model;
 
 import com.telek.elec.protocal.constant.DataType;
-import com.telek.elec.protocal.data.model.complex.OI;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
@@ -9,11 +8,10 @@ import com.telek.elec.util.StringUtils;
 import lombok.Data;
 
 /**
- * 该OAD作为参数
  * 对象标识,4字节，如00100200。
  */
 @Data
-public class OADParams extends AbsBasicData {
+public class OAD extends AbsData {
 
     private static final int OAD_CHAR_LENGTH = 8;
 
@@ -32,11 +30,11 @@ public class OADParams extends AbsBasicData {
      */
     private int index;
 
-    public OADParams() {
+    public OAD() {
         this.dataType = DataType.OAD;
     }
 
-    public OADParams(OI oi, int attr, int index) {
+    public OAD(OI oi, int attr, int index) {
         this();
         this.oi = oi;
         this.attr = attr;
@@ -74,7 +72,7 @@ public class OADParams extends AbsBasicData {
     }
 
     @Override
-    protected int calculateSpecialCharLength() throws EncodeException {
+    protected int calculateSpecialCharLength() {
         return OAD_CHAR_LENGTH;
     }
 }

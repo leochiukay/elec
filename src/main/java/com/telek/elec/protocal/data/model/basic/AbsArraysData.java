@@ -8,7 +8,6 @@ import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
-import lombok.Data;
 
 import lombok.Data;
 
@@ -23,17 +22,17 @@ public abstract class AbsArraysData extends AbsBasicData {
     /**
      * 个数,1字节
      */
-    private int size;
+    protected int size;
     /**
      * 表示里面的元素
      */
-    private List<AbsBasicData> datas;
+    protected List<AbsData> datas;
 
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
         int length = SIZE_CHAR_LENGTH;
         if (datas != null) {
-            for (AbsBasicData data : datas) {
+            for (AbsData data : datas) {
                 // 计算字符长度
                 data.encode();
                 length += data.getCharLength();
@@ -47,7 +46,7 @@ public abstract class AbsArraysData extends AbsBasicData {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(size), 2));
         if (size > 0 && datas != null && datas.size() > 0) {
-            for (AbsBasicData data : datas) {
+            for (AbsData data : datas) {
                 sb.append(data.encode());
             }
         }

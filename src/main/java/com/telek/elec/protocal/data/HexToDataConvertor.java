@@ -17,9 +17,9 @@ import com.telek.elec.protocal.data.model.basic.number.LongUnsigned;
 import com.telek.elec.protocal.data.model.basic.number.Unsigned;
 import com.telek.elec.protocal.data.model.basic.string.OctetString;
 import com.telek.elec.protocal.data.model.basic.string.VisibleString;
-import com.telek.elec.protocal.data.model.complex.OAD;
-import com.telek.elec.protocal.data.model.complex.OI;
-import com.telek.elec.protocal.data.model.complex.OMD;
+import com.telek.elec.protocal.data.model.OAD;
+import com.telek.elec.protocal.data.model.OI;
+import com.telek.elec.protocal.data.model.OMD;
 import com.telek.elec.protocal.exeception.DecodeException;
 
 import lombok.Data;

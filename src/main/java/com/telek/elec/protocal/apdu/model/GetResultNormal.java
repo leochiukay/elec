@@ -1,6 +1,6 @@
 package com.telek.elec.protocal.apdu.model;
 
-import com.telek.elec.protocal.data.model.complex.OAD;
+import com.telek.elec.protocal.data.model.OAD;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 

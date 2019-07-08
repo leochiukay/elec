@@ -7,7 +7,7 @@ import com.telek.elec.protocal.apdu.ResTypeCodecAPDU;
 import com.telek.elec.protocal.apdu.read.Get;
 import com.telek.elec.protocal.constant.APDUResType;
 import com.telek.elec.protocal.constant.APDUSequence;
-import com.telek.elec.protocal.data.model.complex.OAD;
+import com.telek.elec.protocal.data.model.OAD;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;

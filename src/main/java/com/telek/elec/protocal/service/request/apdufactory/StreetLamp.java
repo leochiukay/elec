@@ -1,20 +1,22 @@
 package com.telek.elec.protocal.service.request.apdufactory;
 
-import com.telek.elec.protocal.apdu.CodecAPDU;
-import com.telek.elec.protocal.apdu.factory.StreetLampFactory;
-import com.telek.elec.protocal.apdu.model.DataInfo;
-import com.telek.elec.protocal.apdu.model.SetRequestData;
-import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
-import com.telek.elec.protocal.data.model.basic.AbsBasicData;
-import com.telek.elec.protocal.data.model.basic.Array;
-import com.telek.elec.protocal.data.model.basic.Structure;
-import com.telek.elec.protocal.data.model.basic.number.Unsigned;
+import static com.telek.elec.protocal.service.RequestFactory.getActionRequestNormal;
+import static com.telek.elec.protocal.service.RequestFactory.getRequestNormal;
+import static com.telek.elec.protocal.service.RequestFactory.setRequestNormal;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.telek.elec.protocal.service.RequestFactory.*;
+import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.apdu.factory.StreetLampFactory;
+import com.telek.elec.protocal.apdu.model.DataInfo;
+import com.telek.elec.protocal.apdu.model.SetRequestData;
+import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
+import com.telek.elec.protocal.data.model.AbsData;
+import com.telek.elec.protocal.data.model.basic.Array;
+import com.telek.elec.protocal.data.model.basic.Structure;
+import com.telek.elec.protocal.data.model.basic.number.Unsigned;
 
 /**
  * 路灯
@@ -67,10 +69,10 @@ public class StreetLamp {
     public static SetRequestNormal setAutoControlPeriod(List<Map<String, Short>> controlPeriodList) {
         SetRequestData requestData = new SetRequestData();
         requestData.setOad(StreetLampFactory.autoControlPeriod());
-        List<AbsBasicData> arrayDatas = new ArrayList<>();
+        List<AbsData> arrayDatas = new ArrayList<>();
         for (Map<String, Short> controlPeriod : controlPeriodList) {
             Structure structure = new Structure();
-            List<AbsBasicData> period = new ArrayList<>();
+            List<AbsData> period = new ArrayList<>();
             period.add(new Unsigned(controlPeriod.get("sh")));
             period.add(new Unsigned(controlPeriod.get("sm")));
             period.add(new Unsigned(controlPeriod.get("eh")));

@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.data.model.complex;
+package com.telek.elec.protocal.data.model;
 
 import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.protocal.exeception.DecodeException;
@@ -12,7 +12,7 @@ import lombok.Data;
  * 00 10 01 00 —— OMD
  */
 @Data
-public class OMD extends AbsComplexData {
+public class OMD extends AbsData {
 
     private static final int OMD_CHAR_LENGTH = 8;
 
@@ -59,7 +59,7 @@ public class OMD extends AbsComplexData {
     }
 
     @Override
-    protected void calculateCharLength() {
-        this.charLength = OMD_CHAR_LENGTH;
+    protected int calculateSpecialCharLength() {
+        return OMD_CHAR_LENGTH;
     }
 }

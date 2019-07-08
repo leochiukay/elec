@@ -21,6 +21,11 @@ public class Enums extends AbsBasicData {
         this.dataType = DataType.ENUM;
     }
 
+    public Enums(short value) {
+        this();
+        this.value = value;
+    }
+
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
         return CHAR_LENGTH;

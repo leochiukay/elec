@@ -1,12 +1,13 @@
 package com.telek.elec.protocal.service.request;
 
+import org.springframework.stereotype.Service;
+
 import com.telek.elec.cache.TempCache;
 import com.telek.elec.protocal.Packet;
 import com.telek.elec.protocal.ProtocalSendHelper;
 import com.telek.elec.protocal.apdu.CodecAPDU;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
@@ -35,7 +36,7 @@ public class RequestService {
      */
     public Packet syncSendRequest(CodecAPDU apdu, String address) {
         try {
-            return ProtocalSendHelper.send2Service(address, apdu, true);
+            return ProtocalSendHelper.send2Service(address, apdu, false);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("请求发送失败");
