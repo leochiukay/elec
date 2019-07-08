@@ -1,6 +1,8 @@
 package com.telek.elec.protocal.apdu.model;
 
 import com.telek.elec.protocal.apdu.model.constant.GetResultType;
+import com.telek.elec.protocal.data.HexToDataConvertor;
+import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
@@ -23,7 +25,7 @@ public class GetResult extends AbsResult {
     /**
      * 正确返回数据
      */
-    private DataInfo dataInfo;
+    private AbsData data;
     /**
      * 错误信息
      */
@@ -37,7 +39,7 @@ public class GetResult extends AbsResult {
         if (GetResultType.DAR.equals(getResultType)) {
             sb.append(dar.encode());
         } else if (GetResultType.DATA.equals(getResultType)) {
-            sb.append(dataInfo.encode());
+            sb.append(data.encode());
         }
         return sb.toString();
     }
@@ -56,10 +58,9 @@ public class GetResult extends AbsResult {
         // 解码数据
         String hex = hexString.substring(2);
         if (GetResultType.DATA.equals(this.getResultType)) {
-            DataInfo resultData = new DataInfo();
-            int charLength = resultData.decode(hex);
-            this.dataInfo = resultData;
-            return charLength + 2;
+            AbsData absData = HexToDataConvertor.hexToData(hex);
+            this.data = absData;
+            return absData.getCharLength() + 2;
         } else if (GetResultType.DAR.equals(this.getResultType)) {
             DAR resultDAR = new DAR();
             int charLength = resultDAR.decode(hex);

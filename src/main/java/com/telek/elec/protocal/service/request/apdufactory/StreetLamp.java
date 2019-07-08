@@ -10,7 +10,6 @@ import java.util.Map;
 
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.factory.StreetLampFactory;
-import com.telek.elec.protocal.apdu.model.DataInfo;
 import com.telek.elec.protocal.apdu.model.SetRequestData;
 import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
 import com.telek.elec.protocal.data.model.AbsData;
@@ -82,7 +81,7 @@ public class StreetLamp {
         }
         Array array = new Array();
         array.setDatas(arrayDatas);
-        requestData.setData(new DataInfo(array));
+        requestData.setData(array);
         return setRequestNormal(requestData);
     }
 

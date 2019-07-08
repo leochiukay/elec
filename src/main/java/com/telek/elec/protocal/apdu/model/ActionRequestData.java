@@ -1,5 +1,7 @@
 package com.telek.elec.protocal.apdu.model;
 
+import com.telek.elec.protocal.data.HexToDataConvertor;
+import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.protocal.data.model.OMD;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
@@ -16,7 +18,7 @@ public class ActionRequestData extends AbsResult {
 
     private OMD omd;
 
-    private DataInfo data;
+    private AbsData data;
 
     @Override
     protected String encodeSpecial() throws EncodeException {
@@ -36,10 +38,9 @@ public class ActionRequestData extends AbsResult {
         OMD omd = new OMD();
         int modCharLen = omd.decode(hexString.substring(index, index += 8));
         this.omd = omd;
-        String data = hexString.substring(index);
-        DataInfo actionData = new DataInfo();
-        int dataCharLen = actionData.decode(data);
-        this.data = actionData;
-        return dataCharLen + modCharLen;
+        String dataStr = hexString.substring(index);
+        AbsData absData = HexToDataConvertor.hexToData(dataStr);
+        this.data = absData;
+        return absData.getCharLength() + modCharLen;
     }
 }

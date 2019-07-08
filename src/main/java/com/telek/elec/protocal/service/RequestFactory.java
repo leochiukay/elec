@@ -2,14 +2,13 @@ package com.telek.elec.protocal.service;
 
 import com.telek.elec.protocal.apdu.action.request.ActionRequestNormal;
 import com.telek.elec.protocal.apdu.model.ActionRequestData;
-import com.telek.elec.protocal.apdu.model.DataInfo;
 import com.telek.elec.protocal.apdu.model.SetRequestData;
 import com.telek.elec.protocal.apdu.read.request.GetRequestNormal;
 import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
 import com.telek.elec.protocal.data.model.AbsData;
-import com.telek.elec.protocal.data.model.basic.Null;
 import com.telek.elec.protocal.data.model.OAD;
 import com.telek.elec.protocal.data.model.OMD;
+import com.telek.elec.protocal.data.model.basic.Null;
 
 public class RequestFactory {
 
@@ -24,7 +23,7 @@ public class RequestFactory {
 
         ActionRequestData requestData = new ActionRequestData();
         requestData.setOmd(omd);
-        requestData.setData(new DataInfo(data));
+        requestData.setData(data);
         actionRequestNormal.setActionRequestData(requestData);
         return actionRequestNormal;
     }
@@ -40,7 +39,7 @@ public class RequestFactory {
 
         ActionRequestData requestData = new ActionRequestData();
         requestData.setOmd(omd);
-        requestData.setData(new DataInfo(new Null()));
+        requestData.setData(new Null());
         actionRequestNormal.setActionRequestData(requestData);
         return actionRequestNormal;
     }
@@ -65,9 +64,7 @@ public class RequestFactory {
         setRequestNormal.setPiid(2);
         SetRequestData setRequestData = new SetRequestData();
         setRequestData.setOad(oad);
-        DataInfo dataInfo = new DataInfo();
-        dataInfo.setData(data);
-        setRequestData.setData(dataInfo);
+        setRequestData.setData(data);
         setRequestNormal.setSetData(setRequestData);
         return setRequestNormal;
     }
