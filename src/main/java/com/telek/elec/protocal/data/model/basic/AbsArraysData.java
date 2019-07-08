@@ -26,8 +26,11 @@ public abstract class AbsArraysData extends AbsBasicData {
     /**
      * 表示里面的元素
      */
-    protected List<AbsData> datas;
+    protected List<AbsData> datas = new ArrayList<>();
 
+    public void addData(AbsData data){
+        datas.add(data);
+    }
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
         int length = SIZE_CHAR_LENGTH;
