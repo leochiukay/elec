@@ -47,6 +47,7 @@ public class ResponseService implements IResponseService {
             log.error("解码失败", e);
             return;
         }
+        System.out.println("APDU:" + apdu);
         // 获取具体处理业务的实体类
         IResponseService responseService = getResponseService(apdu);
         if (responseService != null) {

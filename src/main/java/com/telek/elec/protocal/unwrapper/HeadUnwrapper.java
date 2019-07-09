@@ -23,7 +23,7 @@ public class HeadUnwrapper extends Unwrapper {
         // 长度
         byte[] length = new byte[2];
         in.get(length);
-        out.setLength(((length[0] & 0xff) << 8) + length[1]);
+        out.setLength(length[0] + ((length[1] & 0x3f) << 8));
         // 控制域功能码
         byte controlByte = in.get();
         Packet.Control control = new Packet.Control();

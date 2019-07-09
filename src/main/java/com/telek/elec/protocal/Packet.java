@@ -3,6 +3,7 @@ package com.telek.elec.protocal;
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import com.telek.elec.protocal.constant.ProtocalConstant;
 import com.telek.elec.util.ByteUtils;
+import com.telek.elec.util.CRC;
 import com.telek.elec.util.CRC16M;
 import lombok.Data;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import java.nio.ByteBuffer;
 @Getter
 @NoArgsConstructor
 public class Packet {
-    private ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    private StringBuffer hexStr = new StringBuffer();
     /**
      * 起始帧 .
      */
@@ -51,44 +52,47 @@ public class Packet {
      */
     private byte[] fcs;
 
+    public Packet(byte[] data) {
+        this.data = data;
+    }
+
     private byte end = ProtocalConstant.END_FRAM;
 
     public void setLength(int length) {
         this.length = length;
-        byte[] lengthBytes = new byte[]{};
-        baos.write(ByteUtils.reverse(lengthBytes), 0, 2);
+        byte[] lengthBytes = new byte[]{(byte) (length & 0xff), (byte) ((length >> 8) & 0x3f)};
+        hexStr.append(HexBin.encode(lengthBytes));
     }
 
     public void setControl(Control control) {
         this.control = control;
-        baos.write(control.getFun() + (control.getBlock() << 5) + (control.getPrm() << 6) + (control.getDir() << 7));
+        hexStr.append(HexBin.encode(new byte[]{(byte) (control.getFun() + (control.getBlock() << 5) + (control.getPrm() << 6) + (control.getDir() << 7))}));
     }
 
     public void setSa(SA sa) {
         this.sa = sa;
-        baos.write((sa.length - 1 & 0x0F) + ((sa.logicAdd << 4) & 0x03) + ((sa.type << 6) & 0x03));
-        byte[] address = HexBin.decode(sa.getAddress());
-        baos.write(ByteUtils.reverse(address), 0, address.length);
+        hexStr.append(HexBin.encode(new byte[]{(byte) ((sa.length - 1 & 0x0F) + ((sa.logicAdd << 4) & 0x03) + ((sa.type << 6) & 0x03))}));
+        hexStr.append(HexBin.encode(ByteUtils.reverse(HexBin.decode(sa.getAddress()))));
     }
 
     public void setCa(int ca) {
         this.ca = ca;
-        baos.write(ca & 0xFF);
+        hexStr.append(HexBin.encode(new byte[]{(byte) (ca)}));
     }
 
     public void setHcs(byte[] hcs) {
         this.hcs = hcs;
-        baos.write(ByteUtils.reverse(hcs), 0, 2);
+        hexStr.append(HexBin.encode(ByteUtils.reverse(hcs)));
     }
 
     public void setData(byte[] data) {
         this.data = data;
-        baos.write(ByteUtils.reverse(data), 0, data.length);
+        hexStr.append(HexBin.encode(data));
     }
 
     public void setFcs(byte[] fcs) {
         this.fcs = fcs;
-        baos.write(ByteUtils.reverse(fcs), 0, 2);
+        hexStr.append(HexBin.encode(ByteUtils.reverse(fcs)));
     }
 
     @Data
@@ -118,7 +122,7 @@ public class Packet {
      * @return: byte[]
      */
     public void calculateHcs() {
-        byte[] hcs = CRC16M.getCrc16(baos.toByteArray());
+        byte[] hcs = CRC.getCRC16(HexBin.decode(this.hexStr.toString()));
         setHcs(hcs);
     }
 
@@ -130,7 +134,7 @@ public class Packet {
      * @return: byte[]
      */
     public void calculateFcs() {
-        byte[] fcs = CRC16M.getCrc16(baos.toByteArray());
+        byte[] fcs = CRC.getCRC16(HexBin.decode(this.hexStr.toString()));
         setFcs(fcs);
     }
 }
