@@ -3,6 +3,7 @@ package com.telek.elec.protocal.data.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.HexToDataConvertor;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
@@ -25,20 +26,21 @@ public abstract class AbsArraysData extends AbsData {
     /**
      * 表示里面的元素
      */
-    protected List<AbsData> datas = new ArrayList<>();
+    protected List<Datas> datas = new ArrayList<>();
 
-    public void addData(AbsData data){
-        datas.add(data);
+    public void addData(AbsData data) {
+        Datas datas = new Datas(data);
+        this.datas.add(datas);
     }
 
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
         int length = SIZE_CHAR_LENGTH;
         if (datas != null) {
-            for (AbsData data : datas) {
+            for (Datas data : datas) {
                 // 计算字符长度
                 data.encode();
-                length += data.getCharLength();
+                length += data.getData().getCharLength();
             }
         }
         return length;
@@ -49,7 +51,7 @@ public abstract class AbsArraysData extends AbsData {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(size), 2));
         if (size > 0 && datas != null && datas.size() > 0) {
-            for (AbsData data : datas) {
+            for (Datas data : datas) {
                 sb.append(data.encode());
             }
         }
@@ -69,7 +71,7 @@ public abstract class AbsArraysData extends AbsData {
                 String hex = hexExcludeDataType.substring(charLength);
                 AbsData data = HexToDataConvertor.hexToData(hex);
                 if (data != null) {
-                    this.datas.add(data);
+                    this.datas.add(new Datas(data));
                     int thisCharLength = data.getCharLength();
                     charLength += thisCharLength;
                 }

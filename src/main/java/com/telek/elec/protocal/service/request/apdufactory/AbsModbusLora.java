@@ -38,13 +38,13 @@ public abstract class AbsModbusLora {
         datas.add(desc);
         datas.add(portParam);
         datas.add(portFunction);
-        structure.setDatas(datas);
+//        structure.setDatas(datas);
 
         Array array = new Array();
         array.setSize(1);
         List<AbsData> arrayDatas = new ArrayList<>(1);
         arrayDatas.add(structure);
-        array.setDatas(arrayDatas);
+//        array.setDatas(arrayDatas);
 
         // oad
         OAD oad = ModBusFactory.deviceList();
@@ -70,7 +70,7 @@ public abstract class AbsModbusLora {
         datas.add(port);
         datas.add(portParam);
         datas.add(portFunction);
-        structure.setDatas(datas);
+//        structure.setDatas(datas);
 
         // omd
         OMD omd = ModBusFactory.portParam();

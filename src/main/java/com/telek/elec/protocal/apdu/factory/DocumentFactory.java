@@ -14,18 +14,25 @@ public class DocumentFactory {
     /**
      * 添加一个采集档案配置单元
      * 方法127
+     *
      * @return OAD
      */
     public static OMD addDocument() {
         return new OMD(OI, 128, 0);
     }
+
     /**
      * 批量添加采集档案配置单元
      * 方法127
+     *
      * @return OAD
      */
     public static OMD addBatchDocuments() {
         return new OMD(OI, 129, 0);
+    }
+
+    public static OMD clear() {
+        return new OMD(OI, 134, 0);
     }
 
 }

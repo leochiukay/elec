@@ -19,12 +19,4 @@ public class Array extends AbsArraysData {
     public Array() {
         this.dataType = DataType.ARRAY;
     }
-
-    public Array(List<AbsData> data) {
-        if (data == null) {
-            this.size = 0;
-        } else {
-            this.datas = data;
-        }
-    }
 }

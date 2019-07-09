@@ -19,12 +19,4 @@ public class Structure extends AbsArraysData {
     public Structure() {
         this.dataType = DataType.STRUCTURE;
     }
-
-    public Structure(List<AbsData> data) {
-        if (data == null) {
-            this.size = 0;
-        } else {
-            this.datas = data;
-        }
-    }
 }

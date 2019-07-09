@@ -2,7 +2,6 @@ package com.telek.elec.protocal.apdu.connection;
 
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.constant.APDUSequence;
-import com.telek.elec.protocal.data.model.basic.string.VisibleString;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 

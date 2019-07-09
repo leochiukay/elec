@@ -38,15 +38,10 @@ public class TI extends AbsData {
     }
 
     @Override
-    protected int calculateSpecialCharLength() throws EncodeException {
-        return TI_CHAR_LENGTH;
-    }
-
-    @Override
     protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(unit), 2));
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(interVal), 2));
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(interVal), 4));
         return sb.toString();
     }
 
