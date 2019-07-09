@@ -1,7 +1,10 @@
 package com.telek.elec.controller;
 
+import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.data.service.model.Document;
+import com.telek.elec.protocal.service.request.RequestService;
 import com.telek.elec.protocal.service.request.apdufactory.DocumentOps;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,12 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test/document")
 public class DocumentController {
+    @Autowired
+    private RequestService requestService;
+
     @PostMapping("/add")
-    public Object addDocument() {
+    public Object addDocument(String address) {
         Document document = new Document();
         document.setIndex(12);
         Document.BasicObject basicObject = new Document.BasicObject();
-        DocumentOps.addDocument(document);
+        CodecAPDU apdu = DocumentOps.addDocument(document);
+        requestService.sendRequest(apdu, address);
         return "OK";
     }
 
@@ -32,8 +39,10 @@ public class DocumentController {
         return "OK";
     }
 
-    @PostMapping("/delete")
-    public Object delete() {
-        return null;
+    @PostMapping("/clear")
+    public Object delete(String address) {
+        CodecAPDU apdu = DocumentOps.clear();
+        requestService.sendRequest(apdu, address);
+        return "OK";
     }
 }

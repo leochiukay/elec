@@ -18,7 +18,7 @@ public class DocumentFactory {
      * @return OAD
      */
     public static OMD addDocument() {
-        return new OMD(OI, 128, 0);
+        return new OMD(OI, 127, 0);
     }
 
     /**

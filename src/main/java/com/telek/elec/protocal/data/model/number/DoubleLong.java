@@ -34,6 +34,6 @@ public class DoubleLong extends NumericalData {
 
     @Override
     protected int getSpecialCharLength() {
-        return charLength;
+        return CHAR_LENGTH;
     }
 }

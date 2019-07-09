@@ -4,6 +4,7 @@ import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
+import com.telek.elec.util.StringUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,10 +35,10 @@ public class CSD extends AbsData {
     protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         if (oad != null) {
-            sb.append(Integer.toHexString(0));
+            sb.append(StringUtils.subLastNumStr(Integer.toHexString(0), 2));
             sb.append(oad.encode());
         } else if (road != null) {
-            sb.append(Integer.toHexString(1));
+            sb.append(StringUtils.subLastNumStr(Integer.toHexString(1), 2));
             sb.append(road.encode());
         }
         return sb.toString();

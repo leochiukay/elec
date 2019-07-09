@@ -39,7 +39,7 @@ public class TSA extends AbsData {
     @Override
     protected String encodeSpecial() throws EncodeException {
         StringBuffer sbf = new StringBuffer();
-        byte sa0 = (byte) (((addressType << 6) & 0xC0) + ((logicAddress << 4) & 0x30) + (address.length() - 1 & 0x0F));
+        byte sa0 = (byte) (((addressType << 6) & 0xC0) + ((logicAddress << 4) & 0x30) + (address.length()/2 - 1 & 0x0F));
         sbf.append(HexBin.encode(new byte[]{sa0}));
         sbf.append(address);
         OctetString octetString = new OctetString(sbf.toString());

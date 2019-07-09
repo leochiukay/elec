@@ -11,6 +11,7 @@ import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,31 +24,32 @@ public class Document extends Structure {
     /**
      * 配置序号.
      */
-    private int index;
+    private int index =  1;
     /**
      * 基本信息.
      */
-    private BasicObject basicObject;
+    private BasicObject basicObject = new BasicObject();
     /**
      * 扩展信息.
      */
-    private ExtendedObject extendedObject;
+    private ExtendedObject extendedObject = new ExtendedObject();
     /**
      * 附属信息.
      */
-    private List<AnnexObject> annexObject;
+    private List<AnnexObject> annexObject = new ArrayList<>();
 
     @Override
     protected String encodeSpecial() throws EncodeException {
-        super.addData(new LongUnsigned(this.index));
-        super.addData(this.basicObject);
-        super.addData(this.extendedObject);
+        Structure structure = new Structure();
+        structure.addData(new LongUnsigned(this.index));
+        structure.addData(this.basicObject);
+        structure.addData(this.extendedObject);
         Array array = new Array();
         for (AnnexObject object : annexObject) {
             array.addData(object);
         }
-        super.addData(array);
-        return super.encode();
+        structure.addData(array);
+        return structure.encode();
     }
 
     @Override
@@ -60,7 +62,7 @@ public class Document extends Structure {
         /**
          * 通信地址.
          */
-        private String address;
+        private String address = "010203040506";
         /**
          * 波特率.
          */
@@ -100,17 +102,18 @@ public class Document extends Structure {
 
         @Override
         protected String encodeSpecial() throws EncodeException {
-            super.addData(new TSA(this.address));
-            super.addData(new Enums((short) this.baudType.getCode()));
-            super.addData(new Enums((short) this.protocalType.getCode()));
-            super.addData(new OAD());
-            super.addData(new OctetString(this.password));
-            super.addData(new Unsigned((short) this.rateNum));
-            super.addData(new Unsigned((short) this.userType));
-            super.addData(new Enums((short) this.connectionType.getCode()));
-            super.addData(new LongUnsigned(this.voltage));
-            super.addData(new LongUnsigned(this.current));
-            return super.encode();
+            Structure structure = new Structure();
+            structure.addData(new TSA(this.address));
+            structure.addData(new Enums((short) this.baudType.getCode()));
+            structure.addData(new Enums((short) this.protocalType.getCode()));
+            structure.addData(new OAD(new OI(0xf201), 02, 01));
+            structure.addData(new OctetString(this.password));
+            structure.addData(new Unsigned((short) this.rateNum));
+            structure.addData(new Unsigned((short) this.userType));
+            structure.addData(new Enums((short) this.connectionType.getCode()));
+            structure.addData(new LongUnsigned(this.voltage));
+            structure.addData(new LongUnsigned(this.current));
+            return structure.encode();
         }
 
         @Override
@@ -124,21 +127,22 @@ public class Document extends Structure {
         /**
          * 集中器地址.
          */
-        private String address;
+        private String address = "000000000003";
         /**
          * 资产号 .
          */
         private String assetNumber = "0000";
-        private int pt;
-        private int ct;
+        private int pt = 1;
+        private int ct = 1;
 
         @Override
         protected String encodeSpecial() throws EncodeException {
-            super.addData(new TSA(this.address));
-            super.addData(new OctetString(assetNumber));
-            super.addData(new LongUnsigned(this.pt));
-            super.addData(new LongUnsigned(this.ct));
-            return super.encode();
+            Structure structure = new Structure();
+            structure.addData(new TSA(this.address));
+            structure.addData(new OctetString(assetNumber));
+            structure.addData(new LongUnsigned(this.pt));
+            structure.addData(new LongUnsigned(this.ct));
+            return structure.encode();
         }
 
         @Override
@@ -154,9 +158,10 @@ public class Document extends Structure {
 
         @Override
         protected String encodeSpecial() throws EncodeException {
-            super.addData(oad);
-            super.addData(absData);
-            return super.encode();
+            Structure structure = new Structure();
+            structure.addData(oad);
+            structure.addData(absData);
+            return structure.encode();
         }
 
         @Override

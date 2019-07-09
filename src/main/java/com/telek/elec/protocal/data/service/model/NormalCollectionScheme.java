@@ -27,17 +27,18 @@ public class NormalCollectionScheme extends Structure {
 
     @Override
     protected String encodeSpecial() throws EncodeException {
-        super.addData(new Unsigned((short) this.index));
-        super.addData(new LongUnsigned(this.deep));
-        super.addData(this.way);
+        Structure structure = new Structure();
+        structure.addData(new Unsigned((short) this.index));
+        structure.addData(new LongUnsigned(this.deep));
+        structure.addData(this.way);
         Array array = new Array();
         for (CSD csd : recordList) {
             array.addData(csd);
         }
-        super.addData(array);
-        super.addData(this.ms);
-        super.addData(new Enums(((short) storageTimeUnitType.getCode())));
-        return super.encode();
+        structure.addData(array);
+        structure.addData(this.ms);
+        structure.addData(new Enums(((short) storageTimeUnitType.getCode())));
+        return structure.encode();
     }
 
     @Override
@@ -52,9 +53,10 @@ public class NormalCollectionScheme extends Structure {
 
         @Override
         protected String encodeSpecial() throws EncodeException {
-            super.addData(new Unsigned((short) this.type));
-            super.addData(data);
-            return super.encode();
+            Structure structure = new Structure();
+            structure.addData(new Unsigned((short) this.type));
+            structure.addData(data);
+            return structure.encode();
         }
 
         @Override
@@ -70,9 +72,10 @@ public class NormalCollectionScheme extends Structure {
 
         @Override
         protected String encodeSpecial() throws EncodeException {
-            super.addData(ti);
-            super.addData(new LongUnsigned(retry));
-            return super.encode();
+            Structure structure = new Structure();
+            structure.addData(ti);
+            structure.addData(new LongUnsigned(retry));
+            return structure.encode();
         }
 
         @Override

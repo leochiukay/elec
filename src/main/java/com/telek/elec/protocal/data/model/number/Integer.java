@@ -32,7 +32,7 @@ public class Integer extends NumericalData {
 
     @Override
     protected int getSpecialCharLength() {
-        return charLength;
+        return CHAR_LENGTH;
     }
 
     public long getValue() {

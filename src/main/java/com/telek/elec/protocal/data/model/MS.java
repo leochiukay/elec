@@ -25,10 +25,16 @@ public class MS extends AbsData {
      */
     private int value;
 
-    private List<Object> data;
+    private List<AbsData> data;
 
     public MS() {
         this.dataType = DataType.MS;
+    }
+
+    public MS(int value, List<AbsData> datas) {
+        this.dataType = DataType.MS;
+        this.value = value;
+        this.data = datas;
     }
 
     @Override
@@ -37,9 +43,11 @@ public class MS extends AbsData {
         if (data == null) {
             this.data = new ArrayList<>();
         }
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(this.value), 2));
         switch (value) {
             case 0:
             case 1:
+                break;
             case 2:
                 sb.append(StringUtils.subLastNumStr(Integer.toHexString(data.size()), 2));
                 for (Object datum : data) {
