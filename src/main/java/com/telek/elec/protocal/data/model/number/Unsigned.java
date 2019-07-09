@@ -14,11 +14,6 @@ public class Unsigned extends NumericalData {
      */
     private short value;
 
-    public Unsigned(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
     public Unsigned() {
         this.dataType = DataType.UNSIGNED;
     }

@@ -27,19 +27,13 @@ public class DateTimeS extends AbsData {
      */
     private Calendar calendar;
 
-    public DateTimeS(Calendar calendar, boolean isEncodeDataType) {
+    public DateTimeS(Calendar calendar) {
         this();
-        this.isEncodeDataType = isEncodeDataType;
         this.calendar = calendar;
     }
 
     public DateTimeS() {
         this.dataType = DataType.DATE_TIME_S;
-    }
-
-    public DateTimeS(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
     }
 
     @Override

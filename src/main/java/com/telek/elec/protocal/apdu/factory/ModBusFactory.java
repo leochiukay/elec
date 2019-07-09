@@ -6,7 +6,7 @@ import com.telek.elec.protocal.data.model.OMD;
 
 public class ModBusFactory {
 
-    private static final OI OI = new OI(0xf220, false);
+    private static final OI OI = new OI(0xf220);
 
     /**
      * MBUS：F220
@@ -20,7 +20,7 @@ public class ModBusFactory {
      * @return
      */
     public static OAD deviceList() {
-        OAD oad = new OAD(OI, 0x02, 0x00, false);
+        OAD oad = new OAD(OI, 0x02, 0x00);
         return oad;
     }
 
@@ -35,7 +35,7 @@ public class ModBusFactory {
      * @return null
      */
     public static OMD portParam() {
-        return new OMD(OI, 127, 0, false);
+        return new OMD(OI, 127, 0);
     }
 
 

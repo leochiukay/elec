@@ -9,7 +9,7 @@ import com.telek.elec.protocal.data.model.OMD;
  * @Description:
  */
 public class SchemeFactory {
-    public static final OI OI = new OI(0x6014, false);
+    public static final OI OI = new OI(0x6014);
 
     /**
      * 添加或更新一组普通采集方案
@@ -17,7 +17,7 @@ public class SchemeFactory {
      * @return OAD
      */
     public static OMD addScheme() {
-        return new OMD(OI, 127, 0, false);
+        return new OMD(OI, 127, 0);
     }
     /**
      * 删除一组普通采集方案
@@ -25,7 +25,7 @@ public class SchemeFactory {
      * @return OAD
      */
     public static OMD deleteScheme() {
-        return new OMD(OI, 128, 0, false);
+        return new OMD(OI, 128, 0);
     }
 
 }

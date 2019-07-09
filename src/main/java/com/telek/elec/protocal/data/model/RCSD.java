@@ -25,11 +25,6 @@ public class RCSD extends AbsData {
         this.dataType = DataType.RCSD;
     }
 
-    public RCSD(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
         int length = 2;

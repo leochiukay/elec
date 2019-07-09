@@ -9,7 +9,7 @@ import com.telek.elec.protocal.data.model.OMD;
  */
 public class SmartSwitchFactory {
 
-    public static final OI OI = new OI(0x4313, false);
+    public static final OI OI = new OI(0x4313);
 
     /**
      * 状态
@@ -17,7 +17,7 @@ public class SmartSwitchFactory {
      * @return enum{关闭（0），打开（1）
      */
     public static OAD switchState() {
-        return new OAD(OI, 2, 0, false);
+        return new OAD(OI, 2, 0);
     }
 
     /**
@@ -26,7 +26,7 @@ public class SmartSwitchFactory {
      * @return =enum{未（0），打开（1）
      */
     public static OAD autoControlState() {
-        return new OAD(OI, 3, 0, false);
+        return new OAD(OI, 3, 0);
     }
 
     /**
@@ -41,7 +41,7 @@ public class SmartSwitchFactory {
      * }
      */
     public static OAD autoControlPeriod() {
-        return new OAD(OI, 4, 0, false);
+        return new OAD(OI, 4, 0);
     }
 
     /**
@@ -50,7 +50,7 @@ public class SmartSwitchFactory {
      * @return null
      */
     public static OMD on() {
-        return new OMD(OI, 127, 0, false);
+        return new OMD(OI, 127, 0);
     }
 
     /**
@@ -59,7 +59,7 @@ public class SmartSwitchFactory {
      * @return null
      */
     public static OMD off() {
-        return new OMD(OI, 128, 0, false);
+        return new OMD(OI, 128, 0);
     }
 
     /**
@@ -68,7 +68,7 @@ public class SmartSwitchFactory {
      * @return null
      */
     public static OMD onAutoControl() {
-        return new OMD(OI, 129, 0, false);
+        return new OMD(OI, 129, 0);
     }
 
     /**
@@ -77,7 +77,7 @@ public class SmartSwitchFactory {
      * @return null
      */
     public static OMD offAutoControl() {
-        return new OMD(OI, 130, 0, false);
+        return new OMD(OI, 130, 0);
     }
 
 }

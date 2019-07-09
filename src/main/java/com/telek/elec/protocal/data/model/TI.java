@@ -32,13 +32,7 @@ public class TI extends AbsData {
         this.dataType = DataType.TI;
     }
 
-    public TI(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
-    public TI(byte unit, int interVal, boolean isEncodeDataType) {
-        this(isEncodeDataType);
+    public TI(byte unit, int interVal) {
         this.unit = unit;
         this.interVal = interVal;
     }

@@ -24,9 +24,10 @@ public class CSD extends AbsData {
         this.dataType = DataType.CSD;
     }
 
-    public CSD(boolean isEncodeDataType) {
+    public CSD(OAD oad, ROAD road) {
         this();
-        this.isEncodeDataType = isEncodeDataType;
+        this.oad = oad;
+        this.road = road;
     }
 
     @Override

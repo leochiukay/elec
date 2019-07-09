@@ -20,14 +20,8 @@ public class OctetString extends AbsString {
         this.dataType = DataType.OCTET_STRING;
     }
 
-    public OctetString(boolean isEncodeDataType) {
+    public OctetString(String value) {
         this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
-    public OctetString(String value, boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
         this.str = value;
         this.size = value.length() / 2;
     }

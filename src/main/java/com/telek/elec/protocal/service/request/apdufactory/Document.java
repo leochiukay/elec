@@ -31,13 +31,13 @@ public class Document {
         document.addData(new LongUnsigned(index_num.incrementAndGet()));
         Structure basicObject = new Structure();
 //        basicObject.addData(new )
-        basicObject.addData(new Enums((short) 0, false));
-        basicObject.addData(new Enums((short) 1, false));
+        basicObject.addData(new Enums((short) 0));
+        basicObject.addData(new Enums((short) 1));
 //        basicObject.addData(new OAD(4));
 //        basicObject.addData(new OctetString());
         basicObject.addData(new Unsigned((short) 4));
         basicObject.addData(new Unsigned((short) 1));
-        basicObject.addData(new Enums((short) 1, false));
+        basicObject.addData(new Enums((short) 1));
         basicObject.addData(new LongUnsigned(220));
         basicObject.addData(new LongUnsigned(5));
         document.addData(basicObject);

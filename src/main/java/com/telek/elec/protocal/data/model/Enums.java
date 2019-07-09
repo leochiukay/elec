@@ -21,13 +21,7 @@ public class Enums extends AbsData {
         this.dataType = DataType.ENUM;
     }
 
-    public Enums(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
-    public Enums(short value, boolean isEncodeDataType) {
-        this(isEncodeDataType);
+    public Enums(short value) {
         this.value = value;
     }
 

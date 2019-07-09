@@ -20,11 +20,6 @@ public class Region extends AbsData {
         this.dataType = DataType.REGION;
     }
 
-    public Region(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
         return 0;

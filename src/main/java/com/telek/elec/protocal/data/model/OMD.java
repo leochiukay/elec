@@ -32,13 +32,7 @@ public class OMD extends AbsData {
         this.dataType = DataType.OMD;
     }
 
-    public OMD(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
-    public OMD(OI oi, int methodNum, int model, boolean isEncodeDataType) {
-        this(isEncodeDataType);
+    public OMD(OI oi, int methodNum, int model) {
         this.oi = oi;
         this.methodNum = methodNum;
         this.model = model;
