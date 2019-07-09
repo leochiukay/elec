@@ -1,2 +1,4 @@
 netty:
   port: 9201
+server:
+  port: 8080

@@ -13,6 +13,7 @@ import lombok.Data;
 @Data
 public class VisibleString extends AbsString {
 
+
     public VisibleString() {
         this.dataType = DataType.OCTET_STRING;
     }

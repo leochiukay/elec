@@ -2,6 +2,7 @@ package com.telek.elec.protocal.apdu.connection;
 
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.constant.APDUSequence;
+import com.telek.elec.protocal.data.model.basic.string.VisibleString;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
@@ -33,23 +34,23 @@ public class ConnectionResponse extends CodecAPDU implements Connection {
     /**
      * 服务器厂商代码-4字节
      */
-    private long code;
+    private String code;
     /**
      * 服务器厂商版本-4字节
      */
-    private long version;
+    private String version;
     /**
      * 服务器厂商版本日期-6字节
      */
-    private long versionDate;
+    private String versionDate;
     /**
      * 服务器厂商硬件版本-4字节
      */
-    private long hardwareVersion;
+    private String hardwareVersion;
     /**
      * 服务器厂商硬件版本日期-6字节
      */
-    private long hardwareVersionDate;
+    private String hardwareVersionDate;
     /**
      * 服务器厂商扩展信心-8字节
      */
@@ -110,12 +111,13 @@ public class ConnectionResponse extends CodecAPDU implements Connection {
 
     @Override
     public void decodeSpecialHexToThis(String hexString) {
+        // TODO
         int index = this.decodeHexExcludeCommonBeginIndex;
-        this.code = Long.parseLong(hexString.substring(index, index += 8), 16);
-        this.version = Long.parseLong(hexString.substring(index, index += 8), 16);
-        this.versionDate = Long.parseLong(hexString.substring(index, index += 12), 16);
-        this.hardwareVersion = Long.parseLong(hexString.substring(index, index += 8), 16);
-        this.hardwareVersionDate = Long.parseLong(hexString.substring(index, index += 12), 16);
+        this.code = hexString.substring(index, index += 8);
+        this.version = hexString.substring(index, index += 8);
+        this.versionDate = hexString.substring(index, index += 12);
+        this.hardwareVersion = hexString.substring(index, index += 8);
+        this.hardwareVersionDate = hexString.substring(index, index += 12);
         this.expandInfo = hexString.substring(index, index += 16);
         this.expectVersion = Integer.parseInt(hexString.substring(index, index += 4), 16);
         this.protocolConformance = hexString.substring(index, index += 16);
@@ -134,11 +136,11 @@ public class ConnectionResponse extends CodecAPDU implements Connection {
     @Override
     protected String encodeThisSpecialToHex() {
         StringBuilder sb = new StringBuilder();
-        sb.append(StringUtils.subLastNumStr(Long.toHexString(code), 8));
-        sb.append(StringUtils.subLastNumStr(Long.toHexString(version), 8));
-        sb.append(StringUtils.subLastNumStr(Long.toHexString(versionDate), 12));
-        sb.append(StringUtils.subLastNumStr(Long.toHexString(hardwareVersion), 8));
-        sb.append(StringUtils.subLastNumStr(Long.toHexString(hardwareVersionDate), 12));
+        sb.append(StringUtils.subLastNumStr(code, 8));
+        sb.append(StringUtils.subLastNumStr(version, 8));
+        sb.append(StringUtils.subLastNumStr(versionDate, 12));
+        sb.append(StringUtils.subLastNumStr(hardwareVersion, 8));
+        sb.append(StringUtils.subLastNumStr(hardwareVersionDate, 12));
         sb.append(StringUtils.subLastNumStr(expandInfo, 16));
         sb.append(StringUtils.subLastNumStr(Long.toHexString(expectVersion), 4));
         sb.append(StringUtils.subLastNumStr(protocolConformance, 16));

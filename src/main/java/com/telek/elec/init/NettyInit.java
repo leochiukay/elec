@@ -8,12 +8,15 @@ import org.springframework.stereotype.Component;
 
 import com.telek.elec.netty.NettyStarter;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 /**
  * netty初始化
  */
 @Component
 public class NettyInit implements ApplicationListener<ContextRefreshedEvent> {
-
+    private ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
     @Value("${netty.port}")
     private int port;
 
@@ -21,7 +24,7 @@ public class NettyInit implements ApplicationListener<ContextRefreshedEvent> {
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
         if (applicationContext.getParent() == null) {
-            new NettyStarter(port).start();
+            singleThreadExecutor.execute(new NettyStarter(port));
         }
     }
 }
