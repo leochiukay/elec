@@ -19,7 +19,7 @@ import java.util.List;
  * @Description:
  */
 @Data
-public class Document extends AbsData {
+public class Document extends Structure {
     /**
      * 配置序号.
      */
@@ -39,16 +39,15 @@ public class Document extends AbsData {
 
     @Override
     protected String encodeSpecial() throws EncodeException {
-        StringBuffer sbf = new StringBuffer();
-        sbf.append(new LongUnsigned(this.index));
-        sbf.append(this.basicObject.encode());
-        sbf.append(this.extendedObject.encode());
+        super.addData(new LongUnsigned(this.index));
+        super.addData(this.basicObject);
+        super.addData(this.extendedObject);
         Array array = new Array();
         for (AnnexObject object : annexObject) {
             array.addData(object);
         }
-        sbf.append(array.encode());
-        return sbf.toString();
+        super.addData(array);
+        return super.encode();
     }
 
     @Override
@@ -100,11 +99,6 @@ public class Document extends AbsData {
         private int current = 50;
 
         @Override
-        protected int calculateSpecialCharLength() throws EncodeException {
-            return 0;
-        }
-
-        @Override
         protected String encodeSpecial() throws EncodeException {
             super.addData(new TSA(this.address));
             super.addData(new Enums((short) this.baudType.getCode()));
@@ -139,11 +133,6 @@ public class Document extends AbsData {
         private int ct;
 
         @Override
-        protected int calculateSpecialCharLength() throws EncodeException {
-            return 0;
-        }
-
-        @Override
         protected String encodeSpecial() throws EncodeException {
             super.addData(new TSA(this.address));
             super.addData(new OctetString(assetNumber));
@@ -164,11 +153,6 @@ public class Document extends AbsData {
         private AbsData absData;
 
         @Override
-        protected int calculateSpecialCharLength() throws EncodeException {
-            return 0;
-        }
-
-        @Override
         protected String encodeSpecial() throws EncodeException {
             super.addData(oad);
             super.addData(absData);
@@ -179,10 +163,5 @@ public class Document extends AbsData {
         protected int decodeSpecial(String hexString) throws DecodeException {
             return 0;
         }
-    }
-
-    @Override
-    protected int calculateSpecialCharLength() throws EncodeException {
-        return 0;
     }
 }

@@ -26,11 +26,6 @@ public class Enums extends AbsData {
     }
 
     @Override
-    protected int calculateSpecialCharLength() throws EncodeException {
-        return CHAR_LENGTH;
-    }
-
-    @Override
     protected String encodeSpecial() throws EncodeException {
         return StringUtils.subLastNumStr(java.lang.Integer.toHexString(value), 2);
     }

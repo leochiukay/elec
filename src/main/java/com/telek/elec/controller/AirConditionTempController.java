@@ -1,5 +1,6 @@
 package com.telek.elec.controller;
 
+import com.telek.elec.protocal.data.model.Region;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

@@ -8,7 +8,7 @@ import com.telek.elec.protocal.data.model.OMD;
  * @Date: 2019/7/8 20:32
  * @Description:
  */
-public class SchemeFactory {
+public class NormalCollectionSchemeFactory {
     public static final OI OI = new OI(0x6014);
 
     /**
@@ -24,8 +24,8 @@ public class SchemeFactory {
      * 方法128
      * @return OAD
      */
-    public static OMD deleteScheme() {
-        return new OMD(OI, 128, 0);
+    public static OMD clear() {
+        return new OMD(OI, 129, 0);
     }
 
 }

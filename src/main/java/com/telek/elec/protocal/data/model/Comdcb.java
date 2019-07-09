@@ -44,11 +44,6 @@ public class Comdcb extends AbsData {
     }
 
     @Override
-    protected int calculateSpecialCharLength() throws EncodeException {
-        return CHAR_LENGTH;
-    }
-
-    @Override
     protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(baudRate), 2));

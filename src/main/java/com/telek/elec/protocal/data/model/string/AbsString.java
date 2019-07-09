@@ -26,9 +26,4 @@ public abstract class AbsString extends AbsData {
      */
     protected String str;
 
-    @Override
-    protected int calculateSpecialCharLength() throws EncodeException {
-        return 2 + size * 2;
-    }
-
 }

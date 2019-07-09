@@ -69,9 +69,4 @@ public class OAD extends AbsData {
         this.index = java.lang.Integer.parseInt(hexString.substring(oiCharLen, oiCharLen += 2), 16);
         return OAD_CHAR_LENGTH;
     }
-
-    @Override
-    protected int calculateSpecialCharLength() {
-        return OAD_CHAR_LENGTH;
-    }
 }

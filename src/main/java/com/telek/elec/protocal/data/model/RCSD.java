@@ -26,16 +26,6 @@ public class RCSD extends AbsData {
     }
 
     @Override
-    protected int calculateSpecialCharLength() throws EncodeException {
-        int length = 2;
-        for (CSD csd : csds) {
-            csd.encode();
-            length += csd.getCharLength();
-        }
-        return length;
-    }
-
-    @Override
     protected String encodeSpecial() throws EncodeException {
         StringBuffer sb = new StringBuffer();
         sb.append(Integer.toHexString(csds.size()));
