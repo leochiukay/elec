@@ -33,6 +33,7 @@ public class TI extends AbsData {
     }
 
     public TI(byte unit, int interVal) {
+        this();
         this.unit = unit;
         this.interVal = interVal;
     }

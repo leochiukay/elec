@@ -127,13 +127,13 @@ public class TaskConfigModel {
     /**
      * 时段表  array 时段
      */
-    private List<time> times;
+    private List<TaskConfigModelTime> times;
 
     /**
      * 时段
      */
     @Data
-    private static class time {
+    public static class TaskConfigModelTime {
         /**
          * 起始小时  unsigned，
          * 起始分钟  unsigned，
@@ -185,7 +185,7 @@ public class TaskConfigModel {
         Datas<Enums> type = new Datas<>(new Enums((short) this.type));
         Datas<Array> arrayPeriod = new Datas<>(new Array());
         Array data = arrayPeriod.getData();
-        for (time time : times) {
+        for (TaskConfigModelTime time : times) {
             data.addData(time.getData().getData());
         }
         periodData.addData(type.getData());
