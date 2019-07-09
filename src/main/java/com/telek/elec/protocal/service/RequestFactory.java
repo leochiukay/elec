@@ -65,7 +65,7 @@ public class RequestFactory {
         setRequestNormal.setPiid(2);
         SetRequestData setRequestData = new SetRequestData();
         setRequestData.setOad(oad);
-        setRequestData.setData(data);
+        setRequestData.setData(new Datas(data));
         setRequestNormal.setSetData(setRequestData);
         return setRequestNormal;
     }

@@ -22,7 +22,7 @@ public class ActionRequestData extends AbsResult {
 
     private OMD omd;
 
-    private Datas<? extends AbsData> data;
+    private Datas data;
 
     @Override
     protected String encodeSpecial() throws EncodeException {

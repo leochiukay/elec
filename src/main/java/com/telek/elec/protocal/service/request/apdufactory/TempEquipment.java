@@ -1,20 +1,24 @@
 package com.telek.elec.protocal.service.request.apdufactory;
 
-import com.telek.elec.protocal.apdu.CodecAPDU;
-import com.telek.elec.protocal.apdu.factory.TempEquipmentFactory;
-import com.telek.elec.protocal.apdu.model.SetRequestData;
-import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
-import com.telek.elec.protocal.data.model.AbsData;
-import com.telek.elec.protocal.data.model.Array;
-import com.telek.elec.protocal.data.model.Structure;
-import com.telek.elec.protocal.data.model.number.Long;
-import com.telek.elec.protocal.data.model.number.Unsigned;
+import static com.telek.elec.protocal.service.RequestFactory.getActionRequestNormal;
+import static com.telek.elec.protocal.service.RequestFactory.getRequestNormal;
+import static com.telek.elec.protocal.service.RequestFactory.getSetRequestNormal;
+import static com.telek.elec.protocal.service.RequestFactory.setRequestNormal;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static com.telek.elec.protocal.service.RequestFactory.*;
+import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.apdu.factory.TempEquipmentFactory;
+import com.telek.elec.protocal.apdu.model.SetRequestData;
+import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
+import com.telek.elec.protocal.data.Datas;
+import com.telek.elec.protocal.data.model.AbsData;
+import com.telek.elec.protocal.data.model.Array;
+import com.telek.elec.protocal.data.model.Structure;
+import com.telek.elec.protocal.data.model.number.Long;
+import com.telek.elec.protocal.data.model.number.Unsigned;
 
 /**
  * 温控设备
@@ -121,7 +125,7 @@ public class TempEquipment {
         }
         Array array = new Array();
         array.setDatas(arrayDatas);
-        requestData.setData(array);
+        requestData.setData(new Datas(array));
         return setRequestNormal(requestData);
     }
 

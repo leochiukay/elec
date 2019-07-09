@@ -49,4 +49,13 @@ public enum DARType {
     其它(255);
 
     private int code;
+
+    public static DARType decode(int code) {
+        for (DARType value : DARType.values()) {
+            if (code == value.getCode()) {
+                return value;
+            }
+        }
+        return null;
+    }
 }
