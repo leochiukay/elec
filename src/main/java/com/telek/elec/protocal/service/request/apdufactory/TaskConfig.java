@@ -21,7 +21,7 @@ public class TaskConfig {
      *
      * @return
      */
-    public CodecAPDU addArrayTask(List<TaskConfigModel> taskConfigs) {
+    public static CodecAPDU addArrayTask(List<TaskConfigModel> taskConfigs) {
         Datas<Array> arrayDatas = new Datas<>(new Array());
         Array array = arrayDatas.getData();
         for (TaskConfigModel taskConfig : taskConfigs) {
@@ -39,7 +39,7 @@ public class TaskConfig {
         return actionRequestNormal;
     }
 
-    public CodecAPDU deleteArrayTask(List<Integer> taskIds) {
+    public static CodecAPDU deleteArrayTask(List<Integer> taskIds) {
         Datas<Array> arrayDatas = new Datas<>(new Array());
         Array data = arrayDatas.getData();
         for (Integer taskId : taskIds) {
@@ -56,7 +56,7 @@ public class TaskConfig {
         return actionRequestNormal;
     }
 
-    public CodecAPDU clearTask() {
+    public static CodecAPDU clearTask() {
 
         ActionRequestData actionRequestData = new ActionRequestData();
         actionRequestData.setOmd(TaskConfigFactory.clear());

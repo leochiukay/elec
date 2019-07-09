@@ -31,6 +31,7 @@ public abstract class AbsArraysData extends AbsData {
     public void addData(AbsData data) {
         Datas datas = new Datas(data);
         this.datas.add(datas);
+        this.size = this.size + 1;
     }
 
     @Override
