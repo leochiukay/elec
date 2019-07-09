@@ -9,7 +9,7 @@ import com.telek.elec.protocal.data.model.OMD;
  */
 public class DRFactory {
 
-    public static final OI OI = new OI(0x8120);
+    public static final OI OI = new OI(0x8120, false);
 
     /**
      * 需求响应状态
@@ -17,7 +17,7 @@ public class DRFactory {
      * @return enum{未响应（0），正在响应（1）
      */
     public static OAD state() {
-        return new OAD(OI, 2, 0);
+        return new OAD(OI, 2, 0, false);
     }
 
     /**
@@ -32,7 +32,7 @@ public class DRFactory {
      * }
      */
     public static OAD drParams() {
-        return new OAD(OI, 3, 0);
+        return new OAD(OI, 3, 0, false);
     }
 
     /**
@@ -43,7 +43,7 @@ public class DRFactory {
      * @return null
      */
     public static OMD drPublish(long responsLoad, long time) {
-        return new OMD(OI, 127, 0);
+        return new OMD(OI, 127, 0, false);
     }
 
     /**
@@ -52,7 +52,7 @@ public class DRFactory {
      * @return null
      */
     public static OMD releaseDR() {
-        return new OMD(OI, 128, 0);
+        return new OMD(OI, 128, 0, false);
     }
 
 

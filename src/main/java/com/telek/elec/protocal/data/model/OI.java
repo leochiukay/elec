@@ -20,8 +20,13 @@ public class OI extends AbsData {
         this.dataType = DataType.OI;
     }
 
-    public OI(int oi) {
+    public OI(boolean isEncodeDataType) {
         this();
+        this.isEncodeDataType = isEncodeDataType;
+    }
+
+    public OI(int oi, boolean isEncodeDataType) {
+        this(isEncodeDataType);
         this.oi = oi;
     }
 

@@ -1,6 +1,7 @@
 package com.telek.elec.protocal.apdu.model;
 
 import com.telek.elec.protocal.apdu.model.constant.GetResultType;
+import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.HexToDataConvertor;
 import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.protocal.exeception.DecodeException;
@@ -25,7 +26,7 @@ public class GetResult extends AbsResult {
     /**
      * 正确返回数据
      */
-    private AbsData data;
+    private Datas data;
     /**
      * 错误信息
      */
@@ -59,7 +60,7 @@ public class GetResult extends AbsResult {
         String hex = hexString.substring(2);
         if (GetResultType.DATA.equals(this.getResultType)) {
             AbsData absData = HexToDataConvertor.hexToData(hex);
-            this.data = absData;
+            this.data = new Datas(absData);
             return absData.getCharLength() + 2;
         } else if (GetResultType.DAR.equals(this.getResultType)) {
             DAR resultDAR = new DAR();

@@ -23,6 +23,17 @@ public class RSD extends AbsData {
         this.dataType = DataType.RSD;
     }
 
+    public RSD(boolean isEncodeDataType) {
+        this();
+        this.isEncodeDataType = isEncodeDataType;
+    }
+
+    public RSD(byte selectorId, Selector selector, boolean isEncodeDataType) {
+        this(isEncodeDataType);
+        this.selectorId = selectorId;
+        this.selector = selector;
+    }
+
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
         if (selectorId == 0) {

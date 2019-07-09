@@ -1,11 +1,11 @@
-package com.telek.elec.protocal.data.model.basic.date;
+package com.telek.elec.protocal.data.model.date;
 
 import java.util.Calendar;
 
 import com.telek.elec.protocal.apdu.codec.DecoderUtils;
 import com.telek.elec.protocal.apdu.codec.EncoderUtils;
 import com.telek.elec.protocal.constant.DataType;
-import com.telek.elec.protocal.data.model.basic.AbsBasicData;
+import com.telek.elec.protocal.data.model.AbsData;
 
 import lombok.Data;
 
@@ -18,7 +18,7 @@ import lombok.Data;
  *   second        unsigned
  */
 @Data
-public class DateTimeS extends AbsBasicData {
+public class DateTimeS extends AbsData {
 
     private static final int CHAR_LENGTH = 14;
 
@@ -27,13 +27,19 @@ public class DateTimeS extends AbsBasicData {
      */
     private Calendar calendar;
 
-    public DateTimeS(Calendar calendar) {
+    public DateTimeS(Calendar calendar, boolean isEncodeDataType) {
         this();
+        this.isEncodeDataType = isEncodeDataType;
         this.calendar = calendar;
     }
 
     public DateTimeS() {
         this.dataType = DataType.DATE_TIME_S;
+    }
+
+    public DateTimeS(boolean isEncodeDataType) {
+        this();
+        this.isEncodeDataType = isEncodeDataType;
     }
 
     @Override
@@ -48,7 +54,7 @@ public class DateTimeS extends AbsBasicData {
 
     @Override
     protected int decodeSpecial(String hexExcludeDataType) {
-        calendar = DecoderUtils.decodeDateTimeSHex(hexExcludeDataType);
+        calendar = DecoderUtils.decodeDateTimeSHex(hexExcludeDataType.substring(0, CHAR_LENGTH));
         return CHAR_LENGTH;
     }
 }

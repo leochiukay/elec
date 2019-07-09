@@ -34,8 +34,13 @@ public class OAD extends AbsData {
         this.dataType = DataType.OAD;
     }
 
-    public OAD(OI oi, int attr, int index) {
+    public OAD(boolean isEncodeDataType) {
         this();
+        this.isEncodeDataType = isEncodeDataType;
+    }
+
+    public OAD(OI oi, int attr, int index, boolean isEncodeDataType) {
+        this(isEncodeDataType);
         this.oi = oi;
         this.attr = attr;
         this.index = index;

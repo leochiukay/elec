@@ -1,21 +1,17 @@
 package com.telek.elec.protocal.service.request.apdufactory;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.action.request.ActionRequestNormal;
 import com.telek.elec.protocal.apdu.factory.DocumentFactory;
 import com.telek.elec.protocal.apdu.model.ActionRequestData;
-import com.telek.elec.protocal.data.model.AbsData;
-import com.telek.elec.protocal.data.model.OAD;
-import com.telek.elec.protocal.data.model.basic.Array;
-import com.telek.elec.protocal.data.model.basic.Enums;
-import com.telek.elec.protocal.data.model.basic.Structure;
-import com.telek.elec.protocal.data.model.basic.number.LongUnsigned;
-import com.telek.elec.protocal.data.model.basic.number.Unsigned;
-import com.telek.elec.protocal.data.model.basic.string.OctetString;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.telek.elec.protocal.data.Datas;
+import com.telek.elec.protocal.data.model.Array;
+import com.telek.elec.protocal.data.model.Enums;
+import com.telek.elec.protocal.data.model.Structure;
+import com.telek.elec.protocal.data.model.number.LongUnsigned;
+import com.telek.elec.protocal.data.model.number.Unsigned;
 
 /**
  * 档案
@@ -35,13 +31,13 @@ public class Document {
         document.addData(new LongUnsigned(index_num.incrementAndGet()));
         Structure basicObject = new Structure();
 //        basicObject.addData(new )
-        basicObject.addData(new Enums((short) 0));
-        basicObject.addData(new Enums((short) 1));
+        basicObject.addData(new Enums((short) 0, false));
+        basicObject.addData(new Enums((short) 1, false));
 //        basicObject.addData(new OAD(4));
 //        basicObject.addData(new OctetString());
         basicObject.addData(new Unsigned((short) 4));
         basicObject.addData(new Unsigned((short) 1));
-        basicObject.addData(new Enums((short) 1));
+        basicObject.addData(new Enums((short) 1, false));
         basicObject.addData(new LongUnsigned(220));
         basicObject.addData(new LongUnsigned(5));
         document.addData(basicObject);
@@ -54,7 +50,7 @@ public class Document {
         Array annexObject = new Array();
         document.addData(annexObject);
         ActionRequestNormal actionRequest = new ActionRequestNormal();
-        actionRequest.setActionRequestData(new ActionRequestData(DocumentFactory.addDocument(), document));
+        actionRequest.setActionRequestData(new ActionRequestData(DocumentFactory.addDocument(), new Datas<>(document)));
         actionRequest.setTimeStamp(0);
         return null;
     }

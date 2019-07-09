@@ -8,6 +8,16 @@ import com.telek.elec.protocal.exeception.EncodeException;
 
 import lombok.Data;
 
+/**
+ * 50 04 02 00 ——  日冻结
+ *  * 01 —— RSD， 选择方法1
+ *  * 20 21 02 00 —— OAD，数据冻结时间
+ *  * 1C 07 E0 01 14 00 00 00 —— 时间
+ *  * 02 —— RCSD， SEQUENCE OF个数=2
+ *  * 00 —— [0] OAD
+ *  * 20 21 02 00 —— OAD
+ *  * 00 —— [0] OAD
+ */
 @Data
 public class GetRecord extends AbsResult {
 
@@ -30,7 +40,7 @@ public class GetRecord extends AbsResult {
     protected int decodeSpecial(String hexString) throws DecodeException {
         int index = 0;
         OAD oad = new OAD();
-        int oadLen = oad.decode(hexString.substring(index));
+        int oadLen = oad.decode(hexString.substring(index, index += 4));
         this.oad = oad;
 
         RSD rsd = new RSD();

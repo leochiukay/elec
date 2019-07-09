@@ -1,13 +1,9 @@
-package com.telek.elec.protocal.data.model.basic;
+package com.telek.elec.protocal.data.model;
 
 import com.telek.elec.protocal.constant.DataType;
-import com.telek.elec.protocal.data.HexToDataConvertor;
-import com.telek.elec.protocal.data.model.AbsData;
-import com.telek.elec.protocal.data.model.OAD;
-import com.telek.elec.protocal.data.model.ROAD;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
-import com.telek.elec.util.StringUtils;
+
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +22,11 @@ public class CSD extends AbsData {
 
     public CSD() {
         this.dataType = DataType.CSD;
+    }
+
+    public CSD(boolean isEncodeDataType) {
+        this();
+        this.isEncodeDataType = isEncodeDataType;
     }
 
     @Override

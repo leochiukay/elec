@@ -1,6 +1,5 @@
 package com.telek.elec.protocal.apdu.factory;
 
-import com.telek.elec.protocal.data.model.OAD;
 import com.telek.elec.protocal.data.model.OI;
 import com.telek.elec.protocal.data.model.OMD;
 
@@ -10,7 +9,7 @@ import com.telek.elec.protocal.data.model.OMD;
  * @Description:
  */
 public class DocumentFactory {
-    public static final com.telek.elec.protocal.data.model.OI OI = new OI(0x6000);
+    public static final com.telek.elec.protocal.data.model.OI OI = new OI(0x6000, false);
 
     /**
      * 添加一个采集档案配置单元
@@ -18,7 +17,7 @@ public class DocumentFactory {
      * @return OAD
      */
     public static OMD addDocument() {
-        return new OMD(OI, 128, 0);
+        return new OMD(OI, 128, 0, false);
     }
     /**
      * 批量添加采集档案配置单元
@@ -26,7 +25,7 @@ public class DocumentFactory {
      * @return OAD
      */
     public static OMD addBatchDocuments() {
-        return new OMD(OI, 129, 0);
+        return new OMD(OI, 129, 0, false);
     }
 
 }

@@ -4,7 +4,7 @@ import org.apache.commons.lang3.text.StrBuilder;
 
 import com.telek.elec.protocal.apdu.model.Selector;
 import com.telek.elec.protocal.data.model.MS;
-import com.telek.elec.protocal.data.model.basic.date.DateTimeS;
+import com.telek.elec.protocal.data.model.date.DateTimeS;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
@@ -31,13 +31,13 @@ public class Selector5 extends Selector {
     @Override
     protected int decodeSpecial(String hexString) throws DecodeException {
         DateTimeS dateTimeS = new DateTimeS();
-        int dataCharLen = dateTimeS.decode(hexString);
+        dateTimeS.decode(hexString);
         this.dateTimeS = dateTimeS;
 
         MS ms = new MS();
-        int msCharLen = ms.decode(hexString.substring(dataCharLen));
+        ms.decode(hexString.substring(dateTimeS.getCharLength()));
         this.ms = ms;
-        return dataCharLen + msCharLen;
+        return dateTimeS.getCharLength() + ms.getCharLength();
     }
 
     @Override

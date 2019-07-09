@@ -1,9 +1,8 @@
-package com.telek.elec.protocal.data.model.basic;
+package com.telek.elec.protocal.data.model;
 
 import java.util.List;
 
 import com.telek.elec.protocal.constant.DataType;
-import com.telek.elec.protocal.data.model.AbsData;
 
 import lombok.Data;
 
@@ -21,8 +20,13 @@ public class Structure extends AbsArraysData {
         this.dataType = DataType.STRUCTURE;
     }
 
-    public Structure(List<AbsData> data) {
+    public Structure(boolean isEncodeDataType) {
         this();
+        this.isEncodeDataType = isEncodeDataType;
+    }
+
+    public Structure(List<AbsData> data, boolean isEncodeDataType) {
+        this(isEncodeDataType);
         if (data == null) {
             this.size = 0;
         } else {

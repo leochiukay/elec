@@ -1,6 +1,7 @@
 package com.telek.elec.protocal.apdu.model;
 
 import com.telek.elec.protocal.constant.DARType;
+import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.HexToDataConvertor;
 import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.protocal.data.model.OMD;
@@ -26,7 +27,7 @@ public class ActionResponseData extends AbsResult {
     /**
      * 2字节
      */
-    private AbsData data;
+    private Datas data;
 
     @Override
     protected String encodeSpecial() throws EncodeException {
@@ -44,14 +45,9 @@ public class ActionResponseData extends AbsResult {
         int omdCharLen = omd.decode(hexString.substring(index, index += 8));
         this.omd = omd;
         int dar = Integer.parseInt(hexString.substring(index, index += 2), 16);
-        for (DARType value : DARType.values()) {
-            if (dar == value.getCode()) {
-                this.dar = value;
-                break;
-            }
-        }
+        this.dar = DARType.decode(dar);
         AbsData absData = HexToDataConvertor.hexToData(hexString.substring(index));
-        this.data = absData;
+        this.data = new Datas(absData);
         return omdCharLen + 2 + absData.getCharLength();
     }
 }

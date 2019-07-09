@@ -1,8 +1,8 @@
-package com.telek.elec.protocal.data.model.basic.number;
+package com.telek.elec.protocal.data.model.number;
 
 import java.math.BigDecimal;
 
-import com.telek.elec.protocal.data.model.basic.AbsBasicData;
+import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -12,28 +12,27 @@ import lombok.Data;
  *
  */
 @Data
-public abstract class NumericalData extends AbsBasicData {
+public abstract class NumericalData extends AbsData {
 
     /**
      * 换算系数
      */
     private int conversionCoefficient;
 
-
     @Override
     protected int calculateSpecialCharLength() {
-        return getCharLength();
+        return getSpecialCharLength();
     }
 
     @Override
     protected String encodeSpecial() {
-        return StringUtils.subLastNumStr(java.lang.Long.toHexString(getValue()), getCharLength());
+        return StringUtils.subLastNumStr(java.lang.Long.toHexString(getValue()), getSpecialCharLength());
     }
 
     @Override
     protected int decodeSpecial(String hexExcludeDataType) {
-        setValue(java.lang.Long.parseLong(hexExcludeDataType.substring(0, getCharLength()), 16));
-        return getCharLength();
+        setValue(java.lang.Long.parseLong(hexExcludeDataType.substring(0, getSpecialCharLength()), 16));
+        return getSpecialCharLength();
     }
 
     /**
@@ -56,5 +55,7 @@ public abstract class NumericalData extends AbsBasicData {
     protected abstract long getValue();
 
     protected abstract void setValue(long value);
+
+    protected abstract int getSpecialCharLength();
 
 }

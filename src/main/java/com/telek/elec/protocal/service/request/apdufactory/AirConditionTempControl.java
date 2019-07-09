@@ -6,10 +6,10 @@ import java.util.List;
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.factory.AirConditionTempControlFactory;
 import com.telek.elec.protocal.data.model.AbsData;
-import com.telek.elec.protocal.data.model.basic.Array;
-import com.telek.elec.protocal.data.model.basic.Structure;
-import com.telek.elec.protocal.data.model.basic.number.Long;
-import com.telek.elec.protocal.data.model.basic.number.Unsigned;
+import com.telek.elec.protocal.data.model.Array;
+import com.telek.elec.protocal.data.model.Structure;
+import com.telek.elec.protocal.data.model.number.Long;
+import com.telek.elec.protocal.data.model.number.Unsigned;
 import com.telek.elec.protocal.data.model.OI;
 import com.telek.elec.protocal.service.RequestFactory;
 
@@ -18,7 +18,7 @@ import com.telek.elec.protocal.service.RequestFactory;
  */
 public class AirConditionTempControl {
 
-    public static final OI OI = new OI(0x8122);
+    public static final OI OI = new OI(0x8122, false);
 
     /**
      * 参数配置

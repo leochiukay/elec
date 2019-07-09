@@ -13,7 +13,7 @@ public class TI extends AbsData {
     public static final int TI_CHAR_LENGTH = 6;
 
     /**
-     * 单位 ENUMERATED
+     * 单位 ENUMERATED-1 字节
      * {
      * 秒 （0），
      * 分 （1），
@@ -30,6 +30,17 @@ public class TI extends AbsData {
 
     public TI() {
         this.dataType = DataType.TI;
+    }
+
+    public TI(boolean isEncodeDataType) {
+        this();
+        this.isEncodeDataType = isEncodeDataType;
+    }
+
+    public TI(byte unit, int interVal, boolean isEncodeDataType) {
+        this(isEncodeDataType);
+        this.unit = unit;
+        this.interVal = interVal;
     }
 
     @Override

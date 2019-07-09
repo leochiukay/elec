@@ -1,7 +1,6 @@
 package com.telek.elec.protocal.data.model;
 
-import com.telek.elec.protocal.data.HexToDataConvertor;
-import com.telek.elec.protocal.data.model.basic.Enums;
+import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
@@ -17,6 +16,15 @@ public class Region extends AbsData {
 
     private AbsData end;
 
+    public Region() {
+        this.dataType = DataType.REGION;
+    }
+
+    public Region(boolean isEncodeDataType) {
+        this();
+        this.isEncodeDataType = isEncodeDataType;
+    }
+
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
         return 0;
@@ -24,29 +32,11 @@ public class Region extends AbsData {
 
     @Override
     protected String encodeSpecial() throws EncodeException {
-        StringBuffer sb = new StringBuffer();
-        Enums enums = new Enums((short) unit);
-        enums.setEncodeDataType(false);
-        sb.append(enums.encode());
-        sb.append(start.encode());
-        sb.append(end.encode());
-        return sb.toString();
+        return null;
     }
 
     @Override
     protected int decodeSpecial(String hexString) throws DecodeException {
-        int charLength = 0;
-        Enums enums = new Enums();
-        enums.setEncodeDataType(false);
-        enums.decode(hexString);
-        charLength += enums.getCharLength();
-        this.unit = enums.getValue();
-        AbsData start = HexToDataConvertor.hexToData(hexString.substring(charLength));
-        this.start = start;
-        charLength += start.getCharLength();
-        AbsData end = HexToDataConvertor.hexToData(hexString.substring(charLength));
-        this.end = end;
-        charLength += end.getCharLength();
-        return charLength;
+        return 0;
     }
 }

@@ -6,7 +6,7 @@ import com.telek.elec.protocal.data.model.OMD;
 
 public class LoraFactory {
 
-    private static final OI OI = new OI(0xf221);
+    private static final OI OI = new OI(0xf221, false);
 
     /**
      * 属性2（设备对象列表，只读）::=array端口
@@ -19,7 +19,7 @@ public class LoraFactory {
      * @return
      */
     public static OAD deviceList() {
-        OAD oad = new OAD(OI, 0x02, 0x00);
+        OAD oad = new OAD(OI, 0x02, 0x00, false);
         return oad;
     }
 
@@ -34,7 +34,7 @@ public class LoraFactory {
      * @return null
      */
     public static OMD offAppointPeriod() {
-        return new OMD(OI, 127, 0);
+        return new OMD(OI, 127, 0, false);
     }
 
 

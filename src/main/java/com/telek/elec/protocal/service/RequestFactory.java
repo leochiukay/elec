@@ -5,10 +5,11 @@ import com.telek.elec.protocal.apdu.model.ActionRequestData;
 import com.telek.elec.protocal.apdu.model.SetRequestData;
 import com.telek.elec.protocal.apdu.read.request.GetRequestNormal;
 import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
+import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.protocal.data.model.OAD;
 import com.telek.elec.protocal.data.model.OMD;
-import com.telek.elec.protocal.data.model.basic.Null;
+import com.telek.elec.protocal.data.model.Null;
 
 public class RequestFactory {
 
@@ -23,7 +24,7 @@ public class RequestFactory {
 
         ActionRequestData requestData = new ActionRequestData();
         requestData.setOmd(omd);
-        requestData.setData(data);
+        requestData.setData(new Datas<>(data));
         actionRequestNormal.setActionRequestData(requestData);
         return actionRequestNormal;
     }
@@ -39,7 +40,7 @@ public class RequestFactory {
 
         ActionRequestData requestData = new ActionRequestData();
         requestData.setOmd(omd);
-        requestData.setData(new Null());
+        requestData.setData(new Datas<>(new Null()));
         actionRequestNormal.setActionRequestData(requestData);
         return actionRequestNormal;
     }
@@ -64,7 +65,7 @@ public class RequestFactory {
         setRequestNormal.setPiid(2);
         SetRequestData setRequestData = new SetRequestData();
         setRequestData.setOad(oad);
-        setRequestData.setData(data);
+        setRequestData.setData(new Datas(data));
         setRequestNormal.setSetData(setRequestData);
         return setRequestNormal;
     }

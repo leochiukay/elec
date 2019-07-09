@@ -9,7 +9,7 @@ import com.telek.elec.protocal.data.model.OMD;
  */
 public class TempEquipmentFactory {
 
-    public static final OI OI = new OI(0x4311);
+    public static final OI OI = new OI(0x4311, false);
 
     /**
      * 温度
@@ -17,7 +17,7 @@ public class TempEquipmentFactory {
      * @return long（单位：℃,换算：-1）
      */
     public static OAD temperature() {
-        return new OAD(OI, 2, 0);
+        return new OAD(OI, 2, 0, false);
     }
 
     /**
@@ -26,7 +26,7 @@ public class TempEquipmentFactory {
      * @return enum{未温度控制（0），温度控制（1）
      */
     public static OAD autoControlState() {
-        return new OAD(OI, 3, 0);
+        return new OAD(OI, 3, 0, false);
     }
 
     /**
@@ -35,7 +35,7 @@ public class TempEquipmentFactory {
      * @return enum{未温度控制（0），温度控制（1）
      */
     public static OAD periodControlState() {
-        return new OAD(OI, 4, 0);
+        return new OAD(OI, 4, 0, false);
     }
 
     /**
@@ -44,7 +44,7 @@ public class TempEquipmentFactory {
      * @return
      */
     public static OAD tempThreshold() {
-        return new OAD(OI, 5, 0);
+        return new OAD(OI, 5, 0, false);
     }
 
     /**
@@ -59,7 +59,7 @@ public class TempEquipmentFactory {
      * }
      */
     public static OAD autoControlPeriod() {
-        return new OAD(OI, 6, 0);
+        return new OAD(OI, 6, 0, false);
     }
 
     /**
@@ -68,7 +68,7 @@ public class TempEquipmentFactory {
      * @return null
      */
     public static OMD on() {
-        return new OMD(OI, 127, 0);
+        return new OMD(OI, 127, 0, false);
     }
 
     /**
@@ -77,7 +77,7 @@ public class TempEquipmentFactory {
      * @return null
      */
     public static OMD off() {
-        return new OMD(OI, 128, 0);
+        return new OMD(OI, 128, 0, false);
     }
 
     /**
@@ -86,7 +86,7 @@ public class TempEquipmentFactory {
      * @return null
      */
     public static OMD onTempControl() {
-        return new OMD(OI, 129, 0);
+        return new OMD(OI, 129, 0, false);
     }
 
     /**
@@ -95,7 +95,7 @@ public class TempEquipmentFactory {
      * @return null
      */
     public static OMD offTempControl() {
-        return new OMD(OI, 130, 0);
+        return new OMD(OI, 130, 0, false);
     }
 
     /**
@@ -104,7 +104,7 @@ public class TempEquipmentFactory {
      * @return null
      */
     public static OMD onPeriodControl() {
-        return new OMD(OI, 131, 0);
+        return new OMD(OI, 131, 0, false);
     }
 
     /**
@@ -113,6 +113,6 @@ public class TempEquipmentFactory {
      * @return null
      */
     public static OMD offPeriodControl() {
-        return new OMD(OI, 132, 0);
+        return new OMD(OI, 132, 0, false);
     }
 }
