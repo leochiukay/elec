@@ -1,14 +1,14 @@
 package com.telek.elec.protocal.data.model;
 
-import com.telek.elec.protocal.constant.DataType;
-import com.telek.elec.protocal.data.model.basic.CSD;
-import com.telek.elec.protocal.exeception.DecodeException;
-import com.telek.elec.protocal.exeception.EncodeException;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.telek.elec.protocal.constant.DataType;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
+
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @Auther: wll
@@ -23,6 +23,11 @@ public class RCSD extends AbsData {
 
     public RCSD() {
         this.dataType = DataType.RCSD;
+    }
+
+    public RCSD(boolean isEncodeDataType) {
+        this();
+        this.isEncodeDataType = isEncodeDataType;
     }
 
     @Override

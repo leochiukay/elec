@@ -1,5 +1,6 @@
 package com.telek.elec.protocal.data.model;
 
+import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
@@ -14,6 +15,15 @@ public class Region extends AbsData {
     private AbsData start;
 
     private AbsData end;
+
+    public Region() {
+        this.dataType = DataType.REGION;
+    }
+
+    public Region(boolean isEncodeDataType) {
+        this();
+        this.isEncodeDataType = isEncodeDataType;
+    }
 
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {

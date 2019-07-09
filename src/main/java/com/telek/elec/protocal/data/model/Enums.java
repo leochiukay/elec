@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.data.model.basic;
+package com.telek.elec.protocal.data.model;
 
 import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.protocal.exeception.DecodeException;
@@ -8,7 +8,7 @@ import com.telek.elec.util.StringUtils;
 /**
  * 枚举
  */
-public class Enums extends AbsBasicData {
+public class Enums extends AbsData {
 
     private static final int CHAR_LENGTH = 2;
 
@@ -21,8 +21,13 @@ public class Enums extends AbsBasicData {
         this.dataType = DataType.ENUM;
     }
 
-    public Enums(short value) {
+    public Enums(boolean isEncodeDataType) {
         this();
+        this.isEncodeDataType = isEncodeDataType;
+    }
+
+    public Enums(short value, boolean isEncodeDataType) {
+        this(isEncodeDataType);
         this.value = value;
     }
 

@@ -1,7 +1,7 @@
-package com.telek.elec.protocal.data.model.basic.string;
+package com.telek.elec.protocal.data.model.string;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
-import com.telek.elec.protocal.data.model.basic.AbsBasicData;
+import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -13,7 +13,7 @@ import lombok.Data;
  * 12 34 56 78 90 12
  */
 @Data
-public abstract class AbsString extends AbsBasicData {
+public abstract class AbsString extends AbsData {
 
     protected static final int SIZE_CHAR_LENGTH = 2;
 

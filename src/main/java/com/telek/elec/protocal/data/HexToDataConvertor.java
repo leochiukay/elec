@@ -2,21 +2,29 @@ package com.telek.elec.protocal.data;
 
 import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.protocal.data.model.AbsData;
-import com.telek.elec.protocal.data.model.basic.Array;
-import com.telek.elec.protocal.data.model.basic.Comdcb;
-import com.telek.elec.protocal.data.model.basic.date.DateTime;
-import com.telek.elec.protocal.data.model.basic.date.DateTimeS;
-import com.telek.elec.protocal.data.model.basic.Enums;
-import com.telek.elec.protocal.data.model.basic.Null;
-import com.telek.elec.protocal.data.model.basic.Structure;
-import com.telek.elec.protocal.data.model.basic.number.DoubleLong;
-import com.telek.elec.protocal.data.model.basic.number.DoubleLongUnsigned;
-import com.telek.elec.protocal.data.model.basic.number.Integer;
-import com.telek.elec.protocal.data.model.basic.number.Long;
-import com.telek.elec.protocal.data.model.basic.number.LongUnsigned;
-import com.telek.elec.protocal.data.model.basic.number.Unsigned;
-import com.telek.elec.protocal.data.model.basic.string.OctetString;
-import com.telek.elec.protocal.data.model.basic.string.VisibleString;
+import com.telek.elec.protocal.data.model.Array;
+import com.telek.elec.protocal.data.model.CSD;
+import com.telek.elec.protocal.data.model.Comdcb;
+import com.telek.elec.protocal.data.model.MS;
+import com.telek.elec.protocal.data.model.RCSD;
+import com.telek.elec.protocal.data.model.ROAD;
+import com.telek.elec.protocal.data.model.RSD;
+import com.telek.elec.protocal.data.model.TI;
+import com.telek.elec.protocal.data.model.TSA;
+import com.telek.elec.protocal.data.model.date.DateTime;
+import com.telek.elec.protocal.data.model.date.DateTimeS;
+import com.telek.elec.protocal.data.model.Enums;
+import com.telek.elec.protocal.data.model.Null;
+import com.telek.elec.protocal.data.model.Structure;
+import com.telek.elec.protocal.data.model.number.DoubleLong;
+import com.telek.elec.protocal.data.model.number.DoubleLongUnsigned;
+import com.telek.elec.protocal.data.model.number.Integer;
+import com.telek.elec.protocal.data.model.number.Long;
+import com.telek.elec.protocal.data.model.number.LongUnsigned;
+import com.telek.elec.protocal.data.model.number.Unsigned;
+import com.telek.elec.protocal.data.model.string.OctetString;
+import com.telek.elec.protocal.data.model.string.UTF8String;
+import com.telek.elec.protocal.data.model.string.VisibleString;
 import com.telek.elec.protocal.data.model.OAD;
 import com.telek.elec.protocal.data.model.OI;
 import com.telek.elec.protocal.data.model.OMD;
@@ -49,7 +57,7 @@ public class HexToDataConvertor {
         }
         // 1 获取该数据的数据类型
         int dataTypeInt = java.lang.Integer.parseInt(hexIncludeDataType.substring(0, 2), 16);
-        DataType dataType = DataUtils.getDataType(dataTypeInt);
+        DataType dataType = DataType.decode(dataTypeInt);
         if (dataType == null) {
             return null;
         }
@@ -82,6 +90,7 @@ public class HexToDataConvertor {
                 iData = new VisibleString();
                 break;
             case UTF8_STRING:
+                iData = new UTF8String();
                 break;
             case INTEGER:
                 iData = new Integer();
@@ -123,13 +132,16 @@ public class HexToDataConvertor {
                 iData = new OAD();
                 break;
             case ROAD:
+                iData = new ROAD();
                 break;
             case OMD:
                 iData = new OMD();
                 break;
             case TI:
+                iData = new TI();
                 break;
             case TSA:
+                iData = new TSA();
                 break;
             case MAC:
                 break;
@@ -140,10 +152,13 @@ public class HexToDataConvertor {
             case SCALER_UNIT:
                 break;
             case RSD:
+                iData = new RSD();
                 break;
             case CSD:
+                iData = new CSD();
                 break;
             case MS:
+                iData = new MS();
                 break;
             case SID:
                 break;
@@ -153,9 +168,11 @@ public class HexToDataConvertor {
                 iData = new Comdcb();
                 break;
             case RCSD:
+                iData = new RCSD();
                 break;
         }
         if (iData != null) {
+            iData.setEncodeDataType(true);
             iData.decode(hexIncludeDataType);
         }
         return iData;

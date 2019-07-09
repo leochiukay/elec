@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.data.model.basic.number;
+package com.telek.elec.protocal.data.model.number;
 
 import com.telek.elec.protocal.constant.DataType;
 
@@ -14,6 +14,11 @@ public class Long extends NumericalData {
      */
     private short value;
 
+    public Long(boolean isEncodeDataType) {
+        this();
+        this.isEncodeDataType = isEncodeDataType;
+    }
+
     public Long() {
         this.dataType = DataType.LONG;
     }
@@ -26,6 +31,11 @@ public class Long extends NumericalData {
     @Override
     protected void setValue(long value) {
         this.value = (short) value;
+    }
+
+    @Override
+    protected int getSpecialCharLength() {
+        return charLength;
     }
 
     public long getValue() {

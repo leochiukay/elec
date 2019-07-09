@@ -1,5 +1,8 @@
 package com.telek.elec.protocal.data.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
@@ -10,32 +13,71 @@ import lombok.Data;
 @Data
 public class MS extends AbsData {
 
-    public static final int MS_CHAR_LENGTH = 2;
-
+    /**
+     * 无表计 [0]，
+     * 全部用户地址 [1]，
+     * 一组用户类型 [2] SEQUENCE OF unsigned，
+     * 一组用户地址 [3] SEQUENCE OF TSA，
+     * 一组配置序号 [4] SEQUENCE OF long-unsigned，
+     * 一组用户类型区间 [5] SEQUENCE OF Region，
+     * 一组用户地址区间 [6] SEQUENCE OF Region，
+     * 一组配置序号区间 [7] SEQUENCE OF Region
+     */
     private int value;
+
+    private List<Object> data;
 
     public MS() {
         this.dataType = DataType.MS;
     }
 
-    public MS(int value) {
+    public MS(boolean isEncodeDataType) {
         this();
-        this.value = value;
+        this.isEncodeDataType = isEncodeDataType;
     }
 
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
-        return MS_CHAR_LENGTH;
+        return 0;
     }
 
     @Override
     protected String encodeSpecial() throws EncodeException {
-        return StringUtils.subLastNumStr(Integer.toHexString(value), 2);
+        StringBuilder sb = new StringBuilder();
+        if (data == null) {
+            this.data = new ArrayList<>();
+        }
+        switch (value) {
+            case 0:
+            case 1:
+            case 2:
+                sb.append(StringUtils.subLastNumStr(Integer.toHexString(data.size()), 2));
+                for (Object datum : data) {
+                    int i = (int) datum;
+                    sb.append(StringUtils.subLastNumStr(Integer.toHexString(i), 2));
+                }
+            case 4:
+                break;
+            case 3:
+                sb.append(StringUtils.subLastNumStr(Integer.toHexString(data.size()), 2));
+                for (Object datum : data) {
+                    TSA tsa = (TSA) datum;
+                    sb.append(tsa.encode());
+                }
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+        }
+        return sb.toString();
     }
 
     @Override
     protected int decodeSpecial(String hexString) throws DecodeException {
-        this.value = Integer.parseInt(hexString.substring(0, MS_CHAR_LENGTH), 16);
-        return MS_CHAR_LENGTH;
+        this.value = Integer.parseInt(hexString.substring(0, 0), 16);
+        return 0;
     }
 }

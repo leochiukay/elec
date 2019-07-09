@@ -1,10 +1,9 @@
-package com.telek.elec.protocal.data.model.basic;
+package com.telek.elec.protocal.data.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.telek.elec.protocal.data.HexToDataConvertor;
-import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
@@ -15,7 +14,7 @@ import lombok.Data;
  * 数组类型的数据类型eg：数组，structure
  */
 @Data
-public abstract class AbsArraysData extends AbsBasicData {
+public abstract class AbsArraysData extends AbsData {
 
     private static final int SIZE_CHAR_LENGTH = 2;
 
@@ -31,6 +30,7 @@ public abstract class AbsArraysData extends AbsBasicData {
     public void addData(AbsData data){
         datas.add(data);
     }
+
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
         int length = SIZE_CHAR_LENGTH;
@@ -68,8 +68,8 @@ public abstract class AbsArraysData extends AbsBasicData {
                 // 获取里面的元素类型
                 String hex = hexExcludeDataType.substring(charLength);
                 AbsData data = HexToDataConvertor.hexToData(hex);
-                if (data != null && data instanceof AbsBasicData) {
-                    this.datas.add((AbsBasicData)data);
+                if (data != null) {
+                    this.datas.add(data);
                     int thisCharLength = data.getCharLength();
                     charLength += thisCharLength;
                 }

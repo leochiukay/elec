@@ -5,10 +5,10 @@ import com.telek.elec.protocal.apdu.factory.TempEquipmentFactory;
 import com.telek.elec.protocal.apdu.model.SetRequestData;
 import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
 import com.telek.elec.protocal.data.model.AbsData;
-import com.telek.elec.protocal.data.model.basic.Array;
-import com.telek.elec.protocal.data.model.basic.Structure;
-import com.telek.elec.protocal.data.model.basic.number.Long;
-import com.telek.elec.protocal.data.model.basic.number.Unsigned;
+import com.telek.elec.protocal.data.model.Array;
+import com.telek.elec.protocal.data.model.Structure;
+import com.telek.elec.protocal.data.model.number.Long;
+import com.telek.elec.protocal.data.model.number.Unsigned;
 
 import java.util.ArrayList;
 import java.util.List;

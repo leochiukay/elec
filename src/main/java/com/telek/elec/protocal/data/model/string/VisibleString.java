@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.data.model.basic.string;
+package com.telek.elec.protocal.data.model.string;
 
 import com.telek.elec.protocal.constant.DataType;
 
@@ -17,8 +17,14 @@ public class VisibleString extends AbsString {
         this.dataType = DataType.OCTET_STRING;
     }
 
-    public VisibleString(byte[] value) {
+    public VisibleString(boolean isEncodeDataType) {
         this();
+        this.isEncodeDataType = isEncodeDataType;
+    }
+
+    public VisibleString(byte[] value, boolean isEncodeDataType) {
+        this();
+        this.isEncodeDataType = isEncodeDataType;
         if (value == null) {
             size = 0;
         } else {

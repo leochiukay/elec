@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.data.model.basic.number;
+package com.telek.elec.protocal.data.model.number;
 
 import com.telek.elec.protocal.constant.DataType;
 
@@ -14,6 +14,11 @@ public class LongUnsigned extends NumericalData {
      */
     private int value;
 
+    public LongUnsigned(boolean isEncodeDataType) {
+        this();
+        this.isEncodeDataType = isEncodeDataType;
+    }
+
     public LongUnsigned() {
         this.dataType = DataType.LONG_UNSIGNED;
     }
@@ -26,6 +31,11 @@ public class LongUnsigned extends NumericalData {
     @Override
     protected void setValue(long value) {
         this.value = (int) value;
+    }
+
+    @Override
+    protected int getSpecialCharLength() {
+        return charLength;
     }
 
     public long getValue() {

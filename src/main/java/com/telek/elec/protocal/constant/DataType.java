@@ -49,4 +49,26 @@ public enum DataType {
 
     private int code;
 
+    /**
+     * 编码成1字符串
+     * @return
+     */
+    public String encode() {
+        return Integer.toHexString(code);
+    }
+
+    /**
+     * code解码成当前对象
+     * @param code
+     * @return
+     */
+    public static DataType decode(int code) {
+        for (DataType value : values()) {
+            if (value.getCode() == code) {
+                return value;
+            }
+        }
+        return null;
+    }
+
 }

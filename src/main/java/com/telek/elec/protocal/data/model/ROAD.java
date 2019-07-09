@@ -1,17 +1,14 @@
 package com.telek.elec.protocal.data.model;
 
-import com.telek.elec.protocal.data.HexToDataConvertor;
-import com.telek.elec.protocal.data.model.AbsData;
-import com.telek.elec.protocal.data.model.OAD;
-import com.telek.elec.protocal.data.model.OI;
-import com.telek.elec.protocal.data.model.basic.AbsBasicData;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
-import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Data;
 
 /**
  * @Auther: wll
@@ -20,9 +17,19 @@ import java.util.List;
  */
 @Data
 public class ROAD extends AbsData {
+
     private OAD oad;
 
     private List<OAD> sequenceOfData = new ArrayList<>();
+
+    public ROAD() {
+        this.dataType = DataType.ROAD;
+    }
+
+    public ROAD(boolean isEncodeDataType) {
+        this();
+        this.isEncodeDataType = isEncodeDataType;
+    }
 
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
