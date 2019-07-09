@@ -22,12 +22,10 @@ public class HeadWrapper extends Wrapper {
         //启动标志位：PRM=1表示此帧是由客户机发起的；PRM=0表示此帧是由服务器发起的。
         switch (apdu.getApduSequence()) {
             case LINK_RESPONSE:
-                control.setPrm(1);
                 control.setFun(1);
                 break;
             case REPORT_RESPONSE:
                 control.setFun(3);
-                control.setPrm(1);
                 break;
             case CONNECTION_REQUEST:
             case RELEASE_REQUEST:
@@ -36,7 +34,7 @@ public class HeadWrapper extends Wrapper {
             case ACTION_REQUEST:
             case PROXY_REQUEST:
                 control.setFun(3);
-                control.setPrm(0);
+                control.setPrm(1);
                 break;
             default:
                 throw new EncodeException();

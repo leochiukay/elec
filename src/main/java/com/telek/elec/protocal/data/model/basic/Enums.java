@@ -4,10 +4,12 @@ import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
+import lombok.Data;
 
 /**
  * 枚举
  */
+@Data
 public class Enums extends AbsBasicData {
 
     private static final int CHAR_LENGTH = 2;

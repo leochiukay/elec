@@ -3,6 +3,8 @@
  */
 package com.telek.elec.util;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
+
 /**
  * @author Fxh
  */
@@ -95,5 +97,11 @@ public class CRC16M {
         crc16[1] = (byte)(uchCRCLo & 0xFF);
         crc16[0] = (byte)(uchCRCHi & 0xFF);
         return crc16;
+    }
+
+    public static void main(String[] args){
+        byte[] result = CRC16M.getCrc16("HB0000000100021300".getBytes());
+        System.out.println(HexBin.encode(result));
+
     }
 }

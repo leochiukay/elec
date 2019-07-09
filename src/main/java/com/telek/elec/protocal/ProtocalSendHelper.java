@@ -21,6 +21,7 @@ public class ProtocalSendHelper {
 //                || apdu.getApduSequence() == APDUSequence.RELEASE_REQUEST) {
         Encoder encoder = new Encoder();
         byte[] datas = encoder.encode(sa, HexBin.decode(encodeStr), apdu, -1);
+        System.out.println("sendDatas:" + HexBin.encode(datas));
         if (sync) {
             return NettyStarter.syncSend(address, datas);
         } else {

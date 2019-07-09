@@ -54,8 +54,11 @@ public class V698ProtocalDecoder extends ByteToMessageDecoder {
             return null;
         }
         in.resetReaderIndex();
+        byte[] datas = new byte[length + 2];
+        in.readBytes(datas);
+        in.resetReaderIndex();
         ByteBuffer buffer = in.readRetainedSlice(length + 2).nioBuffer();
-        log.info("接收数据为：" + Hex.encodeHexString(buffer.array()));
+        log.info("接收数据为：" + Hex.encodeHexString(datas));
         ReferenceCountUtil.release(in);
         // 4.解码
         Decoder decoder = new Decoder();

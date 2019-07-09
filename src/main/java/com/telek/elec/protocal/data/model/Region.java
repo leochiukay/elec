@@ -1,5 +1,7 @@
 package com.telek.elec.protocal.data.model;
 
+import com.telek.elec.protocal.data.HexToDataConvertor;
+import com.telek.elec.protocal.data.model.basic.Enums;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
@@ -22,11 +24,29 @@ public class Region extends AbsData {
 
     @Override
     protected String encodeSpecial() throws EncodeException {
-        return null;
+        StringBuffer sb = new StringBuffer();
+        Enums enums = new Enums((short) unit);
+        enums.setEncodeDataType(false);
+        sb.append(enums.encode());
+        sb.append(start.encode());
+        sb.append(end.encode());
+        return sb.toString();
     }
 
     @Override
     protected int decodeSpecial(String hexString) throws DecodeException {
-        return 0;
+        int charLength = 0;
+        Enums enums = new Enums();
+        enums.setEncodeDataType(false);
+        enums.decode(hexString);
+        charLength += enums.getCharLength();
+        this.unit = enums.getValue();
+        AbsData start = HexToDataConvertor.hexToData(hexString.substring(charLength));
+        this.start = start;
+        charLength += start.getCharLength();
+        AbsData end = HexToDataConvertor.hexToData(hexString.substring(charLength));
+        this.end = end;
+        charLength += end.getCharLength();
+        return charLength;
     }
 }

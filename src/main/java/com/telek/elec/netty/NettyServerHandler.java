@@ -72,6 +72,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<Packet> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Packet packet) throws Exception {
         //从服务端收到消息时被调用
+
         String channelId = ctx.channel().remoteAddress().toString().substring(1);
         TempCache.serviceAddressInfo.put(packet.getSa().getAddress(), packet.getSa());
         service.execute(new ProcessingServer(packet));

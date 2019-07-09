@@ -1,6 +1,7 @@
 package com.telek.elec.protocal.codec;
 
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import com.telek.elec.protocal.Packet;
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.constant.ProtocalConstant;
@@ -15,9 +16,9 @@ public class Encoder {
     private WrapperChain wrapperChain = new WrapperChain();
 
     public byte[] encode(Packet.SA sa, byte[] data, CodecAPDU apdu, int seq) throws Exception {
-        Packet packet = new Packet();
+        Packet packet = new Packet(data);
         wrapperChain.encode(packet, sa, data, apdu, seq);
-        byte[] datas = packet.getBaos().toByteArray();
+        byte[] datas = HexBin.decode(packet.getHexStr().toString());
         byte[] result = new byte[datas.length + 2];
         result[0] = ProtocalConstant.START_FRAM;
         System.arraycopy(datas, 0, result, 1, datas.length);

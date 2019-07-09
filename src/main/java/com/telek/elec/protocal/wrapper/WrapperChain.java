@@ -14,8 +14,8 @@ public class WrapperChain {
     List<Wrapper> wrappers = new ArrayList<>();
 
     public WrapperChain() {
-        this.add(new DataWrapper());
         this.add(new HeadWrapper());
+        this.add(new DataWrapper());
         this.add(new TailWrapper());
     }
 
