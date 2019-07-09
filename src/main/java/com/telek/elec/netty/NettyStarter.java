@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
  * netty启动器
  */
 @Slf4j
-public class NettyStarter {
+public class NettyStarter implements Runnable{
 
     /**
      * 端口
@@ -37,7 +37,8 @@ public class NettyStarter {
      */
     private ServerSocketChannel channel;
 
-    public void start() {
+    @Override
+    public void run() {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workGroup = new NioEventLoopGroup();
         try {
@@ -66,7 +67,7 @@ public class NettyStarter {
                 Thread.sleep(20000);
             } catch (InterruptedException e) {
             }
-            start();
+            run();
         }
     }
 

@@ -93,6 +93,9 @@ public abstract class AbsData extends AbsCodec implements IData {
     /**
      * 计算字符串长度
      */
-    protected abstract int calculateSpecialCharLength() throws EncodeException;
+    protected int calculateSpecialCharLength() throws EncodeException{
+        this.encode();
+        return this.getCharLength();
+    };
 
 }

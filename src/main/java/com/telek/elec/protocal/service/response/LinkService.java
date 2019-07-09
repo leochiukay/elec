@@ -59,7 +59,7 @@ public class LinkService implements IResponseService {
 
         // 如果为登录，先发送建立应用链接请求
         if (LinkType.LOGIN.equals(linkType)) {
-//            new Thread(new AutoConnection(packet)).start();
+            new Thread(new AutoConnection(packet)).start();
         }
 
     }
@@ -90,17 +90,17 @@ class AutoConnection implements Runnable {
 
     private ConnectionRequest getConnectionRequest() {
         ConnectionRequest connectionRequest = new ConnectionRequest();
-        connectionRequest.setExpectVersion(0x0010);
-        connectionRequest.setProtocolConformance("FFFFFFFFFFFFFFFF");
-        connectionRequest.setFunctionConformance("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
-        connectionRequest.setSendMaxSize(0x0400);
-        connectionRequest.setReceiveMaxSize(0x0400);
-        connectionRequest.setWindowMaxSize(0x01);
-        connectionRequest.setMaxApduSize(0x0400);
-        connectionRequest.setExpectOverTime(0x00000064);
-        connectionRequest.setAuthObject(0x00);
-        connectionRequest.setTimeStamp(0x00);
-        connectionRequest.setPiid(0x00);
+        connectionRequest.setExpectVersion(22);
+        connectionRequest.setProtocolConformance("FFFFFFFFC0000000");
+        connectionRequest.setFunctionConformance("0001FFFE000000000000000000000000");
+        connectionRequest.setSendMaxSize(2048);
+        connectionRequest.setReceiveMaxSize(2048);
+        connectionRequest.setWindowMaxSize(1);
+        connectionRequest.setMaxApduSize(8000);
+        connectionRequest.setExpectOverTime(7200);
+        connectionRequest.setAuthObject(3);
+        connectionRequest.setTimeStamp(32);
+        connectionRequest.setPiid(54);
         return connectionRequest;
     }
 }

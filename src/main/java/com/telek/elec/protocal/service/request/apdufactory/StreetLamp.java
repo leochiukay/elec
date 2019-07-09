@@ -77,11 +77,11 @@ public class StreetLamp {
             period.add(new Unsigned(controlPeriod.get("sm")));
             period.add(new Unsigned(controlPeriod.get("eh")));
             period.add(new Unsigned(controlPeriod.get("em")));
-            structure.setDatas(period);
+//            structure.setDatas(period);
             arrayDatas.add(structure);
         }
         Array array = new Array();
-        array.setDatas(arrayDatas);
+//        array.setDatas(arrayDatas);
         requestData.setData(new Datas(array));
         return setRequestNormal(requestData);
     }

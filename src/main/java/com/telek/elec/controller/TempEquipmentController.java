@@ -1,10 +1,7 @@
 package com.telek.elec.controller;
 
 import com.telek.elec.protocal.apdu.CodecAPDU;
-import com.telek.elec.protocal.apdu.factory.TempEquipmentFactory;
 import com.telek.elec.protocal.service.request.RequestService;
-import com.telek.elec.protocal.service.request.apdufactory.AirConditionTempControl;
-import com.telek.elec.protocal.service.request.apdufactory.StreetLamp;
 import com.telek.elec.protocal.service.request.apdufactory.TempEquipment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.telek.elec.protocal.service.RequestFactory.getActionRequestNormal;
 
 /**
  * @Auther: wll
