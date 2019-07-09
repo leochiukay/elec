@@ -9,7 +9,7 @@ import com.telek.elec.protocal.data.model.OMD;
  */
 public class ChargingPipleFactory {
 
-    public static final OI OI = new OI(0x4312, false);
+    public static final OI OI = new OI(0x4312);
 
     /**
      * 状态
@@ -17,7 +17,7 @@ public class ChargingPipleFactory {
      * @return enum{关闭（0），打开（1）
      */
     public static OAD state() {
-        return new OAD(OI, 2, 0, false);
+        return new OAD(OI, 2, 0);
     }
 
     /**
@@ -26,7 +26,7 @@ public class ChargingPipleFactory {
      * @return =enum{未打开负荷控制（0），打开负荷控制（1）
      */
     public static OAD loadControlState() {
-        return new OAD(OI, 3, 0, false);
+        return new OAD(OI, 3, 0);
     }
 
     /**
@@ -35,7 +35,7 @@ public class ChargingPipleFactory {
      * @return enum{未打开时间控制（0），打开时间控制（1）
      */
     public static OAD appointControlPeriod() {
-        return new OAD(OI, 4, 0, false);
+        return new OAD(OI, 4, 0);
     }
 
     /**
@@ -44,7 +44,7 @@ public class ChargingPipleFactory {
      * @return 有功功率
      */
     public static OAD loadControlThreshold() {
-        return new OAD(OI, 5, 0, false);
+        return new OAD(OI, 5, 0);
     }
 
     /**
@@ -53,7 +53,7 @@ public class ChargingPipleFactory {
      * @return 有功功率
      */
     public static OAD autoControlPeriod() {
-        return new OAD(OI, 6, 0, false);
+        return new OAD(OI, 6, 0);
     }
 
     /**
@@ -62,7 +62,7 @@ public class ChargingPipleFactory {
      * @return null
      */
     public static OMD on() {
-        return new OMD(OI, 127, 0, false);
+        return new OMD(OI, 127, 0);
     }
 
     /**
@@ -71,7 +71,7 @@ public class ChargingPipleFactory {
      * @return null
      */
     public static OMD off() {
-        return new OMD(OI, 128, 0, false);
+        return new OMD(OI, 128, 0);
     }
 
     /**
@@ -80,7 +80,7 @@ public class ChargingPipleFactory {
      * @return null
      */
     public static OMD onLoadControl() {
-        return new OMD(OI, 129, 0, false);
+        return new OMD(OI, 129, 0);
     }
 
     /**
@@ -89,7 +89,7 @@ public class ChargingPipleFactory {
      * @return null
      */
     public static OMD offLoadControl() {
-        return new OMD(OI, 130, 0, false);
+        return new OMD(OI, 130, 0);
     }
 
     /**
@@ -98,7 +98,7 @@ public class ChargingPipleFactory {
      * @return null
      */
     public static OMD onAppointPeriod() {
-        return new OMD(OI, 131, 0, false);
+        return new OMD(OI, 131, 0);
     }
 
     /**
@@ -107,7 +107,7 @@ public class ChargingPipleFactory {
      * @return null
      */
     public static OMD offAppointPeriod() {
-        return new OMD(OI, 132, 0, false);
+        return new OMD(OI, 132, 0);
     }
 
 }

@@ -9,7 +9,7 @@ import com.telek.elec.protocal.data.model.OMD;
  * @Description:
  */
 public class DocumentFactory {
-    public static final com.telek.elec.protocal.data.model.OI OI = new OI(0x6000, false);
+    public static final com.telek.elec.protocal.data.model.OI OI = new OI(0x6000);
 
     /**
      * 添加一个采集档案配置单元
@@ -17,7 +17,7 @@ public class DocumentFactory {
      * @return OAD
      */
     public static OMD addDocument() {
-        return new OMD(OI, 128, 0, false);
+        return new OMD(OI, 128, 0);
     }
     /**
      * 批量添加采集档案配置单元
@@ -25,7 +25,7 @@ public class DocumentFactory {
      * @return OAD
      */
     public static OMD addBatchDocuments() {
-        return new OMD(OI, 129, 0, false);
+        return new OMD(OI, 129, 0);
     }
 
 }

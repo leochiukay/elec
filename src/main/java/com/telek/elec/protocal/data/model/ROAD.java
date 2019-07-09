@@ -26,11 +26,6 @@ public class ROAD extends AbsData {
         this.dataType = DataType.ROAD;
     }
 
-    public ROAD(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
         return sequenceOfData.size() * 8 + 2 + 8;

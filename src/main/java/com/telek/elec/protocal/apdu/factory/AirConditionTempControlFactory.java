@@ -9,7 +9,7 @@ import com.telek.elec.protocal.data.model.OMD;
  */
 public class AirConditionTempControlFactory {
 
-    public static final OI OI = new OI(0x8122, false);
+    public static final OI OI = new OI(0x8122);
 
     /**
      * 参数配置
@@ -29,7 +29,7 @@ public class AirConditionTempControlFactory {
      * @return enum{关闭（0），打开（1）
      */
     public static OAD params() {
-        return new OAD(OI, 2, 0, false);
+        return new OAD(OI, 2, 0);
     }
 
     /**
@@ -38,7 +38,7 @@ public class AirConditionTempControlFactory {
      * @return null
      */
     public static OMD on() {
-        return new OMD(OI, 127, 0, false);
+        return new OMD(OI, 127, 0);
     }
 
     /**
@@ -47,7 +47,7 @@ public class AirConditionTempControlFactory {
      * @return null
      */
     public static OMD off() {
-        return new OMD(OI, 128, 0, false);
+        return new OMD(OI, 128, 0);
     }
 
 }

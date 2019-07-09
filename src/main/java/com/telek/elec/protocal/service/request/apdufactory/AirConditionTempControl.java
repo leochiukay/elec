@@ -18,7 +18,7 @@ import com.telek.elec.protocal.service.RequestFactory;
  */
 public class AirConditionTempControl {
 
-    public static final OI OI = new OI(0x8122, false);
+    public static final OI OI = new OI(0x8122);
 
     /**
      * 参数配置

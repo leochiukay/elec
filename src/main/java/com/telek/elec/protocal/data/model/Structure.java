@@ -20,13 +20,7 @@ public class Structure extends AbsArraysData {
         this.dataType = DataType.STRUCTURE;
     }
 
-    public Structure(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
-    public Structure(List<AbsData> data, boolean isEncodeDataType) {
-        this(isEncodeDataType);
+    public Structure(List<AbsData> data) {
         if (data == null) {
             this.size = 0;
         } else {

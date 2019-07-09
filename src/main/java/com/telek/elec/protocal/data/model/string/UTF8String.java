@@ -14,14 +14,8 @@ public class UTF8String extends AbsString {
         this.dataType = DataType.UTF8_STRING;
     }
 
-    public UTF8String(boolean isEncodeDataType) {
+    public UTF8String(String value) {
         this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
-    public UTF8String(String value, boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
         this.str = value;
         this.size = this.str.getBytes().length;
     }

@@ -23,13 +23,7 @@ public class RSD extends AbsData {
         this.dataType = DataType.RSD;
     }
 
-    public RSD(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
-    public RSD(byte selectorId, Selector selector, boolean isEncodeDataType) {
-        this(isEncodeDataType);
+    public RSD(byte selectorId, Selector selector) {
         this.selectorId = selectorId;
         this.selector = selector;
     }

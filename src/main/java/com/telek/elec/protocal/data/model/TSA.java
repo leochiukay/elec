@@ -18,14 +18,8 @@ public class TSA extends AbsData {
         this.dataType = DataType.TSA;
     }
 
-    public TSA(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
-    public TSA(String address, boolean isEncodeDataType) {
-        this(isEncodeDataType);
-        this.address = new OctetString(address, false);
+    public TSA(String address) {
+        this.address = new OctetString(address);
     }
 
     @Override

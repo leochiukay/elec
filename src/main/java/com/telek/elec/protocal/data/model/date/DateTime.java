@@ -33,14 +33,8 @@ public class DateTime extends AbsData {
         this.dataType = DataType.DATE_TIME;
     }
 
-    public DateTime(boolean isEncodeDataType) {
+    public DateTime(Calendar calendar) {
         this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
-    public DateTime(Calendar calendar, boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
         this.calendar = calendar;
     }
 

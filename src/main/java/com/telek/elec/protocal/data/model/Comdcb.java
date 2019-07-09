@@ -35,13 +35,7 @@ public class Comdcb extends AbsData {
         this.dataType = DataType.COMDCB;
     }
 
-    public Comdcb(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
     public Comdcb(short baudRate, short calibration, short dataBit, short stopBit, short flowControl, boolean isEncodeDataType) {
-        this(isEncodeDataType);
         this.baudRate = baudRate;
         this.calibration = calibration;
         this.dataBit = dataBit;

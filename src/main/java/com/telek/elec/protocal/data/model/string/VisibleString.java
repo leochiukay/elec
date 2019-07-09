@@ -23,14 +23,8 @@ public class VisibleString extends AbsString {
         this.dataType = DataType.OCTET_STRING;
     }
 
-    public VisibleString(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
     public VisibleString(String str, boolean isEncodeDataType) {
         this();
-        this.isEncodeDataType = isEncodeDataType;
         this.str = str;
         this.size = str.getBytes().length;
     }

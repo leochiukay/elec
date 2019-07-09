@@ -11,11 +11,6 @@ public class Null extends AbsData {
         this.dataType = DataType.NULL;
     }
 
-    public Null(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
     @Override
     protected int calculateSpecialCharLength() {
         return 0;

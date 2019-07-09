@@ -14,11 +14,6 @@ public class Long extends NumericalData {
      */
     private short value;
 
-    public Long(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
     public Long() {
         this.dataType = DataType.LONG;
     }

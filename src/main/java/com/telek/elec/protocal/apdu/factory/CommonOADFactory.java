@@ -13,8 +13,8 @@ public class CommonOADFactory {
      * @return
      */
     public static OAD postalAddress() {
-        OI oi = new OI(0x4001, false);
-        OAD oad = new OAD(oi, 0x02, 0x00, false);
+        OI oi = new OI(0x4001);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -23,8 +23,8 @@ public class CommonOADFactory {
      * @return double-long-unsigned 单位：秒
      */
     public static OAD generationTime() {
-        OI oi = new OI(0x2600, false);
-        OAD oad = new OAD(oi, 0x02, 0x00, false);
+        OI oi = new OI(0x2600);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -33,8 +33,8 @@ public class CommonOADFactory {
      * @return long，单位：℃，换算：-1
      */
     public static OAD ambientTemperature() {
-        OI oi = new OI(0x2601, false);
-        OAD oad = new OAD(oi, 0x02, 0x00, false);
+        OI oi = new OI(0x2601);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -43,8 +43,8 @@ public class CommonOADFactory {
      * @return long，单位：℃，换算：-1
      */
     public static OAD componentTemperature() {
-        OI oi = new OI(0x2602, false);
-        OAD oad = new OAD(oi, 0x02, 0x00, false);
+        OI oi = new OI(0x2602);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -53,8 +53,8 @@ public class CommonOADFactory {
      * @return long-unsigned，单位：%RH，换算：-1
      */
     public static OAD humidity() {
-        OI oi = new OI(0x2603, false);
-        OAD oad = new OAD(oi, 0x02, 0x00, false);
+        OI oi = new OI(0x2603);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -63,8 +63,8 @@ public class CommonOADFactory {
      * @return long-unsigned，单位：W/m2
      */
     public static OAD radiation() {
-        OI oi = new OI(0x2604, false);
-        OAD oad = new OAD(oi, 0x02, 0x00, false);
+        OI oi = new OI(0x2604);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -73,8 +73,8 @@ public class CommonOADFactory {
      * @return long-unsigned，单位：MJ/m2，换算：-3
      */
     public static OAD windSpeed() {
-        OI oi = new OI(0x2605, false);
-        OAD oad = new OAD(oi, 0x02, 0x00, false);
+        OI oi = new OI(0x2605);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -83,8 +83,8 @@ public class CommonOADFactory {
      * @return long-unsigned
      */
     public static OAD windDirection() {
-        OI oi = new OI(0x2606, false);
-        OAD oad = new OAD(oi, 0x02, 0x00, false);
+        OI oi = new OI(0x2606);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 
@@ -93,8 +93,8 @@ public class CommonOADFactory {
      * @return long-unsigned，单位：RPM
      */
     public static OAD speed() {
-        OI oi = new OI(0x2607, false);
-        OAD oad = new OAD(oi, 0x02, 0x00, false);
+        OI oi = new OI(0x2607);
+        OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
 }

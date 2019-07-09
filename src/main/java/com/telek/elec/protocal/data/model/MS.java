@@ -31,11 +31,6 @@ public class MS extends AbsData {
         this.dataType = DataType.MS;
     }
 
-    public MS(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
     @Override
     protected int calculateSpecialCharLength() throws EncodeException {
         return 0;

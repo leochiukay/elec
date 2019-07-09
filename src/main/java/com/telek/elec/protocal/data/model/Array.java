@@ -20,13 +20,7 @@ public class Array extends AbsArraysData {
         this.dataType = DataType.ARRAY;
     }
 
-    public Array(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
-    public Array(List<AbsData> data, boolean isEncodeDataType) {
-        this(isEncodeDataType);
+    public Array(List<AbsData> data) {
         if (data == null) {
             this.size = 0;
         } else {

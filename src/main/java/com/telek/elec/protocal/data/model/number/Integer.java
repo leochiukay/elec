@@ -16,11 +16,6 @@ public class Integer extends NumericalData {
      */
     private byte value;
 
-    public Integer(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
     public Integer() {
         this.dataType = DataType.INTEGER;
     }

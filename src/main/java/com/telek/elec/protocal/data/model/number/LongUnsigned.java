@@ -14,11 +14,6 @@ public class LongUnsigned extends NumericalData {
      */
     private int value;
 
-    public LongUnsigned(boolean isEncodeDataType) {
-        this();
-        this.isEncodeDataType = isEncodeDataType;
-    }
-
     public LongUnsigned() {
         this.dataType = DataType.LONG_UNSIGNED;
     }
