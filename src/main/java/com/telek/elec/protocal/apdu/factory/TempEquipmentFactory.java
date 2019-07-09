@@ -41,11 +41,9 @@ public class TempEquipmentFactory {
     /**
      * 温度阈值
      * 属性5
-     * @param up 温度上限
-     * @param down 温度下限
      * @return
      */
-    public static OAD tempThreshold(int up, int down) {
+    public static OAD tempThreshold() {
         return new OAD(OI, 5, 0);
     }
 
@@ -60,7 +58,7 @@ public class TempEquipmentFactory {
      *   结束分钟 unsigned
      * }
      */
-    public static OAD tempThreshold() {
+    public static OAD autoControlPeriod() {
         return new OAD(OI, 6, 0);
     }
 

@@ -1,0 +1,62 @@
+package com.telek.elec.protocal.data.model;
+
+import com.telek.elec.protocal.data.HexToDataConvertor;
+import com.telek.elec.protocal.data.model.AbsData;
+import com.telek.elec.protocal.data.model.OAD;
+import com.telek.elec.protocal.data.model.OI;
+import com.telek.elec.protocal.data.model.basic.AbsBasicData;
+import com.telek.elec.protocal.exeception.DecodeException;
+import com.telek.elec.protocal.exeception.EncodeException;
+import com.telek.elec.util.StringUtils;
+import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @Auther: wll
+ * @Date: 2019/7/8 21:13
+ * @Description:
+ */
+@Data
+public class ROAD extends AbsData {
+    private OAD oad;
+
+    private List<OAD> sequenceOfData = new ArrayList<>();
+
+    @Override
+    protected int calculateSpecialCharLength() throws EncodeException {
+        return sequenceOfData.size() * 8 + 2 + 8;
+    }
+
+    @Override
+    protected String encodeSpecial() throws EncodeException {
+        StringBuilder sb = new StringBuilder();
+        sb.append(oad.encode());
+        sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(sequenceOfData.size()), 2));
+        for (OAD data : sequenceOfData) {
+            sb.append(data.encode());
+        }
+        return sb.toString();
+    }
+
+    @Override
+    protected int decodeSpecial(String hexString) throws DecodeException {
+        int charLength = 0;
+        OAD oad = new OAD();
+        oad.decode(hexString);
+        this.oad = oad;
+        charLength += oad.getCharLength();
+        int size = java.lang.Integer.parseInt(hexString.substring(0, charLength), 16);
+        charLength += 2;
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                OAD sequenceOad = new OAD();
+                sequenceOad.decode(hexString);
+                this.sequenceOfData.add(sequenceOad);
+                charLength += sequenceOad.getCharLength();
+            }
+        }
+        return charLength;
+    }
+}

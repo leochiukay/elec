@@ -6,7 +6,9 @@ import com.telek.elec.protocal.data.model.OMD;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 设置请求的数据信息
@@ -14,6 +16,8 @@ import lombok.Data;
  *  * 0F 00 ——参数Data， integer(0)
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ActionRequestData extends AbsResult {
 
     private OMD omd;
