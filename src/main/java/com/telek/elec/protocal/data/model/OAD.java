@@ -35,6 +35,7 @@ public class OAD extends AbsData {
     }
 
     public OAD(OI oi, int attr, int index) {
+        this();
         this.oi = oi;
         this.attr = attr;
         this.index = index;

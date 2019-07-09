@@ -36,6 +36,7 @@ public class Comdcb extends AbsData {
     }
 
     public Comdcb(short baudRate, short calibration, short dataBit, short stopBit, short flowControl, boolean isEncodeDataType) {
+        this();
         this.baudRate = baudRate;
         this.calibration = calibration;
         this.dataBit = dataBit;

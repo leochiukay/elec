@@ -21,6 +21,7 @@ public class OI extends AbsData {
     }
 
     public OI(int oi) {
+        this();
         this.oi = oi;
     }
 

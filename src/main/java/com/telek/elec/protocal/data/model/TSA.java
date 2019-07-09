@@ -21,6 +21,7 @@ public class TSA extends AbsData {
     }
 
     public TSA(String address) {
+        this();
         this.dataType = DataType.TSA;
         this.addressType = 0;
         this.logicAddress = 0;
@@ -28,6 +29,7 @@ public class TSA extends AbsData {
     }
 
     public TSA(int addressType, int logicAddress, String address) {
+        this();
         this.dataType = DataType.TSA;
         this.addressType = addressType;
         this.logicAddress = logicAddress;

@@ -22,6 +22,7 @@ public class Enums extends AbsData {
     }
 
     public Enums(short value) {
+        this();
         this.value = value;
     }
 

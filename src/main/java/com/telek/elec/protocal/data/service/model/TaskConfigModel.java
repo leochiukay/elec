@@ -11,6 +11,7 @@ import com.telek.elec.protocal.data.model.TI;
 import com.telek.elec.protocal.data.model.date.DateTimeS;
 import com.telek.elec.protocal.data.model.number.LongUnsigned;
 import com.telek.elec.protocal.data.model.number.Unsigned;
+import com.telek.elec.protocal.exeception.EncodeException;
 
 import lombok.Data;
 
@@ -204,6 +205,13 @@ public class TaskConfigModel {
         structure.addData(beginScriptId.getData());
         structure.addData(endScriptId.getData());
         structure.addData(periodData);
+
+        System.out.println("===============================");
+        try {
+            System.out.println(task.encode());
+        } catch (EncodeException e) {
+            e.printStackTrace();
+        }
 
         return task;
     }

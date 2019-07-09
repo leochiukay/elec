@@ -33,6 +33,7 @@ public class OMD extends AbsData {
     }
 
     public OMD(OI oi, int methodNum, int model) {
+        this();
         this.oi = oi;
         this.methodNum = methodNum;
         this.model = model;
