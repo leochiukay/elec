@@ -37,6 +37,8 @@ public class LinkService implements IResponseService {
                 break;
             case LOGIN:
             case HEART_BEAT:
+                log.error("address:" + address);
+
                 TempCache.linkedInfo.put(address, linkRequest);
                 break;
             default:
@@ -59,7 +61,7 @@ public class LinkService implements IResponseService {
 
         // 如果为登录，先发送建立应用链接请求
         if (LinkType.LOGIN.equals(linkType)) {
-            new Thread(new AutoConnection(packet)).start();
+            // new Thread(new AutoConnection(packet)).start();
         }
 
     }
