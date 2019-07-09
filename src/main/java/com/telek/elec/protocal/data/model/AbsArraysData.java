@@ -3,6 +3,7 @@ package com.telek.elec.protocal.data.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.HexToDataConvertor;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
@@ -28,7 +29,7 @@ public abstract class AbsArraysData extends AbsData {
     protected List<AbsData> datas = new ArrayList<>();
 
     public void addData(AbsData data){
-        datas.add(data);
+        datas.add(new Datas<>(data).getData());
     }
 
     @Override
