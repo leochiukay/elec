@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.apdu.read.request;
+package com.telek.elec.protocal.apdu.read.response;
 
 import com.telek.elec.protocal.apdu.ResTypeCodecAPDU;
 import com.telek.elec.protocal.apdu.model.GetRecord;
@@ -11,28 +11,35 @@ import com.telek.elec.protocal.exeception.EncodeException;
 import lombok.Data;
 
 /**
- * 终端读取电能表在2016-01-20 00： 00： 00的日冻结正向有功总及费率电能量
- * 05 03 03 50 04 02 00 01 20 21 02 00 07 E0 16 01 14 00 00 00 02 00 20 21 02 00 00 00 10 02 00 00
- * 05 —— [5] GET-Request
- * 03 —— [3] GetRequestRecord
- * 03 —— PIID
- * 50 04 02 00 ——  日冻结
- * 01 —— RSD， 选择方法1
- * 20 21 02 00 —— OAD，数据冻结时间
- * 1C 07 E0 01 14 00 00 00 —— 时间
+ * 响应： 85 03 03 50 04 02 00 02 00 20 21 02 00 00 00 10 02 00 01 01 1C 07 EO 01 14 00 00
+ * 00 01 05 06 00 00 00 00 06 00 00 00 00 06 00 00 00 00 06 00 00 00 00 06 00 00 00 00 00 00
+ * 85 —— [133] GET-Response
+ * 03 —— [3] GeResponseRecord
+ * 03 —— PIID-ACD
+ * 50 04 02 00 —— OAD
  * 02 —— RCSD， SEQUENCE OF个数=2
- * 00 —— [0] OAD
- * 20 21 02 00 —— OAD
- * 00 —— [0] OAD
- * 00 10 02 00 —— OAD
+ * 00 20 21 02 00 —— 第1列OAD
+ * 00 00 10 02 00 —— 第2列OADQ/GDW 11778—2017
+ * 201
+ * 01 —— 记录数据
+ * 01 —— M条记录， M=1
+ * 1C 07 E0 01 14 00 00 00 —— 第1列数据Data
+ * 01 —— 第2列数据Data
+ * 05
+ * 06 00 00 00 00
+ * 06 00 00 00 00
+ * 06 00 00 00 00
+ * 06 00 00 00 00
+ * 06 00 00 00 00
+ * 00 —— FollowReport OPTIONAL=0 表示没有上报信息
  * 00 —— 没有时间标签
  */
 @Data
-public class GetRequestRecord extends ResTypeCodecAPDU implements Get {
+public class GetResponseRecord extends ResTypeCodecAPDU implements Get {
 
     private GetRecord getRecord;
 
-    public GetRequestRecord() {
+    public GetResponseRecord() {
         super(APDUResType.GET_RECORD);
         this.apduSequence = APDUSequence.GET_REQUEST;
     }

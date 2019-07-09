@@ -1,7 +1,6 @@
 package com.telek.elec.protocal.data.model;
 
 import com.telek.elec.protocal.constant.DataType;
-import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
@@ -13,7 +12,7 @@ import lombok.Data;
 @Data
 public class OI extends AbsData {
 
-    private static final int OI_CHAR_LENGTH = 4;
+    public static final int OI_CHAR_LENGTH = 4;
 
     private int oi;
 

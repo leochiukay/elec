@@ -10,8 +10,8 @@ import com.telek.elec.protocal.service.request.apdufactory.TempEquipment;
  */
 public class ArchivesController {
     public void test(){
-        CodecAPDU request = TempEquipment.temperature();
-//        requestService.sendRequest(request, address);
-//        return "OK";
+        /*CodecAPDU request = TempEquipment.temperature();
+        requestService.sendRequest(request, address);
+        return "OK";*/
     }
 }

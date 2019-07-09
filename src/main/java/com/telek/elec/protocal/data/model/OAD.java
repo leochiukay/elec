@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 public class OAD extends AbsData {
 
-    private static final int OAD_CHAR_LENGTH = 8;
+    public static final int OAD_CHAR_LENGTH = 8;
 
     private OI oi;
     /**
