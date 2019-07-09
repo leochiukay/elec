@@ -25,7 +25,7 @@ public class TSA extends AbsData {
 
     public TSA(String address, boolean isEncodeDataType) {
         this(isEncodeDataType);
-        this.address = new OctetString(address.getBytes(), false);
+        this.address = new OctetString(address, false);
     }
 
     @Override
