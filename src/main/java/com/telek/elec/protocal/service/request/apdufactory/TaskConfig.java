@@ -8,7 +8,7 @@ import com.telek.elec.protocal.apdu.model.ActionRequestData;
 import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.model.Array;
 import com.telek.elec.protocal.data.model.number.Unsigned;
-import com.telek.elec.protocal.service.servicemodel.TaskConfigModel;
+import com.telek.elec.protocal.data.service.model.TaskConfigModel;
 
 /**
  * 任务配置

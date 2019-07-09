@@ -1,4 +1,4 @@
-package com.telek.elec.protocal.service.servicemodel;
+package com.telek.elec.protocal.data.service.model;
 
 import java.util.Calendar;
 import java.util.List;
