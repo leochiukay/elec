@@ -35,19 +35,6 @@ public abstract class AbsArraysData extends AbsData {
     }
 
     @Override
-    protected int calculateSpecialCharLength() throws EncodeException {
-        int length = SIZE_CHAR_LENGTH;
-        if (datas != null) {
-            for (Datas data : datas) {
-                // 计算字符长度
-                data.encode();
-                length += data.getData().getCharLength();
-            }
-        }
-        return length;
-    }
-
-    @Override
     protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(StringUtils.subLastNumStr(java.lang.Integer.toHexString(size), 2));

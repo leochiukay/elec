@@ -27,11 +27,6 @@ public class ROAD extends AbsData {
     }
 
     @Override
-    protected int calculateSpecialCharLength() throws EncodeException {
-        return sequenceOfData.size() * 8 + 2 + 8;
-    }
-
-    @Override
     protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         sb.append(oad.encode());

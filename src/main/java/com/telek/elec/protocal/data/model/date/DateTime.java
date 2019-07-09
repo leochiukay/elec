@@ -39,11 +39,6 @@ public class DateTime extends AbsData {
     }
 
     @Override
-    protected int calculateSpecialCharLength() {
-        return CHAR_LENGTH;
-    }
-
-    @Override
     protected String encodeSpecial() {
         return EncoderUtils.encodeToDateTimeHex(calendar);
     }

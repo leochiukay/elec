@@ -29,14 +29,6 @@ public class RSD extends AbsData {
     }
 
     @Override
-    protected int calculateSpecialCharLength() throws EncodeException {
-        if (selectorId == 0) {
-            return 0;
-        }
-        return selector.getCharLength();
-    }
-
-    @Override
     protected String encodeSpecial() throws EncodeException {
         if (selector != null) {
             return "";

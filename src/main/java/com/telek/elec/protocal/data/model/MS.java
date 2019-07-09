@@ -32,11 +32,6 @@ public class MS extends AbsData {
     }
 
     @Override
-    protected int calculateSpecialCharLength() throws EncodeException {
-        return 0;
-    }
-
-    @Override
     protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         if (data == null) {

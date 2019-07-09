@@ -34,9 +34,4 @@ public class OI extends AbsData {
         this.oi = Integer.parseInt(hexString.substring(0, OI_CHAR_LENGTH), 16);
         return OI_CHAR_LENGTH;
     }
-
-    @Override
-    protected int calculateSpecialCharLength() {
-        return OI_CHAR_LENGTH;
-    }
 }

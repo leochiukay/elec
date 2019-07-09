@@ -30,6 +30,7 @@ public abstract class AbsData extends AbsCodec implements IData {
 
     /**
      * 将当前对象编码成十六进制字符串
+     *
      * @return
      */
     @Override
@@ -44,16 +45,13 @@ public abstract class AbsData extends AbsCodec implements IData {
         if (special != null) {
             sb.append(special);
         }
-        int commonCharLen = 0;
-        if (isEncodeDataType) {
-            commonCharLen = 2;
-        }
-        this.charLength = commonCharLen + calculateSpecialCharLength();
+        this.charLength = sb.length();
         return sb.toString();
     }
 
     /**
      * 编码通用属性
+     *
      * @return
      */
     public String encodeCommon() {
@@ -66,6 +64,7 @@ public abstract class AbsData extends AbsCodec implements IData {
 
     /**
      * 将该字符串解码成当前对象
+     *
      * @param hexString
      * @return 返回该对象所占字符串长度
      */
@@ -80,6 +79,7 @@ public abstract class AbsData extends AbsCodec implements IData {
 
     /**
      * 解码通用属性
+     *
      * @return
      */
     private int decodeCommon(String hex) {
@@ -93,9 +93,8 @@ public abstract class AbsData extends AbsCodec implements IData {
     /**
      * 计算字符串长度
      */
-    protected int calculateSpecialCharLength() throws EncodeException{
+    protected int calculateSpecialCharLength() throws EncodeException {
         this.encode();
         return this.getCharLength();
-    };
-
+    }
 }

@@ -56,9 +56,4 @@ public class OMD extends AbsData {
         this.model = java.lang.Integer.parseInt(hexString.substring(oiCharLen, oiCharLen += 2), 16);
         return OMD_CHAR_LENGTH;
     }
-
-    @Override
-    protected int calculateSpecialCharLength() {
-        return OMD_CHAR_LENGTH;
-    }
 }

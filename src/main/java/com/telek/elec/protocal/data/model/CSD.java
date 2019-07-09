@@ -31,18 +31,6 @@ public class CSD extends AbsData {
     }
 
     @Override
-    protected int calculateSpecialCharLength() throws EncodeException {
-        if (oad != null) {
-            oad.encode();
-            return 4 + oad.getCharLength();
-        } else if (road != null) {
-            road.encode();
-            return 4 + road.getCharLength();
-        }
-        return 4;
-    }
-
-    @Override
     protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
         if (oad != null) {

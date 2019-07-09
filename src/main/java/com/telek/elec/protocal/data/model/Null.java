@@ -12,11 +12,6 @@ public class Null extends AbsData {
     }
 
     @Override
-    protected int calculateSpecialCharLength() {
-        return 0;
-    }
-
-    @Override
     protected String encodeSpecial() {
         return null;
     }

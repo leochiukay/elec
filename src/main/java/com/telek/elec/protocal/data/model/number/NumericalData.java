@@ -19,10 +19,6 @@ public abstract class NumericalData extends AbsData {
      */
     private int conversionCoefficient;
 
-    @Override
-    protected int calculateSpecialCharLength() {
-        return getSpecialCharLength();
-    }
 
     @Override
     protected String encodeSpecial() {
