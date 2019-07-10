@@ -1,16 +1,13 @@
 package com.telek.elec.protocal.service.request.apdufactory;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.action.request.ActionRequestNormal;
 import com.telek.elec.protocal.apdu.factory.DocumentFactory;
-import com.telek.elec.protocal.apdu.model.ActionRequestData;
+import com.telek.elec.protocal.apdu.model.action.ActionRequestData;
 import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.model.*;
-import com.telek.elec.protocal.data.model.number.LongUnsigned;
-import com.telek.elec.protocal.data.model.number.Unsigned;
 import com.telek.elec.protocal.data.service.model.Document;
 
 /**

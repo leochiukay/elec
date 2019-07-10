@@ -13,9 +13,20 @@ import com.telek.elec.protocal.apdu.connection.ReleaseRequest;
 import com.telek.elec.protocal.apdu.connection.ReleaseResponse;
 import com.telek.elec.protocal.apdu.link.LinkRequest;
 import com.telek.elec.protocal.apdu.link.LinkResponse;
-import com.telek.elec.protocal.apdu.read.request.GetRequestNormal;
-import com.telek.elec.protocal.apdu.read.response.GetResponseNormal;
-import com.telek.elec.protocal.apdu.read.response.GetResponseNormalList;
+import com.telek.elec.protocal.apdu.get.request.GetRequestNormal;
+import com.telek.elec.protocal.apdu.get.request.GetRequestNormalList;
+import com.telek.elec.protocal.apdu.get.request.GetRequestRecord;
+import com.telek.elec.protocal.apdu.get.response.GetResponseNormal;
+import com.telek.elec.protocal.apdu.get.response.GetResponseNormalList;
+import com.telek.elec.protocal.apdu.get.response.GetResponseRecord;
+import com.telek.elec.protocal.apdu.proxy.request.ProxyActionRequestList;
+import com.telek.elec.protocal.apdu.proxy.request.ProxyGetRequestList;
+import com.telek.elec.protocal.apdu.proxy.request.ProxyGetRequestRecord;
+import com.telek.elec.protocal.apdu.proxy.request.ProxySetRequestList;
+import com.telek.elec.protocal.apdu.proxy.response.ProxyActionResponseList;
+import com.telek.elec.protocal.apdu.proxy.response.ProxyGetResponseList;
+import com.telek.elec.protocal.apdu.proxy.response.ProxyGetResponseRecord;
+import com.telek.elec.protocal.apdu.proxy.response.ProxySetResponseList;
 import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
 import com.telek.elec.protocal.apdu.set.request.SetRequestNormalList;
 import com.telek.elec.protocal.apdu.set.response.SetResponseNormal;
@@ -38,10 +49,10 @@ public class APDUFactory {
     public static CodecAPDU getAPDUHandler(byte[] data) {
         int length = data.length;
         int apdeSequenceId = data[0] & 0xff;
-        APDUSequence apduSequence = APDUSequence.getByIdSequence(apdeSequenceId);
+        APDUSequence apduSequence = APDUSequence.decode(apdeSequenceId);
         APDUResType apduResType = null;
         if (length > 1) {
-            apduResType = APDUResType.getResByType(data[1] & 0xff, apduSequence.getApduType());
+            apduResType = APDUResType.decode(data[1] & 0xff, apduSequence.getApduType());
         }
         return getCodecAPDU(apduSequence, apduResType);
     }
@@ -100,7 +111,9 @@ public class APDUFactory {
                             case GET_NORMAL:
                                 return new GetRequestNormal();
                             case GET_NORMAL_LIST:
-                                return new GetResponseNormal();
+                                return new GetRequestNormalList();
+                            case GET_RECORD:
+                                return new GetRequestRecord();
                             default:
                                 return null;
                         }
@@ -110,6 +123,8 @@ public class APDUFactory {
                                 return new GetResponseNormal();
                             case GET_NORMAL_LIST:
                                 return new GetResponseNormalList();
+                            case GET_RECORD:
+                                return new GetResponseRecord();
                             default:
                                 return null;
                         }
@@ -157,6 +172,34 @@ public class APDUFactory {
                         }
                 }
             case PROXY:
+                switch (apduSequence) {
+                    case PROXY_REQUEST:
+                        switch (apduResType) {
+                            case PROXY_GET_LIST:
+                                return new ProxyGetRequestList();
+                            case PROXY_GET_RECORD:
+                                return new ProxyGetRequestRecord();
+                            case PROXY_SET_LIST:
+                                return new ProxySetRequestList();
+                            case PROXY_ACTION_LIST:
+                                return new ProxyActionRequestList();
+                            default:
+                                return null;
+                        }
+                    case PROXY_RESPONSE:
+                        switch (apduResType) {
+                            case PROXY_GET_LIST:
+                                return new ProxyGetResponseList();
+                            case PROXY_GET_RECORD:
+                                return new ProxyGetResponseRecord();
+                            case PROXY_SET_LIST:
+                                return new ProxySetResponseList();
+                            case PROXY_ACTION_LIST:
+                                return new ProxyActionResponseList();
+                            default:
+                                return null;
+                        }
+                }
             case REPORT:
             default:
                 return null;

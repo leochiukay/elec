@@ -1,15 +1,13 @@
 package com.telek.elec.protocal;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
+import org.apache.tomcat.util.buf.HexUtils;
+
 import com.telek.elec.cache.TempCache;
 import com.telek.elec.netty.NettyStarter;
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.codec.Encoder;
 
-import com.telek.elec.protocal.data.HexToDataConvertor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Hex;
-import org.apache.tomcat.util.buf.HexUtils;
 
 @Slf4j
 public class ProtocalSendHelper {
@@ -24,7 +22,6 @@ public class ProtocalSendHelper {
 //                || apdu.getApduSequence() == APDUSequence.RELEASE_REQUEST) {
         Encoder encoder = new Encoder();
         byte[] datas = encoder.encode(sa, HexUtils.fromHexString(encodeStr), apdu, -1);
-        System.out.println("sendDatas:" + encodeStr);
         if (sync) {
             return NettyStarter.syncSend(address, datas);
         } else {

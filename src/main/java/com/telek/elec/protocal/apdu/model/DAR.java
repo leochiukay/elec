@@ -9,9 +9,16 @@ import lombok.Data;
  * dar信息
  */
 @Data
-public class DAR extends AbsResult {
+public class DAR extends AbsDataModel {
 
     private DARType dar;
+
+    public DAR(DARType dar) {
+        this.dar = dar;
+    }
+
+    public DAR() {
+    }
 
     @Override
     protected String encodeSpecial() {

@@ -6,6 +6,7 @@ import java.util.List;
 import com.telek.elec.protocal.constant.DataType;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
+import com.telek.elec.util.StringUtils;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +26,15 @@ public class RCSD extends AbsData {
         this.dataType = DataType.RCSD;
     }
 
+    public RCSD(List<CSD> csds) {
+        this();
+        this.csds = csds;
+    }
+
     @Override
     protected String encodeSpecial() throws EncodeException {
         StringBuffer sb = new StringBuffer();
-        sb.append(Integer.toHexString(csds.size()));
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(csds.size()), 2));
         for (CSD csd : csds) {
             sb.append(csd.encode());
         }

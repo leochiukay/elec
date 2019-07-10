@@ -28,7 +28,7 @@ public class DocumentFactory {
      * @return OAD
      */
     public static OMD addBatchDocuments() {
-        return new OMD(OI, 129, 0);
+        return new OMD(OI, 128, 0);
     }
 
     public static OMD clear() {

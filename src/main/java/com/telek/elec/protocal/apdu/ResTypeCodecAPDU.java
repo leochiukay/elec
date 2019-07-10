@@ -53,7 +53,7 @@ public abstract class ResTypeCodecAPDU extends CodecAPDU {
     protected void decodeCommonHexToThis(String hexString) {
         int begin = APDU_SEQUENCE_CHAR_LENGTH;
         int resType = Integer.parseInt(hexString.substring(begin, begin += TYPE_CHAR_LENGTH), 16);
-        this.apduResType = APDUResType.getResByType(resType, apduSequence.getApduType());
+        this.apduResType = APDUResType.decode(resType, apduSequence.getApduType());
         if (hasPiidFied()) {
             this.piid = Integer.parseInt(hexString.substring(begin, begin + PIID_CHAR_LENGTH), 16);
         }

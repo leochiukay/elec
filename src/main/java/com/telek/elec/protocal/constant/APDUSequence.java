@@ -23,12 +23,12 @@ public enum APDUSequence {
     GET_RESPONSE(0x85,"读取响应", APDUType.GET),
 
     SET_REQUEST(0x6,"设置请求", APDUType.SET),
-    SET_RESPONSE(0x86,"设置请求", APDUType.SET),
+    SET_RESPONSE(0x86,"设置响应", APDUType.SET),
 
     ACTION_REQUEST(0x7,"操作请求", APDUType.ACTION),
-    ACTION_RESPONSE(0x87,"操作请求", APDUType.ACTION),
+    ACTION_RESPONSE(0x87,"操作响应", APDUType.ACTION),
 
-    REPORT_RESPONSE(0x08, "上报应答求", APDUType.REPORT),
+    REPORT_RESPONSE(0x08, "上报应答", APDUType.REPORT),
     REPORT_NOTIFICATION(0x88, "上报通知", APDUType.REPORT),
 
     PROXY_REQUEST(0x09, "代理请求", APDUType.PROXY),
@@ -43,7 +43,12 @@ public enum APDUSequence {
 
     private APDUType apduType;
 
-    public static APDUSequence getByIdSequence(int apduSequence) {
+    /**
+     * 通过code获取apdu sequence
+     * @param apduSequence
+     * @return
+     */
+    public static APDUSequence decode(int apduSequence) {
         for (APDUSequence value : APDUSequence.values()) {
             if (value.getId() == apduSequence) {
                 return value;

@@ -26,6 +26,11 @@ public class ROAD extends AbsData {
         this.dataType = DataType.ROAD;
     }
 
+    public ROAD(OAD oad, List<OAD> sequenceOfData) {
+        this.oad = oad;
+        this.sequenceOfData = sequenceOfData;
+    }
+
     @Override
     protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();
@@ -44,8 +49,7 @@ public class ROAD extends AbsData {
         oad.decode(hexString);
         this.oad = oad;
         charLength += oad.getCharLength();
-        int size = java.lang.Integer.parseInt(hexString.substring(0, charLength), 16);
-        charLength += 2;
+        int size = java.lang.Integer.parseInt(hexString.substring(charLength, charLength += 2), 16);
         if (size > 0) {
             for (int i = 0; i < size; i++) {
                 OAD sequenceOad = new OAD();

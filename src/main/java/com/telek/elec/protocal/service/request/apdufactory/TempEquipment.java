@@ -11,7 +11,7 @@ import java.util.Map;
 
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.factory.TempEquipmentFactory;
-import com.telek.elec.protocal.apdu.model.SetRequestData;
+import com.telek.elec.protocal.apdu.model.set.SetRequestData;
 import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
 import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.model.AbsData;

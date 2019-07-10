@@ -8,6 +8,9 @@ import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
 import com.telek.elec.util.StringUtils;
 
+import lombok.Data;
+
+@Data
 public class UTF8String extends AbsString {
 
     public UTF8String() {

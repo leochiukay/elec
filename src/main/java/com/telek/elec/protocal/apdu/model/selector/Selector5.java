@@ -20,6 +20,10 @@ public class Selector5 extends Selector {
 
     private MS ms;
 
+    public Selector5() {
+        this.id = 5;
+    }
+
     @Override
     protected String encodeSpecial() throws EncodeException {
         StrBuilder sb = new StrBuilder();
@@ -30,14 +34,14 @@ public class Selector5 extends Selector {
 
     @Override
     protected int decodeSpecial(String hexString) throws DecodeException {
+        int index = 0;
         DateTimeS dateTimeS = new DateTimeS();
-        dateTimeS.decode(hexString);
+        index += dateTimeS.decode(hexString.substring(index));
         this.dateTimeS = dateTimeS;
-
         MS ms = new MS();
-        ms.decode(hexString.substring(dateTimeS.getCharLength()));
+        index += ms.decode(hexString.substring(index));
         this.ms = ms;
-        return dateTimeS.getCharLength() + ms.getCharLength();
+        return index;
     }
 
     @Override

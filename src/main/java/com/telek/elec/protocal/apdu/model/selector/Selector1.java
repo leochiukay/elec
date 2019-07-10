@@ -1,6 +1,7 @@
 package com.telek.elec.protocal.apdu.model.selector;
 
 import com.telek.elec.protocal.apdu.model.Selector;
+import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.HexToDataConvertor;
 import com.telek.elec.protocal.data.model.AbsData;
 import com.telek.elec.protocal.data.model.OAD;
@@ -15,12 +16,20 @@ import lombok.Data;
 @Data
 public class Selector1 extends Selector {
 
+    private static final int ID = 1;
+
     private OAD oad;
 
-    private AbsData data;
+    private Datas data;
 
     public Selector1() {
         this.id = 1;
+    }
+
+    public Selector1(OAD oad, Datas data) {
+        this();
+        this.oad = oad;
+        this.data = data;
     }
 
     @Override
@@ -33,19 +42,19 @@ public class Selector1 extends Selector {
 
     @Override
     protected int decodeSpecial(String hexString) throws DecodeException {
+        int index = 0;
         OAD oad = new OAD();
-        int oadCharLen = oad.decode(hexString);
+        index += oad.decode(hexString.substring(index));
         this.oad = oad;
-        String dataStr = hexString.substring(oadCharLen);
-        AbsData absData = HexToDataConvertor.hexToData(dataStr);
-        this.data = absData;
-        return oadCharLen + absData.getCharLength();
+        AbsData absData = HexToDataConvertor.hexToData(hexString.substring(index));
+        this.data = new Datas(absData);
+        return index + absData.getCharLength();
     }
 
     @Override
     public int getCharLength() throws EncodeException {
         encode();
-        return oad.getCharLength() + data.getCharLength();
+        return oad.getCharLength() + data.getData().getCharLength();
     }
 
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.telek.elec.protocal.apdu.ResTypeCodecAPDU;
-import com.telek.elec.protocal.apdu.model.SetRequestData;
+import com.telek.elec.protocal.apdu.model.set.SetRequestData;
 import com.telek.elec.protocal.apdu.set.Set;
 import com.telek.elec.protocal.constant.APDUResType;
 import com.telek.elec.protocal.constant.APDUSequence;
@@ -29,14 +29,11 @@ import lombok.Data;
  */
 @Data
 public class SetRequestNormalList extends ResTypeCodecAPDU implements Set {
-    /**
-     * oad个数-1字节
-     */
-    private int dataCount;
+
     /**
      * 设置参数值
      */
-    private List<SetRequestData> setDatas;
+    private List<SetRequestData> setDatas = new ArrayList<>();
     /**
      * 时间标签-1字节
      */
@@ -50,11 +47,9 @@ public class SetRequestNormalList extends ResTypeCodecAPDU implements Set {
     @Override
     protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(dataCount), 16));
-        if (dataCount > 0 && setDatas != null) {
-            for (SetRequestData setData : setDatas) {
-                sb.append(setData.encode());
-            }
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(setDatas.size()), 16));
+        for (SetRequestData setData : setDatas) {
+            sb.append(setData.encode());
         }
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(timeStamp), 2));
         return sb.toString();
@@ -63,22 +58,13 @@ public class SetRequestNormalList extends ResTypeCodecAPDU implements Set {
     @Override
     protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
         int index = this.decodeHexExcludeCommonBeginIndex;
-        this.dataCount = Integer.parseInt(hexString.substring(index, index += 2), 16);
-        if (dataCount > 0) {
-            this.setDatas = new ArrayList<>(dataCount);
-            for (int i = 0; i < dataCount; i++) {
-                SetRequestData setData = new SetRequestData();
-                setData.decode(hexString.substring(index, index += 24));
-                this.setDatas.add(setData);
-            }
+        int size = Integer.parseInt(hexString.substring(index, index += 2), 16);
+        this.setDatas = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            SetRequestData setData = new SetRequestData();
+            setData.decode(hexString.substring(index, index += 24));
+            this.setDatas.add(setData);
         }
         this.timeStamp = Integer.parseInt(hexString.substring(hexString.length() - 2), 16);
-    }
-
-    @Override
-    protected void encodeValidateSpecial() throws EncodeException {
-        if (dataCount < 0 || (dataCount > 0 && (setDatas == null || setDatas.size() != dataCount))) {
-            throw new EncodeException("setDatas个数有误");
-        }
     }
 }

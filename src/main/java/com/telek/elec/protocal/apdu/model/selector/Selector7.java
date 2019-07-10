@@ -22,6 +22,10 @@ public class Selector7 extends Selector {
 
     private MS ms;
 
+    public Selector7() {
+        this.id = 7;
+    }
+
     @Override
     protected String encodeSpecial() throws EncodeException {
         StrBuilder sb = new StrBuilder();
@@ -35,23 +39,24 @@ public class Selector7 extends Selector {
     @Override
     protected int decodeSpecial(String hexString) throws DecodeException {
         int index = 0;
+
         DateTimeS begin = new DateTimeS();
-        begin.decode(hexString.substring(index));
+        index += begin.decode(hexString.substring(index));
         this.timeBegin = begin;
 
         DateTimeS end = new DateTimeS();
-        end.decode(hexString.substring(index += begin.getCharLength()));
+        index += end.decode(hexString.substring(index));
         this.timeEnd = end;
 
         TI ti = new TI();
-        ti.decode(hexString.substring(index += end.getCharLength()));
+        index += ti.decode(hexString.substring(index));
         this.ti = ti;
 
         MS ms = new MS();
-        ms.decode(hexString.substring(index += ti.getCharLength()));
+        index += ms.decode(hexString.substring(index));
         this.ms = ms;
 
-        return index + ms.getCharLength();
+        return index;
     }
 
     @Override

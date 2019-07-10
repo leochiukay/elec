@@ -1,9 +1,9 @@
 package com.telek.elec.protocal.service;
 
 import com.telek.elec.protocal.apdu.action.request.ActionRequestNormal;
-import com.telek.elec.protocal.apdu.model.ActionRequestData;
-import com.telek.elec.protocal.apdu.model.SetRequestData;
-import com.telek.elec.protocal.apdu.read.request.GetRequestNormal;
+import com.telek.elec.protocal.apdu.model.action.ActionRequestData;
+import com.telek.elec.protocal.apdu.model.set.SetRequestData;
+import com.telek.elec.protocal.apdu.get.request.GetRequestNormal;
 import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
 import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.model.AbsData;

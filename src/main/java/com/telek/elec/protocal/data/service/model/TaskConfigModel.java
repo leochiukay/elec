@@ -149,6 +149,9 @@ public class TaskConfigModel {
         public Datas<Structure> getData() {
             Datas<Structure> structureDatas = new Datas<>(new Structure());
             Structure structure = structureDatas.getData();
+            if (type == null) {
+                return structureDatas;
+            }
             structure.addData(this.type);
 
             // 时段表
@@ -218,7 +221,15 @@ public class TaskConfigModel {
         structure.addData(state);
         structure.addData(new LongUnsigned(beginScriptId));
         structure.addData(new LongUnsigned(endScriptId));
-        structure.addData(taskRunPeriod.getData());
+
+        Datas<Structure> taskRunPeriod;
+        if (this.taskRunPeriod == null) {
+            taskRunPeriod = new Datas<>(new Structure());
+        } else {
+            taskRunPeriod = this.taskRunPeriod.getData();
+        }
+        structure.addData(taskRunPeriod);
+
         return task;
     }
 

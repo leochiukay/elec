@@ -4,7 +4,7 @@ import java.util.List;
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.action.request.ActionRequestNormal;
 import com.telek.elec.protocal.apdu.factory.TaskConfigFactory;
-import com.telek.elec.protocal.apdu.model.ActionRequestData;
+import com.telek.elec.protocal.apdu.model.action.ActionRequestData;
 import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.model.Array;
 import com.telek.elec.protocal.data.model.number.Unsigned;

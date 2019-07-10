@@ -2,7 +2,7 @@ package com.telek.elec.protocal.apdu.action.request;
 
 import com.telek.elec.protocal.apdu.ResTypeCodecAPDU;
 import com.telek.elec.protocal.apdu.action.Action;
-import com.telek.elec.protocal.apdu.model.ActionRequestData;
+import com.telek.elec.protocal.apdu.model.action.ActionRequestData;
 import com.telek.elec.protocal.constant.APDUResType;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.exeception.DecodeException;

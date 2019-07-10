@@ -1,18 +1,25 @@
 package com.telek.elec.protocal.data.service.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.telek.elec.protocal.constant.BAUDType;
 import com.telek.elec.protocal.constant.ConnectionType;
 import com.telek.elec.protocal.constant.ProtocalType;
-import com.telek.elec.protocal.data.model.*;
+import com.telek.elec.protocal.data.Datas;
+import com.telek.elec.protocal.data.model.AbsData;
+import com.telek.elec.protocal.data.model.Array;
+import com.telek.elec.protocal.data.model.Enums;
+import com.telek.elec.protocal.data.model.OAD;
+import com.telek.elec.protocal.data.model.Structure;
+import com.telek.elec.protocal.data.model.TSA;
 import com.telek.elec.protocal.data.model.number.LongUnsigned;
 import com.telek.elec.protocal.data.model.number.Unsigned;
 import com.telek.elec.protocal.data.model.string.OctetString;
 import com.telek.elec.protocal.exeception.DecodeException;
 import com.telek.elec.protocal.exeception.EncodeException;
-import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Data;
 
 /**
  * @Auther: wll
@@ -74,7 +81,7 @@ public class Document extends Structure {
         /**
          * 端口.
          */
-        private int port = 4;
+        private Datas<OAD> port;
         /**
          * 通信密码.
          */
@@ -106,7 +113,7 @@ public class Document extends Structure {
             structure.addData(new TSA(this.address));
             structure.addData(new Enums((short) this.baudType.getCode()));
             structure.addData(new Enums((short) this.protocalType.getCode()));
-            structure.addData(new OAD(new OI(0xf201), 02, 01));
+            structure.addData(port);
             structure.addData(new OctetString(this.password));
             structure.addData(new Unsigned((short) this.rateNum));
             structure.addData(new Unsigned((short) this.userType));

@@ -26,4 +26,13 @@ public enum BAUDType {
 
     private int code;
     private String msg;
+
+    public static BAUDType get(int code) {
+        for (BAUDType value : values()) {
+            if (code == value.getCode()) {
+                return value;
+            }
+        }
+        return null;
+    }
 }

@@ -2,6 +2,9 @@ package com.telek.elec.protocal.service.response;
 
 import com.telek.elec.protocal.Packet;
 import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.apdu.get.request.GetRequestNormalList;
+import com.telek.elec.protocal.apdu.get.response.GetResponseNormal;
+import com.telek.elec.protocal.apdu.get.response.GetResponseRecord;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,27 +23,12 @@ public class GetService implements IResponseService {
 
     @Override
     public void dealAndResponse() {
-        /*if (apdu instanceof GetResponseNormal) {
-            GetResponseNormal response = (GetResponseNormal) apdu;
-            GetResultNormal resultNormal = response.getGetResultNormal();
-            GetResult getResult = resultNormal.getGetResult();
-            if (getResult.getGetResultType() == GetResultType.DATA) {
-                AbsData data = getResult.getDataInfo().getData();
-                // mbus
-                if (resultNormal.getOad().equals(CommonOADFactory.mbus())) {
-                    List<AbsBasicData> array = ((Array) data).getDatas();
-                    for (AbsBasicData absBasicData : array) {
-                        List<AbsBasicData> structure = ((Structure) absBasicData).getDatas();
-                        String portDesc = ((OctString) structure.get(0)).getValue();
-
-                    }
-                }
-
-            } else {
-                log.error("通信出错,{}", getResult.getDar());
-            }
+        if (apdu instanceof GetResponseNormal) {
+            System.out.println("处理get response normal请求。。。");
         } else if (apdu instanceof GetRequestNormalList) {
-
-        }*/
+            System.out.println("处理get response normal list请求。。。");
+        } else if (apdu instanceof GetResponseRecord) {
+            System.out.println("处理get response record请求。。。");
+        }
     }
 }

@@ -1,8 +1,6 @@
 package com.telek.elec.protocal.service.response;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
-import com.telek.elec.netty.NettyContext;
-import com.telek.elec.netty.SyncWriteFuture;
 import com.telek.elec.protocal.Packet;
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.factory.APDUFactory;
@@ -47,7 +45,6 @@ public class ResponseService implements IResponseService {
             log.error("解码失败", e);
             return;
         }
-        System.out.println("APDU:" + apdu);
         // 获取具体处理业务的实体类
         IResponseService responseService = getResponseService(apdu);
         if (responseService != null) {
@@ -56,6 +53,7 @@ public class ResponseService implements IResponseService {
     }
 
     private IResponseService getResponseService(CodecAPDU apdu) {
+        log.info("收到的apdu:" + apdu);
         APDUSequence apduSequence = apdu.getApduSequence();
         APDUType apduType = apduSequence.getApduType();
         switch (apduType) {
@@ -66,8 +64,9 @@ public class ResponseService implements IResponseService {
             case CONNECTION:
                 return new ConnectionService(packet, apdu);
             case REPORT:
-            case PROXY:
                 return null;
+            case PROXY:
+                return new ProxyService(packet, apdu);
             case ACTION:
                 return new ActionService(packet, apdu);
             case SET:

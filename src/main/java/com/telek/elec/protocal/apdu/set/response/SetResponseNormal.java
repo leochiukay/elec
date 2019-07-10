@@ -1,7 +1,7 @@
 package com.telek.elec.protocal.apdu.set.response;
 
 import com.telek.elec.protocal.apdu.ResTypeCodecAPDU;
-import com.telek.elec.protocal.apdu.model.SetResponseData;
+import com.telek.elec.protocal.apdu.model.set.SetResponseData;
 import com.telek.elec.protocal.apdu.set.Set;
 import com.telek.elec.protocal.constant.APDUResType;
 import com.telek.elec.protocal.constant.APDUSequence;

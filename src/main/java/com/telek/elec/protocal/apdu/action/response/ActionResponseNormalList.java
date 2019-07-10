@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.telek.elec.protocal.apdu.ResTypeCodecAPDU;
 import com.telek.elec.protocal.apdu.action.Action;
-import com.telek.elec.protocal.apdu.model.ActionResponseData;
+import com.telek.elec.protocal.apdu.model.action.ActionResponseData;
 import com.telek.elec.protocal.constant.APDUResType;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.exeception.DecodeException;
@@ -17,9 +17,7 @@ import lombok.Data;
 @Data
 public class ActionResponseNormalList extends ResTypeCodecAPDU implements Action {
 
-    private int count;
-
-    private List<ActionResponseData> actionResponseDatas;
+    private List<ActionResponseData> actionResponseDatas = new ArrayList<>();
     /**
      * 标识是否有上报信息-1字节
      */
@@ -37,11 +35,9 @@ public class ActionResponseNormalList extends ResTypeCodecAPDU implements Action
     @Override
     protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(count), 2));
-        if (count > 0 && actionResponseDatas.size() > 0) {
-            for (ActionResponseData responseData : actionResponseDatas) {
-                sb.append(responseData.encode());
-            }
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(actionResponseDatas.size()), 2));
+        for (ActionResponseData responseData : actionResponseDatas) {
+            sb.append(responseData.encode());
         }
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(followReport), 2));
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(timeStamp), 2));
@@ -52,16 +48,14 @@ public class ActionResponseNormalList extends ResTypeCodecAPDU implements Action
     protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
         int index = this.decodeHexExcludeCommonBeginIndex;
         int length = hexString.length();
-        this.count = Integer.parseInt(hexString.substring(index, index += 2), 16);
-        if (count > 0) {
-            this.actionResponseDatas = new ArrayList<>(count);
-            for (int i = 0; i < count; i++) {
-                String s = hexString.substring(index);
-                ActionResponseData responseData = new ActionResponseData();
-                int charLen = responseData.decode(s);
-                this.actionResponseDatas.add(responseData);
-                index += charLen;
-            }
+        int size = Integer.parseInt(hexString.substring(index, index += 2), 16);
+        this.actionResponseDatas = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            String s = hexString.substring(index);
+            ActionResponseData responseData = new ActionResponseData();
+            int charLen = responseData.decode(s);
+            this.actionResponseDatas.add(responseData);
+            index += charLen;
         }
         this.followReport = Integer.parseInt(hexString.substring(length - 4, length - 2), 16);
         this.timeStamp = Integer.parseInt(hexString.substring(length - 2, length), 16);

@@ -4,6 +4,10 @@ import static com.telek.elec.protocal.service.RequestFactory.getRequestNormal;
 
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.factory.CommonOADFactory;
+import com.telek.elec.protocal.apdu.model.get.GetRequestRecordData;
+import com.telek.elec.protocal.apdu.get.request.GetRequestRecord;
+import com.telek.elec.protocal.data.model.RCSD;
+import com.telek.elec.protocal.data.model.RSD;
 
 /**
  * 发送请求的service
@@ -11,11 +15,19 @@ import com.telek.elec.protocal.apdu.factory.CommonOADFactory;
 public class Common {
 
     /**
-     * 读取通讯地址：4001 02 00
-     * @return
+     * 获取发电时间
      */
-    public static CodecAPDU postalAddress() {
-        return getRequestNormal(CommonOADFactory.postalAddress());
+    public static CodecAPDU generationTime2() {
+        GetRequestRecord getRequestRecord = new GetRequestRecord();
+        getRequestRecord.setPiid(03);
+        GetRequestRecordData getRecord = new GetRequestRecordData();
+        getRequestRecord.setGetRecord(getRecord);
+
+        getRecord.setOad(CommonOADFactory.generationTime());
+        getRecord.setRsd(new RSD(null));
+        getRecord.setRcsd(new RCSD());
+
+        return getRequestRecord;
     }
 
     /**

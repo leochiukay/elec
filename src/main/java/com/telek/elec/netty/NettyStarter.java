@@ -2,6 +2,7 @@ package com.telek.elec.netty;
 
 import java.util.concurrent.TimeUnit;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.HexBin;
 import com.telek.elec.protocal.Packet;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -72,6 +73,7 @@ public class NettyStarter implements Runnable{
     }
 
     public static void send(String address, byte[] data) {
+        System.out.println("sendDatas:" + HexBin.encode(data));
         String channelId = NettyContext.concentratorCache.get(address);
         Channel channel = NettyContext.clientChannel.get(channelId);
         if (channel == null) {

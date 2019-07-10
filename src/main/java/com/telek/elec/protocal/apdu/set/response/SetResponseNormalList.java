@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.telek.elec.protocal.apdu.ResTypeCodecAPDU;
-import com.telek.elec.protocal.apdu.model.SetResponseData;
+import com.telek.elec.protocal.apdu.model.set.SetResponseData;
 import com.telek.elec.protocal.apdu.set.Set;
 import com.telek.elec.protocal.constant.APDUResType;
 import com.telek.elec.protocal.constant.APDUSequence;
@@ -30,12 +30,8 @@ import lombok.Data;
  */
 @Data
 public class SetResponseNormalList extends ResTypeCodecAPDU implements Set {
-    /**
-     * 结果个数-1字节
-     */
-    private int dataCount;
 
-    private List<SetResponseData> responseDatas;
+    private List<SetResponseData> responseDatas = new ArrayList<>();
     /**
      * 标识是否有上报信息-1字节
      */
@@ -53,11 +49,9 @@ public class SetResponseNormalList extends ResTypeCodecAPDU implements Set {
     @Override
     protected String encodeThisSpecialToHex() throws EncodeException {
         StringBuilder sb = new StringBuilder();
-        sb.append(StringUtils.subLastNumStr(Integer.toHexString(dataCount), 2));
-        if (dataCount > 0 && responseDatas != null) {
-            for (SetResponseData responseData : responseDatas) {
-                sb.append(responseData.encode());
-            }
+        sb.append(StringUtils.subLastNumStr(Integer.toHexString(responseDatas.size()), 2));
+        for (SetResponseData responseData : responseDatas) {
+            sb.append(responseData.encode());
         }
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(followReport), 2));
         sb.append(StringUtils.subLastNumStr(Integer.toHexString(timeStamp), 2));
@@ -67,15 +61,13 @@ public class SetResponseNormalList extends ResTypeCodecAPDU implements Set {
     @Override
     protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
         int index = this.decodeHexExcludeCommonBeginIndex;
-        this.dataCount = Integer.parseInt(hexString.substring(index, index += 2), 16);
-        if (dataCount > 0) {
-            for (int i = 0; i < dataCount; i++) {
-                this.responseDatas = new ArrayList<>(dataCount);
-                String data = hexString.substring(index, index += 10);
-                SetResponseData responseData = new SetResponseData();
-                responseData.decode(data);
-                responseDatas.add(responseData);
-            }
+        int size = Integer.parseInt(hexString.substring(index, index += 2), 16);
+        this.responseDatas = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            String data = hexString.substring(index, index += 10);
+            SetResponseData responseData = new SetResponseData();
+            responseData.decode(data);
+            responseDatas.add(responseData);
         }
         this.followReport = Integer.parseInt(hexString.substring(index, index += 2), 16);
         this.timeStamp = Integer.parseInt(hexString.substring(index, index += 2), 16);

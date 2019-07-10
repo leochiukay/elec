@@ -2,9 +2,8 @@ package com.telek.elec.protocal.service.request.apdufactory;
 
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.action.request.ActionRequestNormal;
-import com.telek.elec.protocal.apdu.factory.DocumentFactory;
 import com.telek.elec.protocal.apdu.factory.NormalCollectionSchemeFactory;
-import com.telek.elec.protocal.apdu.model.ActionRequestData;
+import com.telek.elec.protocal.apdu.model.action.ActionRequestData;
 import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.model.Array;
 import com.telek.elec.protocal.data.model.Null;
