@@ -24,8 +24,10 @@ public class TaskConfig {
     public static CodecAPDU addArrayTask(List<TaskConfigModel> taskConfigs) {
         Datas<Array> arrayDatas = new Datas<>(new Array());
         Array array = arrayDatas.getData();
-        for (TaskConfigModel taskConfig : taskConfigs) {
-            array.addData(taskConfig.getData().getData());
+        if (taskConfigs != null) {
+            for (TaskConfigModel taskConfig : taskConfigs) {
+                array.addData(taskConfig.getData());
+            }
         }
 
         ActionRequestData actionRequestData = new ActionRequestData();
@@ -42,8 +44,10 @@ public class TaskConfig {
     public static CodecAPDU deleteArrayTask(List<Integer> taskIds) {
         Datas<Array> arrayDatas = new Datas<>(new Array());
         Array data = arrayDatas.getData();
-        for (Integer taskId : taskIds) {
-            data.addData(new Datas<>(new Unsigned((short) taskId.intValue())).getData());
+        if (taskIds != null) {
+            for (Integer taskId : taskIds) {
+                data.addData(new Unsigned((short) taskId.intValue()));
+            }
         }
 
         ActionRequestData actionRequestData = new ActionRequestData();

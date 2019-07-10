@@ -1,15 +1,17 @@
 package com.telek.elec.controller;
 
-import com.telek.elec.protocal.apdu.CodecAPDU;
-import com.telek.elec.protocal.data.service.model.Document;
-import com.telek.elec.protocal.service.request.RequestService;
-import com.telek.elec.protocal.service.request.apdufactory.DocumentOps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.data.service.model.Document;
+import com.telek.elec.protocal.service.request.RequestService;
+import com.telek.elec.protocal.service.request.apdufactory.DocumentOps;
+
 /**
+ * 档案配置
  * @Auther: wll
  * @Date: 2019/7/8 20:26
  * @Description:
@@ -24,7 +26,6 @@ public class DocumentController {
     public Object addDocument(String address) {
         Document document = new Document();
         document.setIndex(12);
-        Document.BasicObject basicObject = new Document.BasicObject();
         CodecAPDU apdu = DocumentOps.addDocument(document);
         requestService.sendRequest(apdu, address);
         return "OK";

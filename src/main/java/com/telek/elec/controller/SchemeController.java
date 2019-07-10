@@ -1,22 +1,26 @@
 package com.telek.elec.controller;
 
-import com.telek.elec.protocal.apdu.CodecAPDU;
-import com.telek.elec.protocal.constant.StorageTimeUnitType;
-import com.telek.elec.protocal.data.model.*;
-import com.telek.elec.protocal.data.service.model.Document;
-import com.telek.elec.protocal.data.service.model.NormalCollectionScheme;
-import com.telek.elec.protocal.service.request.RequestService;
-import com.telek.elec.protocal.service.request.apdufactory.DocumentOps;
-import com.telek.elec.protocal.service.request.apdufactory.NormalCollectionSchemeOps;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.constant.StorageTimeUnitType;
+import com.telek.elec.protocal.data.model.CSD;
+import com.telek.elec.protocal.data.model.MS;
+import com.telek.elec.protocal.data.model.Null;
+import com.telek.elec.protocal.data.model.OAD;
+import com.telek.elec.protocal.data.model.OI;
+import com.telek.elec.protocal.data.service.model.NormalCollectionScheme;
+import com.telek.elec.protocal.service.request.RequestService;
+import com.telek.elec.protocal.service.request.apdufactory.NormalCollectionSchemeOps;
 
 /**
+ * 普通采集方案
  * @Auther: wll
  * @Date: 2019/7/9 23:59
  * @Description:

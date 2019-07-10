@@ -4,7 +4,7 @@ import com.telek.elec.protocal.data.model.OI;
 import com.telek.elec.protocal.data.model.OMD;
 
 /**
- * @Auther: wll
+ * @Auther: wll 普通采集方案
  * @Date: 2019/7/8 20:32
  * @Description:
  */

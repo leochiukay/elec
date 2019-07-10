@@ -4,12 +4,12 @@ import com.telek.elec.protocal.data.model.OI;
 import com.telek.elec.protocal.data.model.OMD;
 
 /**
- * @Auther: wll
+ * @Auther: wll 档案配置
  * @Date: 2019/7/8 20:32
  * @Description:
  */
 public class DocumentFactory {
-    public static final com.telek.elec.protocal.data.model.OI OI = new OI(0x6000);
+    public static final OI OI = new OI(0x6000);
 
     /**
      * 添加一个采集档案配置单元

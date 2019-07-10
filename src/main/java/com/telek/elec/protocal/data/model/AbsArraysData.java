@@ -34,6 +34,11 @@ public abstract class AbsArraysData extends AbsData {
         this.size = this.size + 1;
     }
 
+    public void addData(Datas<? extends AbsData> datas) {
+        this.datas.add(datas);
+        this.size = this.size + 1;
+    }
+
     @Override
     protected String encodeSpecial() throws EncodeException {
         StringBuilder sb = new StringBuilder();

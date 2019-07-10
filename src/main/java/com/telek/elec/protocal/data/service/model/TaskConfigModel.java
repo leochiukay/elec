@@ -11,7 +11,6 @@ import com.telek.elec.protocal.data.model.TI;
 import com.telek.elec.protocal.data.model.date.DateTimeS;
 import com.telek.elec.protocal.data.model.number.LongUnsigned;
 import com.telek.elec.protocal.data.model.number.Unsigned;
-import com.telek.elec.protocal.exeception.EncodeException;
 
 import lombok.Data;
 
@@ -61,7 +60,7 @@ import lombok.Data;
 @Data
 public class TaskConfigModel {
     /**
-     * 任务id
+     * 任务id unsigned
      */
     private int taskId;
     /**
@@ -76,7 +75,7 @@ public class TaskConfigModel {
      * 脚本方案     （5）
      * }，
      */
-    private int taskType;
+    private Datas<Enums> taskType;
     /**
      * 方案编号 unsigned
      */
@@ -100,7 +99,7 @@ public class TaskConfigModel {
     /**
      * 状态        enum{正常（1），停用（2）}
      */
-    private int state;
+    private Datas<Enums> state;
     /**
      * 任务开始前脚本id   long-unsigned，
      *
@@ -111,7 +110,13 @@ public class TaskConfigModel {
      */
     private int endScriptId;
     /**
-     * 任务运行时段       structure，
+     * 任务运行时段
+     */
+    private TaskRunPeriod taskRunPeriod;
+
+
+    /**
+     任务运行时段       structure，
      * 任务运行时段∷=structrue
      * {
      *    类型  enum
@@ -121,14 +126,45 @@ public class TaskConfigModel {
      *        前闭后闭    （2），
      *        前开后开    （3）
      * }，
-     *时段表  array 时段
+     *  时段表  array 时段
      * }
      */
-    private int type;
-    /**
-     * 时段表  array 时段
-     */
-    private List<TaskConfigModelTime> times;
+    @Data
+    public static class TaskRunPeriod {
+        /**
+         * 类型 enum
+         * {
+         * 前闭后开 （0），
+         * 前开后闭 （1），
+         * 前闭后闭 （2），
+         * 前开后开 （3）
+         * }，
+         */
+        private Datas<Enums> type;
+        /**
+         * 时段表  array
+         */
+        private List<TaskConfigModelTime> modelTimes;
+
+        public Datas<Structure> getData() {
+            Datas<Structure> structureDatas = new Datas<>(new Structure());
+            Structure structure = structureDatas.getData();
+            structure.addData(this.type);
+
+            // 时段表
+            Datas<Array> arrayDatas = new Datas<>(new Array());
+            structure.addData(arrayDatas);
+
+            // 组装时段表array
+            if (this.modelTimes != null) {
+                Array array = arrayDatas.getData();
+                for (TaskConfigModelTime modelTime : this.modelTimes) {
+                    array.addData(modelTime.getData());
+                }
+            }
+            return structureDatas;
+        }
+    }
 
     /**
      * 时段
@@ -148,18 +184,11 @@ public class TaskConfigModel {
 
         private Datas<Structure> getData() {
             Datas<Structure> structureDatas = new Datas<>(new Structure());
-
-            Datas<Unsigned> beginHour = new Datas<>(new Unsigned((short) this.beginHour));
-            Datas<Unsigned> beginMinute = new Datas<>(new Unsigned((short) this.beginMinute));
-            Datas<Unsigned> endHour = new Datas<>(new Unsigned((short) this.endHour));
-            Datas<Unsigned> endMinute = new Datas<>(new Unsigned((short) this.endMinute));
-
-            Structure data = structureDatas.getData();
-            data.addData(beginHour.getData());
-            data.addData(beginMinute.getData());
-            data.addData(endHour.getData());
-            data.addData(endMinute.getData());
-
+            Structure structure = structureDatas.getData();
+            structure.addData(new Unsigned((short) beginHour));
+            structure.addData(new Unsigned((short) beginMinute));
+            structure.addData(new Unsigned((short) endHour));
+            structure.addData(new Unsigned((short) endMinute));
             return structureDatas;
         }
     }
@@ -170,49 +199,26 @@ public class TaskConfigModel {
      */
     public Datas<Structure> getData() {
         Datas<Structure> task = new Datas<>(new Structure());
-
-        Datas<Unsigned> taskId = new Datas<>(new Unsigned((short) this.taskId));
-        Datas<Enums> taskType = new Datas<>(new Enums((short) this.taskType));
-        Datas<Unsigned> taskNum = new Datas<>(new Unsigned((short) this.taskNum));
-        Datas<DateTimeS> beginTime = new Datas<>(new DateTimeS(this.beginTime));
-        Datas<DateTimeS> endTime = new Datas<>(new DateTimeS(this.endTime));
-        Datas<Unsigned> priority = new Datas<>(new Unsigned((short) this.priority));
-        Datas<Enums> state = new Datas<>(new Enums((short) this.state));
-        Datas<LongUnsigned> beginScriptId = new Datas<>(new LongUnsigned(this.beginScriptId));
-        Datas<LongUnsigned> endScriptId = new Datas<>(new LongUnsigned(this.endScriptId));
-
-        Datas<Structure> period = new Datas<>(new Structure());
-        Structure periodData = period.getData();
-        Datas<Enums> type = new Datas<>(new Enums((short) this.type));
-        Datas<Array> arrayPeriod = new Datas<>(new Array());
-        Array data = arrayPeriod.getData();
-        for (TaskConfigModelTime time : times) {
-            data.addData(time.getData().getData());
-        }
-        periodData.addData(type.getData());
-        periodData.addData(arrayPeriod.getData());
-
         Structure structure = task.getData();
-        structure.addData(taskId.getData());
-        structure.addData(frequency.getData());
-        structure.addData(taskType.getData());
-        structure.addData(taskNum.getData());
-        structure.addData(beginTime.getData());
-        structure.addData(endTime.getData());
-        structure.addData(delay.getData());
-        structure.addData(priority.getData());
-        structure.addData(state.getData());
-        structure.addData(beginScriptId.getData());
-        structure.addData(endScriptId.getData());
-        structure.addData(periodData);
 
-        System.out.println("===============================");
-        try {
-            System.out.println(task.encode());
-        } catch (EncodeException e) {
-            e.printStackTrace();
+        structure.addData(new Unsigned((short) taskId));
+        structure.addData(frequency);
+        structure.addData(taskType);
+        short value = taskType.getData().getValue();
+        //当方案类型为脚本时，方案编号为脚本 id
+        if (value == 5) {
+            this.taskNum = value;
         }
 
+        structure.addData(new Unsigned((short) taskNum));
+        structure.addData(new DateTimeS(beginTime));
+        structure.addData(new DateTimeS(endTime));
+        structure.addData(delay);
+        structure.addData(new Unsigned((short) priority));
+        structure.addData(state);
+        structure.addData(new LongUnsigned(beginScriptId));
+        structure.addData(new LongUnsigned(endScriptId));
+        structure.addData(taskRunPeriod.getData());
         return task;
     }
 
