@@ -1,10 +1,15 @@
 package com.telek.elec.protocal.service.request.apdufactory;
 
-import static com.telek.elec.protocal.service.RequestFactory.getActionRequestNormal;
-import static com.telek.elec.protocal.service.RequestFactory.getRequestNormal;
-
-import com.telek.elec.protocal.apdu.CodecAPDU;
-import com.telek.elec.protocal.apdu.factory.ChargingPipleFactory;
+import com.telek.elec.protocal.apdu.factory.ChargingPipleOADFactory;
+import com.telek.elec.protocal.apdu.proxy.request.ProxyActionRequestList;
+import com.telek.elec.protocal.apdu.proxy.request.ProxyGetRequestList;
+import com.telek.elec.protocal.apdu.proxy.request.ProxySetRequestList;
+import com.telek.elec.protocal.data.Datas;
+import com.telek.elec.protocal.data.model.Null;
+import com.telek.elec.protocal.data.model.Structure;
+import com.telek.elec.protocal.data.model.number.LongUnsigned;
+import com.telek.elec.protocal.data.model.number.Unsigned;
+import com.telek.elec.protocal.service.RequestFactory;
 
 /**
  * 充电桩
@@ -17,8 +22,8 @@ public class ChargingPiple {
      * 属性2
      * @return enum{关闭（0），打开（1）
      */
-    public static CodecAPDU state() {
-        return getRequestNormal(ChargingPipleFactory.state());
+    public static ProxyGetRequestList state(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, ChargingPipleOADFactory.state());
     }
 
     /**
@@ -26,8 +31,8 @@ public class ChargingPiple {
      * 属性3
      * @return =enum{未打开负荷控制（0），打开负荷控制（1）
      */
-    public static CodecAPDU loadControlState() {
-        return getRequestNormal(ChargingPipleFactory.loadControlState());
+    public static ProxyGetRequestList loadControlState(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, ChargingPipleOADFactory.loadControlState());
     }
 
     /**
@@ -35,8 +40,8 @@ public class ChargingPiple {
      * 属性4
      * @return enum{未打开时间控制（0），打开时间控制（1）
      */
-    public static CodecAPDU appointControlPeriod() {
-        return getRequestNormal(ChargingPipleFactory.appointControlPeriod());
+    public static ProxyGetRequestList appointControlPeriod(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, ChargingPipleOADFactory.appointControlPeriod());
     }
 
     /**
@@ -44,8 +49,18 @@ public class ChargingPiple {
      * 属性5
      * @return 有功功率
      */
-    public static CodecAPDU loadControlThreshold() {
-        return getRequestNormal(ChargingPipleFactory.loadControlThreshold());
+    public static ProxyGetRequestList loadControlThreshold(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, ChargingPipleOADFactory.loadControlThreshold());
+    }
+
+    /**
+     * 设置负荷控制阈值
+     * 属性5
+     * @return 有功功率
+     */
+    public static ProxySetRequestList setLoadControlThreshold(String proxyAddress, int power) {
+        Datas datas = new Datas(new LongUnsigned(power));
+        return RequestFactory.proxySetRequestList(proxyAddress, ChargingPipleOADFactory.loadControlThreshold(), datas);
     }
 
     /**
@@ -53,8 +68,25 @@ public class ChargingPiple {
      * 属性6
      * @return 有功功率
      */
-    public static CodecAPDU autoControlPeriod() {
-        return getRequestNormal(ChargingPipleFactory.autoControlPeriod());
+    public static ProxyGetRequestList autoControlPeriod(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, ChargingPipleOADFactory.autoControlPeriod());
+    }
+
+    /**
+     * 设置自动控制时段
+     * 属性6
+     *
+     * @return 有功功率
+     */
+    public static ProxySetRequestList autoControlPeriod(String proxyAddress, short beginHour, short beginMinute,
+                                                        short endHour, short endMinute) {
+        Datas<Structure> datas = new Datas<>(new Structure());
+        Structure structure = datas.getData();
+        structure.addData(new Unsigned(beginHour));
+        structure.addData(new Unsigned(beginMinute));
+        structure.addData(new Unsigned(endHour));
+        structure.addData(new Unsigned(endMinute));
+        return RequestFactory.proxySetRequestList(proxyAddress, ChargingPipleOADFactory.autoControlPeriod(), datas);
     }
 
     /**
@@ -62,8 +94,8 @@ public class ChargingPiple {
      * 方法127
      * @return null
      */
-    public static CodecAPDU on() {
-        return getActionRequestNormal(ChargingPipleFactory.on());
+    public static ProxyActionRequestList on(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, ChargingPipleOADFactory.on(), new Datas(new Null()));
     }
 
     /**
@@ -71,8 +103,8 @@ public class ChargingPiple {
      * 方法128
      * @return null
      */
-    public static CodecAPDU off() {
-        return getActionRequestNormal(ChargingPipleFactory.off());
+    public static ProxyActionRequestList off(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, ChargingPipleOADFactory.off(), new Datas(new Null()));
     }
 
     /**
@@ -80,8 +112,8 @@ public class ChargingPiple {
      * 方法129
      * @return null
      */
-    public static CodecAPDU onLoadControl() {
-        return getActionRequestNormal(ChargingPipleFactory.onLoadControl());
+    public static ProxyActionRequestList onLoadControl(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, ChargingPipleOADFactory.onLoadControl(), new Datas(new Null()));
     }
 
     /**
@@ -89,8 +121,8 @@ public class ChargingPiple {
      * 方法130
      * @return null
      */
-    public static CodecAPDU offLoadControl() {
-        return getActionRequestNormal(ChargingPipleFactory.offLoadControl());
+    public static ProxyActionRequestList offLoadControl(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, ChargingPipleOADFactory.offLoadControl(), new Datas(new Null()));
     }
 
     /**
@@ -98,8 +130,8 @@ public class ChargingPiple {
      * 方法131
      * @return null
      */
-    public static CodecAPDU onAppointPeriod() {
-        return getActionRequestNormal(ChargingPipleFactory.onAppointPeriod());
+    public static ProxyActionRequestList onAppointPeriod(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, ChargingPipleOADFactory.onAppointPeriod(), new Datas(new Null()));
     }
 
     /**
@@ -107,8 +139,8 @@ public class ChargingPiple {
      * 方法132
      * @return null
      */
-    public static CodecAPDU offAppointPeriod() {
-        return getActionRequestNormal(ChargingPipleFactory.offAppointPeriod());
+    public static ProxyActionRequestList offAppointPeriod(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, ChargingPipleOADFactory.offAppointPeriod(), new Datas(new Null()));
     }
 
 

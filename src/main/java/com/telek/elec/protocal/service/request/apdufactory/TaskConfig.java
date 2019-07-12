@@ -3,7 +3,7 @@ import java.util.List;
 
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.action.request.ActionRequestNormal;
-import com.telek.elec.protocal.apdu.factory.TaskConfigFactory;
+import com.telek.elec.protocal.apdu.factory.TaskConfigOADFactory;
 import com.telek.elec.protocal.apdu.model.action.ActionRequestData;
 import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.model.Array;
@@ -31,7 +31,7 @@ public class TaskConfig {
         }
 
         ActionRequestData actionRequestData = new ActionRequestData();
-        actionRequestData.setOmd(TaskConfigFactory.add());
+        actionRequestData.setOmd(TaskConfigOADFactory.add());
         actionRequestData.setData(arrayDatas);
 
         ActionRequestNormal actionRequestNormal = new ActionRequestNormal();
@@ -51,7 +51,7 @@ public class TaskConfig {
         }
 
         ActionRequestData actionRequestData = new ActionRequestData();
-        actionRequestData.setOmd(TaskConfigFactory.delete());
+        actionRequestData.setOmd(TaskConfigOADFactory.delete());
         actionRequestData.setData(arrayDatas);
 
         ActionRequestNormal actionRequestNormal = new ActionRequestNormal();
@@ -63,7 +63,7 @@ public class TaskConfig {
     public static CodecAPDU clearTask() {
 
         ActionRequestData actionRequestData = new ActionRequestData();
-        actionRequestData.setOmd(TaskConfigFactory.clear());
+        actionRequestData.setOmd(TaskConfigOADFactory.clear());
         actionRequestData.setData(null);
 
         ActionRequestNormal actionRequestNormal = new ActionRequestNormal();

@@ -1,25 +1,17 @@
 package com.telek.elec.protocal.service.request.apdufactory;
 
-import static com.telek.elec.protocal.service.RequestFactory.getActionRequestNormal;
-import static com.telek.elec.protocal.service.RequestFactory.getRequestNormal;
-import static com.telek.elec.protocal.service.RequestFactory.setRequestNormal;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import com.telek.elec.protocal.apdu.CodecAPDU;
-import com.telek.elec.protocal.apdu.factory.StreetLampFactory;
-import com.telek.elec.protocal.apdu.model.set.SetRequestData;
-import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
+import com.telek.elec.protocal.apdu.factory.StreetLampOADFactory;
+import com.telek.elec.protocal.apdu.proxy.request.ProxyGetRequestList;
+import com.telek.elec.protocal.apdu.proxy.request.ProxySetRequestList;
 import com.telek.elec.protocal.data.Datas;
-import com.telek.elec.protocal.data.model.AbsData;
-import com.telek.elec.protocal.data.model.Array;
+import com.telek.elec.protocal.data.model.Null;
 import com.telek.elec.protocal.data.model.Structure;
 import com.telek.elec.protocal.data.model.number.Unsigned;
+import com.telek.elec.protocal.service.RequestFactory;
 
 /**
- * 路灯
+ * 路灯控制
  */
 public class StreetLamp {
 
@@ -29,22 +21,22 @@ public class StreetLamp {
      *
      * @return enum
      */
-    public static CodecAPDU controlState() {
-        return getRequestNormal(StreetLampFactory.controlState());
+    public static ProxyGetRequestList controlState(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, StreetLampOADFactory.controlState());
     }
 
     /**
-     * 自动控制状态
+     * 读取自动控制状态
      * 属性3
      *
      * @return enum
      */
-    public static CodecAPDU autoControlState() {
-        return getRequestNormal(StreetLampFactory.autoControlState());
+    public static ProxyGetRequestList autoControlState(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, StreetLampOADFactory.autoControlState());
     }
 
     /**
-     * 自动控制时段
+     * 读取自动控制时段
      * 属性4
      *
      * @return array::structure
@@ -55,8 +47,8 @@ public class StreetLamp {
      * 结束分钟 unsigned
      * }
      */
-    public static CodecAPDU autoControlPeriod() {
-        return getRequestNormal(StreetLampFactory.autoControlPeriod());
+    public static ProxyGetRequestList autoControlPeriod(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, StreetLampOADFactory.autoControlPeriod());
     }
 
     /**
@@ -66,24 +58,15 @@ public class StreetLamp {
      * @param: [controlPeriod]
      * @return: com.telek.elec.protocal.apdu.set.request.SetRequestNormal
      */
-    public static SetRequestNormal setAutoControlPeriod(List<Map<String, Short>> controlPeriodList) {
-        SetRequestData requestData = new SetRequestData();
-        requestData.setOad(StreetLampFactory.autoControlPeriod());
-        List<AbsData> arrayDatas = new ArrayList<>();
-        for (Map<String, Short> controlPeriod : controlPeriodList) {
-            Structure structure = new Structure();
-            List<AbsData> period = new ArrayList<>();
-            period.add(new Unsigned(controlPeriod.get("sh")));
-            period.add(new Unsigned(controlPeriod.get("sm")));
-            period.add(new Unsigned(controlPeriod.get("eh")));
-            period.add(new Unsigned(controlPeriod.get("em")));
-//            structure.setDatas(period);
-            arrayDatas.add(structure);
-        }
-        Array array = new Array();
-//        array.setDatas(arrayDatas);
-        requestData.setData(new Datas(array));
-        return setRequestNormal(requestData);
+    public static ProxySetRequestList setAutoControlPeriod(String proxyAddress, short beginHour, short beginMinute,
+                                                           short endHour, short endMinute) {
+        Datas<Structure> datas = new Datas<>(new Structure());
+        Structure structure = datas.getData();
+        structure.addData(new Unsigned(beginHour));
+        structure.addData(new Unsigned(beginMinute));
+        structure.addData(new Unsigned(endHour));
+        structure.addData(new Unsigned(endMinute));
+        return RequestFactory.proxySetRequestList(proxyAddress, StreetLampOADFactory.autoControlPeriod(), datas);
     }
 
     /**
@@ -92,8 +75,8 @@ public class StreetLamp {
      *
      * @return null
      */
-    public static CodecAPDU on() {
-        return getActionRequestNormal(StreetLampFactory.on());
+    public static CodecAPDU on(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, StreetLampOADFactory.on(), new Datas(new Null()));
     }
 
     /**
@@ -102,8 +85,8 @@ public class StreetLamp {
      *
      * @return null
      */
-    public static CodecAPDU off() {
-        return getActionRequestNormal(StreetLampFactory.off());
+    public static CodecAPDU off(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, StreetLampOADFactory.off(), new Datas(new Null()));
     }
 
     /**
@@ -112,8 +95,8 @@ public class StreetLamp {
      *
      * @return null
      */
-    public static CodecAPDU onAutoControl() {
-        return getActionRequestNormal(StreetLampFactory.onAutoControl());
+    public static CodecAPDU onAutoControl(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, StreetLampOADFactory.onAutoControl(), new Datas(new Null()));
     }
 
     /**
@@ -122,8 +105,8 @@ public class StreetLamp {
      *
      * @return null
      */
-    public static CodecAPDU offAutoControl() {
-        return getActionRequestNormal(StreetLampFactory.offAutoControl());
+    public static CodecAPDU offAutoControl(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, StreetLampOADFactory.offAutoControl(), new Datas(new Null()));
     }
 
 }

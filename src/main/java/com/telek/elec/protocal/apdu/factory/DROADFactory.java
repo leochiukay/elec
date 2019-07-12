@@ -7,7 +7,7 @@ import com.telek.elec.protocal.data.model.OMD;
 /**
  * 需求 响应
  */
-public class DRFactory {
+public class DROADFactory {
 
     public static final OI OI = new OI(0x8120);
 
@@ -42,7 +42,7 @@ public class DRFactory {
      *    响应时间    long-unsigned，单位：分钟
      * @return null
      */
-    public static OMD drPublish(long responsLoad, long time) {
+    public static OMD drPublish() {
         return new OMD(OI, 127, 0);
     }
 

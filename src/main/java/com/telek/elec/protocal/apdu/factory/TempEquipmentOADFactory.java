@@ -7,7 +7,7 @@ import com.telek.elec.protocal.data.model.OMD;
 /**
  * 温控设备工厂类
  */
-public class TempEquipmentFactory {
+public class TempEquipmentOADFactory {
 
     public static final OI OI = new OI(0x4311);
 

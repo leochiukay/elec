@@ -7,7 +7,7 @@ import com.telek.elec.protocal.data.model.OMD;
 /**
  * 空调时段温控oad/omd工厂类
  */
-public class AirConditionTempControlFactory {
+public class AirConditionTempControlOADFactory {
 
     public static final OI OI = new OI(0x8122);
 

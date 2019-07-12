@@ -3,8 +3,14 @@ package com.telek.elec.protocal.service.request.apdufactory;
 import static com.telek.elec.protocal.service.RequestFactory.getActionRequestNormal;
 import static com.telek.elec.protocal.service.RequestFactory.getRequestNormal;
 
-import com.telek.elec.protocal.apdu.CodecAPDU;
-import com.telek.elec.protocal.apdu.factory.DRFactory;
+import com.telek.elec.protocal.apdu.action.request.ActionRequestNormal;
+import com.telek.elec.protocal.apdu.factory.DROADFactory;
+import com.telek.elec.protocal.apdu.get.request.GetRequestNormal;
+import com.telek.elec.protocal.data.Datas;
+import com.telek.elec.protocal.data.model.Null;
+import com.telek.elec.protocal.data.model.Structure;
+import com.telek.elec.protocal.data.model.number.DoubleLong;
+import com.telek.elec.protocal.data.model.number.LongUnsigned;
 
 /**
  * 需求 响应
@@ -16,8 +22,8 @@ public class DR {
      * 属性2
      * @return enum{未响应（0），正在响应（1）
      */
-    public static CodecAPDU state() {
-        return getRequestNormal(DRFactory.state());
+    public static GetRequestNormal state() {
+        return getRequestNormal(DROADFactory.state());
     }
 
     /**
@@ -31,8 +37,8 @@ public class DR {
      *   已响应时间    long-unsigned，单位：分钟
      * }
      */
-    public static CodecAPDU drParams() {
-        return getRequestNormal(DRFactory.drParams());
+    public static GetRequestNormal drParams() {
+        return getRequestNormal(DROADFactory.drParams());
     }
 
     /**
@@ -42,8 +48,12 @@ public class DR {
      *    响应时间    long-unsigned，单位：分钟
      * @return null
      */
-    public static CodecAPDU drPublish(long responsLoad, long time) {
-        return getActionRequestNormal(DRFactory.drPublish(responsLoad, time));
+    public static ActionRequestNormal drPublish(double power, int minutes) {
+        Datas<Structure> datas = new Datas<>(new Structure());
+        Structure structure = datas.getData();
+        structure.addData(new DoubleLong((int) (power * 10)));
+        structure.addData(new LongUnsigned(minutes));
+        return getActionRequestNormal(DROADFactory.drPublish(), datas);
     }
 
     /**
@@ -51,8 +61,8 @@ public class DR {
      * 方法128
      * @return null
      */
-    public static CodecAPDU releaseDR() {
-        return getActionRequestNormal(DRFactory.releaseDR());
+    public static ActionRequestNormal releaseDR() {
+        return getActionRequestNormal(DROADFactory.releaseDR(), new Datas(new Null()));
     }
 
 

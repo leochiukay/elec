@@ -5,25 +5,30 @@ import com.telek.elec.protocal.data.model.OI;
 import com.telek.elec.protocal.data.model.OMD;
 
 /**
- * 智能开关oad/omd工厂类
+ * 路灯oad/omd工厂类
  */
-public class SmartSwitchFactory {
+public class StreetLampOADFactory {
 
-    public static final OI OI = new OI(0x4313);
+    public static final int OFF = 0;
+    public static final int ON = 1;
+    public static final int AUTO_CONTROL_ON = 1;
+    public static final int AUTO_CONTROL_OFF = 0;
+
+    public static final OI OI = new OI(0x4310);
 
     /**
-     * 状态
+     * 控制状态
      * 属性2
-     * @return enum{关闭（0），打开（1）
+     * @return enum
      */
-    public static OAD switchState() {
+    public static OAD controlState() {
         return new OAD(OI, 2, 0);
     }
 
     /**
      * 自动控制状态
      * 属性3
-     * @return =enum{未（0），打开（1）
+     * @return enum
      */
     public static OAD autoControlState() {
         return new OAD(OI, 3, 0);
@@ -32,13 +37,13 @@ public class SmartSwitchFactory {
     /**
      * 自动控制时段
      * 属性4
-     * @return structure
-     * {
-     *   起始小时 unsigned，
-     *   起始分钟 unsigned，
-     *   结束小时 unsigned，
-     *   结束分钟 unsigned
-     * }
+     * @return  array::structure
+     *          {
+     *              起始小时 unsigned，
+     *              起始分钟 unsigned，
+     *              结束小时 unsigned，
+     *              结束分钟 unsigned
+     *          }
      */
     public static OAD autoControlPeriod() {
         return new OAD(OI, 4, 0);

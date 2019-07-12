@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.action.request.ActionRequestNormal;
-import com.telek.elec.protocal.apdu.factory.DocumentFactory;
+import com.telek.elec.protocal.apdu.factory.DocumentOADFactory;
 import com.telek.elec.protocal.apdu.model.action.ActionRequestData;
 import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.model.*;
@@ -23,7 +23,7 @@ public class DocumentOps {
      */
     public static CodecAPDU addDocument(Document document) {
         ActionRequestNormal actionRequest = new ActionRequestNormal();
-        actionRequest.setActionRequestData(new ActionRequestData(DocumentFactory.addDocument(), new Datas(document)));
+        actionRequest.setActionRequestData(new ActionRequestData(DocumentOADFactory.addDocument(), new Datas(document)));
         actionRequest.setTimeStamp(0);
         return actionRequest;
     }
@@ -41,13 +41,13 @@ public class DocumentOps {
         for (Document document : documents) {
             array.addData(document);
         }
-        actionRequest.setActionRequestData(new ActionRequestData(DocumentFactory.addBatchDocuments(), new Datas(array)));
+        actionRequest.setActionRequestData(new ActionRequestData(DocumentOADFactory.addBatchDocuments(), new Datas(array)));
         return actionRequest;
     }
 
     public static CodecAPDU clear() {
         ActionRequestNormal actionRequest = new ActionRequestNormal();
-        actionRequest.setActionRequestData(new ActionRequestData(DocumentFactory.clear(), new Datas(new Null())));
+        actionRequest.setActionRequestData(new ActionRequestData(DocumentOADFactory.clear(), new Datas(new Null())));
         return actionRequest;
     }
 }

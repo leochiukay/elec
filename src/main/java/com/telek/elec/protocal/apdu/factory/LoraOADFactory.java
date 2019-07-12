@@ -4,7 +4,7 @@ import com.telek.elec.protocal.data.model.OAD;
 import com.telek.elec.protocal.data.model.OI;
 import com.telek.elec.protocal.data.model.OMD;
 
-public class LoraFactory {
+public class LoraOADFactory {
 
     private static final OI OI = new OI(0xf221);
 
@@ -33,7 +33,7 @@ public class LoraFactory {
      * }
      * @return null
      */
-    public static OMD offAppointPeriod() {
+    public static OMD portParam() {
         return new OMD(OI, 127, 0);
     }
 

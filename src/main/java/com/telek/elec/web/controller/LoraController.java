@@ -13,6 +13,7 @@ import com.telek.elec.protocal.data.model.Enums;
 import com.telek.elec.protocal.data.model.OAD;
 import com.telek.elec.protocal.data.model.OI;
 import com.telek.elec.protocal.service.request.RequestService;
+import com.telek.elec.protocal.service.request.apdufactory.Lora;
 import com.telek.elec.protocal.service.request.apdufactory.ModBus;
 
 /**
@@ -21,15 +22,15 @@ import com.telek.elec.protocal.service.request.apdufactory.ModBus;
  * @Description:
  */
 @RestController
-@RequestMapping("/test/mbus")
-public class MbusController {
+@RequestMapping("/test/lora")
+public class LoraController {
 
     @Autowired
     private RequestService requestService;
 
     @PostMapping("/dl")
     public Object readProperties(String address) {
-        GetRequestNormal apdu = ModBus.deviceList();
+        GetRequestNormal apdu = Lora.deviceList();
         requestService.sendRequest(apdu, address);
         return "ok";
     }

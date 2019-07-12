@@ -1,132 +1,118 @@
 package com.telek.elec.web.controller;
 
+import static com.telek.elec.web.constant.Const.PROXY_ADDRESS;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.service.request.RequestService;
 import com.telek.elec.protocal.service.request.apdufactory.TempEquipment;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
+ *
+ * 温控设备
  * @Auther: wll
  * @Date: 2019/7/7 23:05
  * @Description:
  */
 @RestController
-@RequestMapping("/test/tempEq")
+@RequestMapping("/test/te")
 public class TempEquipmentController {
+
     @Autowired
     private RequestService requestService;
 
-    @GetMapping("/temperature/{address}")
-    public Object temperature(@PathVariable("address") String address) {
-        CodecAPDU request = TempEquipment.temperature();
+    @PostMapping("/temp")
+    public Object temperature(String address) {
+        CodecAPDU request = TempEquipment.temperature(PROXY_ADDRESS);
         requestService.sendRequest(request, address);
         return "OK";
     }
 
-    @GetMapping("/acState/{address}")
-    public Object acState(@PathVariable("address") String address) {
-        CodecAPDU request = TempEquipment.autoControlState();
+    @PostMapping("/acState")
+    public Object acState(String address) {
+        CodecAPDU request = TempEquipment.autoControlState(PROXY_ADDRESS);
         requestService.sendRequest(request, address);
         return "OK";
     }
 
-    @GetMapping("/pcState/{address}")
-    public Object pcState(@PathVariable("address") String address) {
-        CodecAPDU request = TempEquipment.periodControlState();
+    @PostMapping("/pcState")
+    public Object pcState(String address) {
+        CodecAPDU request = TempEquipment.periodControlState(PROXY_ADDRESS);
         requestService.sendRequest(request, address);
         return "OK";
     }
 
-    @GetMapping("/tempThreshold/{address}")
-    public Object tempThreshold(@PathVariable("address") String address) {
-        CodecAPDU request = TempEquipment.tempThreshold();
+    @PostMapping("/tempThreshold")
+    public Object tempThreshold(String address) {
+        CodecAPDU request = TempEquipment.tempThreshold(PROXY_ADDRESS);
         requestService.sendRequest(request, address);
         return "OK";
     }
 
-    @PostMapping("/setTempThreshold/{address}")
-    public Object setTempThreshold(@PathVariable("address") String address, String up, String down) {
-        CodecAPDU request = TempEquipment.setTempThreshold(up, down);
+    @PostMapping("/setTempThreshold")
+    public Object setTempThreshold(String address, float up, float down) {
+        CodecAPDU request = TempEquipment.setTempThreshold(PROXY_ADDRESS, up, down);
         requestService.sendRequest(request, address);
         return "OK";
     }
 
-    @GetMapping("/readACPeriod/{address}")
-    public Object readACPeriod(@PathVariable("address") String address) {
-        CodecAPDU request = TempEquipment.autoControlPeriod();
+    @GetMapping("/acPeriod")
+    public Object readACPeriod(String address) {
+        CodecAPDU request = TempEquipment.autoControlPeriod(PROXY_ADDRESS);
         requestService.sendRequest(request, address);
         return "OK";
     }
 
-    /**
-     * @Description:
-     * @auther: wll
-     * @date: 22:53 2019/7/7
-     * @param: address,
-     * periods 格式：HH:mm-HH:mm;HH:mm-HH:mm;...
-     * @return: java.lang.Object
-     */
-    @PostMapping("/setACPeriod/{address}")
-    public Object setACPeriod(@PathVariable("address") String address, @RequestParam String periods) {
-        String[] periodArr = periods.split(";");
-        List<Map<String, Short>> controlPeriodList = new ArrayList<>();
-        for (String period : periodArr) {
-            Map<String, Short> periodMap = new HashMap<>();
-            periodMap.put("sh", Short.parseShort(period.split("-")[0].split(":")[0]));
-            periodMap.put("sm", Short.parseShort(period.split("-")[0].split(":")[1]));
-            periodMap.put("eh", Short.parseShort(period.split("-")[1].split(":")[0]));
-            periodMap.put("em", Short.parseShort(period.split("-")[1].split(":")[1]));
-            controlPeriodList.add(periodMap);
-        }
-        CodecAPDU request = TempEquipment.setAutoControlPeriod(controlPeriodList);
+    @PostMapping("/setACPeriod")
+    public Object setACPeriod(String address, short bh, short bm, short eh, short em) {
+        CodecAPDU request = TempEquipment.setAutoControlPeriod(PROXY_ADDRESS, bh, bm, eh, em);
         requestService.sendRequest(request, address);
         return "OK";
     }
 
-    @PostMapping("/on/{address}")
-    public Object on(@PathVariable("address") String address) {
-        CodecAPDU request = TempEquipment.on();
+    @PostMapping("/on")
+    public Object on(String address) {
+        CodecAPDU request = TempEquipment.on(PROXY_ADDRESS);
         requestService.sendRequest(request, address);
         return "OK";
     }
 
-    @PostMapping("/off/{address}")
-    public Object off(@PathVariable("address") String address) {
-        CodecAPDU request = TempEquipment.off();
+    @PostMapping("/off")
+    public Object off(String address) {
+        CodecAPDU request = TempEquipment.off(PROXY_ADDRESS);
         requestService.sendRequest(request, address);
         return "OK";
     }
 
-    @PostMapping("/onTempControl/{address}")
-    public Object onTempControl(@PathVariable("address") String address) {
-        CodecAPDU request = TempEquipment.onTempControl();
+    @PostMapping("/onTempControl")
+    public Object onTempControl(String address) {
+        CodecAPDU request = TempEquipment.onTempControl(PROXY_ADDRESS);
         requestService.sendRequest(request, address);
         return "OK";
     }
 
-    @PostMapping("/offTempControl/{address}")
-    public Object offTempControl(@PathVariable("address") String address) {
-        CodecAPDU request = TempEquipment.offTempControl();
+    @PostMapping("/offTempControl")
+    public Object offTempControl(String address) {
+        CodecAPDU request = TempEquipment.offTempControl(PROXY_ADDRESS);
         requestService.sendRequest(request, address);
         return "OK";
     }
 
-    @PostMapping("/onPeriodControl/{address}")
-    public Object onPeriodControl(@PathVariable("address") String address) {
-        CodecAPDU request = TempEquipment.onPeriodControl();
+    @PostMapping("/onPeriodControl")
+    public Object onPeriodControl(String address) {
+        CodecAPDU request = TempEquipment.onPeriodControl(PROXY_ADDRESS);
         requestService.sendRequest(request, address);
         return "OK";
     }
 
-    @PostMapping("/offPeriodControl/{address}")
-    public Object offPeriodControl(@PathVariable("address") String address) {
-        CodecAPDU request = TempEquipment.offPeriodControl();
+    @PostMapping("/offPeriodControl")
+    public Object offPeriodControl(String address) {
+        CodecAPDU request = TempEquipment.offPeriodControl(PROXY_ADDRESS);
         requestService.sendRequest(request, address);
         return "OK";
     }

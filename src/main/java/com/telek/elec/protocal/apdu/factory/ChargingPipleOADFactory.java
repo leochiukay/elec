@@ -7,7 +7,7 @@ import com.telek.elec.protocal.data.model.OMD;
 /**
  * 充电桩oad/omd工厂类
  */
-public class ChargingPipleFactory {
+public class ChargingPipleOADFactory {
 
     public static final OI OI = new OI(0x4312);
 

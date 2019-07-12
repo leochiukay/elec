@@ -1,10 +1,14 @@
 package com.telek.elec.protocal.service.request.apdufactory;
 
-import static com.telek.elec.protocal.service.RequestFactory.getActionRequestNormal;
-import static com.telek.elec.protocal.service.RequestFactory.getRequestNormal;
-
-import com.telek.elec.protocal.apdu.CodecAPDU;
-import com.telek.elec.protocal.apdu.factory.SmartSwitchFactory;
+import com.telek.elec.protocal.apdu.factory.SmartSwitchOADFactory;
+import com.telek.elec.protocal.apdu.proxy.request.ProxyActionRequestList;
+import com.telek.elec.protocal.apdu.proxy.request.ProxyGetRequestList;
+import com.telek.elec.protocal.apdu.proxy.request.ProxySetRequestList;
+import com.telek.elec.protocal.data.Datas;
+import com.telek.elec.protocal.data.model.Null;
+import com.telek.elec.protocal.data.model.Structure;
+import com.telek.elec.protocal.data.model.number.Unsigned;
+import com.telek.elec.protocal.service.RequestFactory;
 
 /**
  * 智能开关
@@ -16,8 +20,8 @@ public class SmartSwitch {
      * 属性2
      * @return enum{关闭（0），打开（1）
      */
-    public static CodecAPDU switchState() {
-        return getRequestNormal(SmartSwitchFactory.switchState());
+    public static ProxyGetRequestList switchState(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, SmartSwitchOADFactory.switchState());
     }
 
     /**
@@ -25,8 +29,8 @@ public class SmartSwitch {
      * 属性3
      * @return =enum{未（0），打开（1）
      */
-    public static CodecAPDU autoControlState() {
-        return getRequestNormal(SmartSwitchFactory.autoControlState());
+    public static ProxyGetRequestList autoControlState(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, SmartSwitchOADFactory.autoControlState());
     }
 
     /**
@@ -40,8 +44,30 @@ public class SmartSwitch {
      *   结束分钟 unsigned
      * }
      */
-    public static CodecAPDU autoControlPeriod() {
-        return getRequestNormal(SmartSwitchFactory.autoControlPeriod());
+    public static ProxyGetRequestList autoControlPeriod(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, SmartSwitchOADFactory.autoControlPeriod());
+    }
+
+    /**
+     * 设置自动控制时段
+     * 属性4
+     * @return structure
+     * {
+     *   起始小时 unsigned，
+     *   起始分钟 unsigned，
+     *   结束小时 unsigned，
+     *   结束分钟 unsigned
+     * }
+     */
+    public static ProxySetRequestList autoControlPeriod(String proxyAddress, short beginHour, short beginMinute,
+                                                        short endHour, short endMinute) {
+        Datas<Structure> datas = new Datas<>(new Structure());
+        Structure structure = datas.getData();
+        structure.addData(new Unsigned(beginHour));
+        structure.addData(new Unsigned(beginMinute));
+        structure.addData(new Unsigned(endHour));
+        structure.addData(new Unsigned(endMinute));
+        return RequestFactory.proxySetRequestList(proxyAddress, SmartSwitchOADFactory.autoControlPeriod(), datas);
     }
 
     /**
@@ -49,8 +75,8 @@ public class SmartSwitch {
      * 方法127
      * @return null
      */
-    public static CodecAPDU on() {
-        return getActionRequestNormal(SmartSwitchFactory.on());
+    public static ProxyActionRequestList on(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, SmartSwitchOADFactory.on(), new Datas(new Null()));
     }
 
     /**
@@ -58,8 +84,8 @@ public class SmartSwitch {
      * 方法128
      * @return null
      */
-    public static CodecAPDU off() {
-        return getActionRequestNormal(SmartSwitchFactory.off());
+    public static ProxyActionRequestList off(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, SmartSwitchOADFactory.off(), new Datas(new Null()));
     }
 
     /**
@@ -67,8 +93,8 @@ public class SmartSwitch {
      * 方法129
      * @return null
      */
-    public static CodecAPDU onAutoControl() {
-        return getActionRequestNormal(SmartSwitchFactory.onAutoControl());
+    public static ProxyActionRequestList onAutoControl(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, SmartSwitchOADFactory.onAutoControl(), new Datas(new Null()));
     }
 
     /**
@@ -76,8 +102,8 @@ public class SmartSwitch {
      * 方法130
      * @return null
      */
-    public static CodecAPDU offAutoControl() {
-        return getActionRequestNormal(SmartSwitchFactory.offAutoControl());
+    public static ProxyActionRequestList offAutoControl(String proxyAddress) {
+        return RequestFactory.proxyActionRequestList(proxyAddress, SmartSwitchOADFactory.offAutoControl(), new Datas(new Null()));
     }
 
 

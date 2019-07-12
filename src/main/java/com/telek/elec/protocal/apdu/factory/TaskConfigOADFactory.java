@@ -6,7 +6,7 @@ import com.telek.elec.protocal.data.model.OMD;
 /**
  * 任务配置
  */
-public class TaskConfigFactory {
+public class TaskConfigOADFactory {
 
     private static final OI oi = new OI(0x6012);
 

@@ -1,24 +1,17 @@
 package com.telek.elec.protocal.service.request.apdufactory;
 
-import static com.telek.elec.protocal.service.RequestFactory.getActionRequestNormal;
-import static com.telek.elec.protocal.service.RequestFactory.getRequestNormal;
-import static com.telek.elec.protocal.service.RequestFactory.getSetRequestNormal;
-import static com.telek.elec.protocal.service.RequestFactory.setRequestNormal;
+import static com.telek.elec.protocal.service.RequestFactory.proxyActionRequestList;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import com.telek.elec.protocal.apdu.CodecAPDU;
-import com.telek.elec.protocal.apdu.factory.TempEquipmentFactory;
-import com.telek.elec.protocal.apdu.model.set.SetRequestData;
-import com.telek.elec.protocal.apdu.set.request.SetRequestNormal;
+import com.telek.elec.protocal.apdu.factory.TempEquipmentOADFactory;
+import com.telek.elec.protocal.apdu.proxy.request.ProxyActionRequestList;
+import com.telek.elec.protocal.apdu.proxy.request.ProxyGetRequestList;
+import com.telek.elec.protocal.apdu.proxy.request.ProxySetRequestList;
 import com.telek.elec.protocal.data.Datas;
-import com.telek.elec.protocal.data.model.AbsData;
-import com.telek.elec.protocal.data.model.Array;
+import com.telek.elec.protocal.data.model.Null;
 import com.telek.elec.protocal.data.model.Structure;
 import com.telek.elec.protocal.data.model.number.Long;
 import com.telek.elec.protocal.data.model.number.Unsigned;
+import com.telek.elec.protocal.service.RequestFactory;
 
 /**
  * 温控设备
@@ -31,8 +24,8 @@ public class TempEquipment {
      *
      * @return long（单位：℃,换算：-1）
      */
-    public static CodecAPDU temperature() {
-        return getRequestNormal(TempEquipmentFactory.temperature());
+    public static ProxyGetRequestList temperature(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, TempEquipmentOADFactory.temperature());
     }
 
     /**
@@ -41,8 +34,8 @@ public class TempEquipment {
      *
      * @return enum{未温度控制（0），温度控制（1）
      */
-    public static CodecAPDU autoControlState() {
-        return getRequestNormal(TempEquipmentFactory.autoControlState());
+    public static ProxyGetRequestList autoControlState(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, TempEquipmentOADFactory.autoControlState());
     }
 
     /**
@@ -51,8 +44,8 @@ public class TempEquipment {
      *
      * @return enum{未温度控制（0），温度控制（1）
      */
-    public static CodecAPDU periodControlState() {
-        return getRequestNormal(TempEquipmentFactory.periodControlState());
+    public static ProxyGetRequestList periodControlState(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, TempEquipmentOADFactory.periodControlState());
     }
 
     /**
@@ -61,8 +54,8 @@ public class TempEquipment {
      *
      * @return
      */
-    public static CodecAPDU tempThreshold() {
-        return getRequestNormal(TempEquipmentFactory.tempThreshold());
+    public static ProxyGetRequestList tempThreshold(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, TempEquipmentOADFactory.tempThreshold());
     }
 
     /**
@@ -73,17 +66,12 @@ public class TempEquipment {
      * @param down 温度下限
      * @return
      */
-    public static CodecAPDU setTempThreshold(String up, String down) {
-        Structure structure = new Structure();
-        List<AbsData> period = new ArrayList<>();
-        Long ups = new Long(Short.parseShort(up));
-        ups.setConversionCoefficient(-1);
-        period.add(ups);
-        Long downs = new Long(Short.parseShort(down));
-        downs.setConversionCoefficient(-1);
-        period.add(downs);
-//        structure.setDatas(period);
-        return getSetRequestNormal(structure, TempEquipmentFactory.tempThreshold());
+    public static ProxySetRequestList setTempThreshold(String proxyAddress, float up, float down) {
+        Datas<Structure> datas = new Datas<>(new Structure());
+        Structure structure = datas.getData();
+        structure.addData(new Long((short) (up * 10)));
+        structure.addData(new Long((short) (down * 10)));
+        return RequestFactory.proxySetRequestList(proxyAddress, TempEquipmentOADFactory.tempThreshold(), datas);
     }
 
     /**
@@ -98,8 +86,8 @@ public class TempEquipment {
      * 结束分钟 unsigned
      * }
      */
-    public static CodecAPDU autoControlPeriod() {
-        return getRequestNormal(TempEquipmentFactory.autoControlPeriod());
+    public static ProxyGetRequestList autoControlPeriod(String proxyAddress) {
+        return RequestFactory.proxyGetRequestList(proxyAddress, TempEquipmentOADFactory.autoControlPeriod());
     }
 
     /**
@@ -109,24 +97,15 @@ public class TempEquipment {
      * @param: [controlPeriod]
      * @return: com.telek.elec.protocal.apdu.set.request.SetRequestNormal
      */
-    public static SetRequestNormal setAutoControlPeriod(List<Map<String, Short>> controlPeriodList) {
-        SetRequestData requestData = new SetRequestData();
-        requestData.setOad(TempEquipmentFactory.autoControlPeriod());
-        List<AbsData> arrayDatas = new ArrayList<>();
-        for (Map<String, Short> controlPeriod : controlPeriodList) {
-            Structure structure = new Structure();
-            List<AbsData> period = new ArrayList<>();
-            period.add(new Unsigned(controlPeriod.get("sh")));
-            period.add(new Unsigned(controlPeriod.get("sm")));
-            period.add(new Unsigned(controlPeriod.get("eh")));
-            period.add(new Unsigned(controlPeriod.get("em")));
-//            structure.setDatas(period);
-            arrayDatas.add(structure);
-        }
-        Array array = new Array();
-//        array.setDatas(arrayDatas);
-        requestData.setData(new Datas(array));
-        return setRequestNormal(requestData);
+    public static ProxySetRequestList setAutoControlPeriod(String proxyAddress, short beginHour, short beginMinute,
+                                                        short endHour, short endMinute) {
+        Datas<Structure> datas = new Datas<>(new Structure());
+        Structure structure = datas.getData();
+        structure.addData(new Unsigned(beginHour));
+        structure.addData(new Unsigned(beginMinute));
+        structure.addData(new Unsigned(endHour));
+        structure.addData(new Unsigned(endMinute));
+        return RequestFactory.proxySetRequestList(proxyAddress, TempEquipmentOADFactory.autoControlPeriod(), datas);
     }
 
     /**
@@ -135,8 +114,8 @@ public class TempEquipment {
      *
      * @return null
      */
-    public static CodecAPDU on() {
-        return getActionRequestNormal(TempEquipmentFactory.on());
+    public static ProxyActionRequestList on(String proxyAddress) {
+        return proxyActionRequestList(proxyAddress, TempEquipmentOADFactory.on(), new Datas(new Null()));
     }
 
     /**
@@ -145,8 +124,8 @@ public class TempEquipment {
      *
      * @return null
      */
-    public static CodecAPDU off() {
-        return getActionRequestNormal(TempEquipmentFactory.off());
+    public static ProxyActionRequestList off(String proxyAddress) {
+        return proxyActionRequestList(proxyAddress, TempEquipmentOADFactory.off(), new Datas(new Null()));
     }
 
     /**
@@ -155,8 +134,8 @@ public class TempEquipment {
      *
      * @return null
      */
-    public static CodecAPDU onTempControl() {
-        return getActionRequestNormal(TempEquipmentFactory.onTempControl());
+    public static ProxyActionRequestList onTempControl(String proxyAddress) {
+        return proxyActionRequestList(proxyAddress, TempEquipmentOADFactory.onTempControl(), new Datas(new Null()));
     }
 
     /**
@@ -165,8 +144,8 @@ public class TempEquipment {
      *
      * @return null
      */
-    public static CodecAPDU offTempControl() {
-        return getActionRequestNormal(TempEquipmentFactory.offTempControl());
+    public static ProxyActionRequestList offTempControl(String proxyAddress) {
+        return proxyActionRequestList(proxyAddress, TempEquipmentOADFactory.offTempControl(), new Datas(new Null()));
     }
 
     /**
@@ -175,8 +154,8 @@ public class TempEquipment {
      *
      * @return null
      */
-    public static CodecAPDU onPeriodControl() {
-        return getActionRequestNormal(TempEquipmentFactory.onPeriodControl());
+    public static ProxyActionRequestList onPeriodControl(String proxyAddress) {
+        return proxyActionRequestList(proxyAddress, TempEquipmentOADFactory.onPeriodControl(), new Datas(new Null()));
     }
 
     /**
@@ -185,7 +164,7 @@ public class TempEquipment {
      *
      * @return null
      */
-    public static CodecAPDU offPeriodControl() {
-        return getActionRequestNormal(TempEquipmentFactory.offPeriodControl());
+    public static ProxyActionRequestList offPeriodControl(String proxyAddress) {
+        return proxyActionRequestList(proxyAddress, TempEquipmentOADFactory.offPeriodControl(), new Datas(new Null()));
     }
 }

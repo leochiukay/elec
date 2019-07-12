@@ -8,7 +8,7 @@ import com.telek.elec.protocal.data.model.OMD;
  * @Date: 2019/7/8 20:32
  * @Description:
  */
-public class NormalCollectionSchemeFactory {
+public class NormalCollectionSchemeOADFactory {
     public static final OI OI = new OI(0x6014);
 
     /**

@@ -2,7 +2,7 @@ package com.telek.elec.protocal.service.request.apdufactory;
 
 import com.telek.elec.protocal.apdu.CodecAPDU;
 import com.telek.elec.protocal.apdu.action.request.ActionRequestNormal;
-import com.telek.elec.protocal.apdu.factory.NormalCollectionSchemeFactory;
+import com.telek.elec.protocal.apdu.factory.NormalCollectionSchemeOADFactory;
 import com.telek.elec.protocal.apdu.model.action.ActionRequestData;
 import com.telek.elec.protocal.data.Datas;
 import com.telek.elec.protocal.data.model.Array;
@@ -30,13 +30,13 @@ public class NormalCollectionSchemeOps {
             array.addData(scheme);
         }
         ActionRequestNormal actionRequest = new ActionRequestNormal();
-        actionRequest.setActionRequestData(new ActionRequestData(NormalCollectionSchemeFactory.addScheme(), new Datas(array)));
+        actionRequest.setActionRequestData(new ActionRequestData(NormalCollectionSchemeOADFactory.addScheme(), new Datas(array)));
         return actionRequest;
     }
 
     public static CodecAPDU clear() {
         ActionRequestNormal actionRequest = new ActionRequestNormal();
-        actionRequest.setActionRequestData(new ActionRequestData(NormalCollectionSchemeFactory.clear(), new Datas(new Null())));
+        actionRequest.setActionRequestData(new ActionRequestData(NormalCollectionSchemeOADFactory.clear(), new Datas(new Null())));
         return actionRequest;
     }
 }

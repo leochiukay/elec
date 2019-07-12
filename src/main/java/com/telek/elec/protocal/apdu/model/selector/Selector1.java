@@ -23,7 +23,7 @@ public class Selector1 extends Selector {
     private Datas data;
 
     public Selector1() {
-        this.id = 1;
+        this.id = ID;
     }
 
     public Selector1(OAD oad, Datas data) {

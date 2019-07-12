@@ -4,7 +4,7 @@ import com.telek.elec.protocal.data.model.OAD;
 import com.telek.elec.protocal.data.model.OI;
 import com.telek.elec.protocal.data.model.OMD;
 
-public class ModBusFactory {
+public class ModBusOADFactory {
 
     private static final OI OI = new OI(0xf220);
 
