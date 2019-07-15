@@ -9,10 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.telek.elec.protocal.apdu.CodecAPDU;
+import com.telek.elec.protocal.apdu.get.request.GetRequestRecord;
+import com.telek.elec.protocal.apdu.model.Selector;
 import com.telek.elec.protocal.apdu.model.get.GetRequestRecordData;
 import com.telek.elec.protocal.apdu.model.selector.Selector5;
-import com.telek.elec.protocal.apdu.get.request.GetRequestRecord;
 import com.telek.elec.protocal.data.model.CSD;
 import com.telek.elec.protocal.data.model.MS;
 import com.telek.elec.protocal.data.model.OAD;
@@ -65,12 +65,14 @@ public class CommonController {
     }
 
 
+    private static final Selector SELECTOR5 = new Selector5(new DateTimeS(Calendar.getInstance()), new MS(0, null));
+
     /**
      * 获取发电时间
      */
     @PostMapping("/gt")
     public Object generationTime(String address) {
-        CodecAPDU apdu = Common.generationTime2();
+        GetRequestRecord apdu = Common.generationTime(SELECTOR5);
         requestService.sendRequest(apdu, address);
         return "ok";
     }
@@ -80,7 +82,7 @@ public class CommonController {
      */
     @PostMapping("/at")
     public Object ambientTemperature(String address) {
-        CodecAPDU apdu = Common.ambientTemperature();
+        GetRequestRecord apdu = Common.ambientTemperature(SELECTOR5);
         requestService.sendRequest(apdu, address);
         return "ok";
     }
@@ -90,7 +92,7 @@ public class CommonController {
      */
     @PostMapping("/ct")
     public Object componentTemperature(String address) {
-        CodecAPDU apdu = Common.componentTemperature();
+        GetRequestRecord apdu = Common.componentTemperature(SELECTOR5);
         requestService.sendRequest(apdu, address);
         return "ok";
     }
@@ -100,7 +102,7 @@ public class CommonController {
      */
     @PostMapping("/humidity")
     public Object humidity(String address) {
-        CodecAPDU apdu = Common.humidity();
+        GetRequestRecord apdu = Common.humidity(SELECTOR5);
         requestService.sendRequest(apdu, address);
         return "ok";
     }
@@ -110,7 +112,7 @@ public class CommonController {
      */
     @PostMapping("/radiation")
     public Object radiation(String address) {
-        CodecAPDU apdu = Common.radiation();
+        GetRequestRecord apdu = Common.radiation(SELECTOR5);
         requestService.sendRequest(apdu, address);
         return "ok";
     }
@@ -120,7 +122,7 @@ public class CommonController {
      */
     @PostMapping("/ws")
     public Object windSpeed(String address) {
-        CodecAPDU apdu = Common.windSpeed();
+        GetRequestRecord apdu = Common.windSpeed(SELECTOR5);
         requestService.sendRequest(apdu, address);
         return "ok";
     }
@@ -130,7 +132,7 @@ public class CommonController {
      */
     @PostMapping("/wd")
     public Object windDirection(String address) {
-        CodecAPDU apdu = Common.windDirection();
+        GetRequestRecord apdu = Common.windDirection(SELECTOR5);
         requestService.sendRequest(apdu, address);
         return "ok";
     }
@@ -140,7 +142,7 @@ public class CommonController {
      */
     @PostMapping("/speed")
     public Object speed(String address) {
-        CodecAPDU apdu = Common.speed();
+        GetRequestRecord apdu = Common.speed(SELECTOR5);
         requestService.sendRequest(apdu, address);
         return "ok";
     }

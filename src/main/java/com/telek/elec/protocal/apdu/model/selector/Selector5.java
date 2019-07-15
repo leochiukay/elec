@@ -24,6 +24,12 @@ public class Selector5 extends Selector {
         this.id = 5;
     }
 
+    public Selector5(DateTimeS dateTimeS, MS ms) {
+        this();
+        this.dateTimeS = dateTimeS;
+        this.ms = ms;
+    }
+
     @Override
     protected String encodeSpecial() throws EncodeException {
         StrBuilder sb = new StrBuilder();
