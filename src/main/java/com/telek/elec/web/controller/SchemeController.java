@@ -64,16 +64,15 @@ public class SchemeController {
         csdList.add(new CSD(new OAD(new OI(0x4311), 2, 0)));
         csdList.add(new CSD(new OAD(new OI(0x4312), 2, 0)));
         csdList.add(new CSD(new OAD(new OI(0x4313), 2, 0)));
-        int i = 0x2600;
-        csdList.add(new CSD(new OAD(new OI(i), 2, 0)));
-        csdList.add(new CSD(new OAD(new OI(i += 1), 2, 0)));
-        csdList.add(new CSD(new OAD(new OI(i += 1), 2, 0)));
-        csdList.add(new CSD(new OAD(new OI(i += 1), 2, 0)));
-        csdList.add(new CSD(new OAD(new OI(i += 1), 2, 0)));
-        csdList.add(new CSD(new OAD(new OI(i += 1), 2, 0)));
-        csdList.add(new CSD(new OAD(new OI(i += 1), 2, 0)));
-        csdList.add(new CSD(new OAD(new OI(i += 1), 2, 0)));
-        csdList.add(new CSD(new OAD(new OI(i += 1), 2, 0)));
+
+        csdList.add(new CSD(new OAD(new OI(0x2600), 2, 0)));
+        csdList.add(new CSD(new OAD(new OI(0x2601), 2, 0)));
+        csdList.add(new CSD(new OAD(new OI(0x2602), 2, 0)));
+        csdList.add(new CSD(new OAD(new OI(0x2603), 2, 0)));
+        csdList.add(new CSD(new OAD(new OI(0x2604), 2, 0)));
+        csdList.add(new CSD(new OAD(new OI(0x2605), 2, 0)));
+        csdList.add(new CSD(new OAD(new OI(0x2606), 2, 0)));
+        csdList.add(new CSD(new OAD(new OI(0x2607), 2, 0)));
 
         csdList.add(new CSD(new OAD(new OI(0x8120), 2, 0)));
         csdList.add(new CSD(new OAD(new OI(0x8121), 2, 0)));

@@ -5,10 +5,10 @@ import com.telek.elec.protocal.apdu.proxy.request.ProxyActionRequestList;
 import com.telek.elec.protocal.apdu.proxy.request.ProxyGetRequestList;
 import com.telek.elec.protocal.apdu.proxy.request.ProxySetRequestList;
 import com.telek.elec.protocal.data.Datas;
+import com.telek.elec.protocal.data.model.Array;
 import com.telek.elec.protocal.data.model.Null;
-import com.telek.elec.protocal.data.model.Structure;
-import com.telek.elec.protocal.data.model.number.Unsigned;
 import com.telek.elec.protocal.service.RequestFactory;
+import com.telek.elec.protocal.service.request.Utils;
 
 /**
  * 智能开关
@@ -61,12 +61,7 @@ public class SmartSwitch {
      */
     public static ProxySetRequestList autoControlPeriod(String proxyAddress, short beginHour, short beginMinute,
                                                         short endHour, short endMinute) {
-        Datas<Structure> datas = new Datas<>(new Structure());
-        Structure structure = datas.getData();
-        structure.addData(new Unsigned(beginHour));
-        structure.addData(new Unsigned(beginMinute));
-        structure.addData(new Unsigned(endHour));
-        structure.addData(new Unsigned(endMinute));
+        Datas<Array> datas = Utils.autoControlPeriod(beginHour, beginMinute, endHour, endMinute);
         return RequestFactory.proxySetRequestList(proxyAddress, SmartSwitchOADFactory.autoControlPeriod(), datas);
     }
 

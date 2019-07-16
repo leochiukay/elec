@@ -15,7 +15,7 @@ public class DoubleLong extends NumericalData {
     private int value;
 
     public DoubleLong() {
-        this.dataType = DataType.DOUBLE_LONG_UNSIGNED;
+        this.dataType = DataType.DOUBLE_LONG;
     }
 
     public DoubleLong(int value) {

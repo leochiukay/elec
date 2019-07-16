@@ -13,6 +13,7 @@ import com.telek.elec.protocal.apdu.get.request.GetRequestRecord;
 import com.telek.elec.protocal.apdu.model.Selector;
 import com.telek.elec.protocal.apdu.model.get.GetRequestRecordData;
 import com.telek.elec.protocal.apdu.model.selector.Selector5;
+import com.telek.elec.protocal.apdu.model.selector.Selector7;
 import com.telek.elec.protocal.data.model.CSD;
 import com.telek.elec.protocal.data.model.MS;
 import com.telek.elec.protocal.data.model.OAD;
@@ -20,6 +21,7 @@ import com.telek.elec.protocal.data.model.OI;
 import com.telek.elec.protocal.data.model.RCSD;
 import com.telek.elec.protocal.data.model.ROAD;
 import com.telek.elec.protocal.data.model.RSD;
+import com.telek.elec.protocal.data.model.TI;
 import com.telek.elec.protocal.data.model.date.DateTimeS;
 import com.telek.elec.protocal.service.request.RequestService;
 import com.telek.elec.protocal.service.request.apdufactory.Common;
@@ -64,15 +66,32 @@ public class CommonController {
         return "ok";
     }
 
+    private static Calendar NOW = Calendar.getInstance();
 
-    private static final Selector SELECTOR5 = new Selector5(new DateTimeS(Calendar.getInstance()), new MS(0, null));
+    private static Calendar BEGIN;
+
+    private static Calendar END;
+
+    private static Selector SELECTOR5;
+
+    private static Selector SELECTOR7;
+
+    static {
+        BEGIN = Calendar.getInstance();
+        BEGIN.add(Calendar.DAY_OF_MONTH, -2);
+        END = Calendar.getInstance();
+        END.add(Calendar.DAY_OF_MONTH, 2);
+
+        SELECTOR5 = new Selector5(new DateTimeS(NOW), new MS(1, null));
+        SELECTOR7 = new Selector7(new DateTimeS(BEGIN), new DateTimeS(END), new TI((byte) 0, 30), new MS(1, null));
+    }
 
     /**
      * 获取发电时间
      */
     @PostMapping("/gt")
     public Object generationTime(String address) {
-        GetRequestRecord apdu = Common.generationTime(SELECTOR5);
+        GetRequestRecord apdu = Common.generationTime(SELECTOR7);
         requestService.sendRequest(apdu, address);
         return "ok";
     }

@@ -3,7 +3,6 @@ package com.telek.elec.web.controller;
 import static com.telek.elec.web.constant.Const.PROXY_ADDRESS;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,7 +60,7 @@ public class TempEquipmentController {
         return "OK";
     }
 
-    @GetMapping("/acPeriod")
+    @PostMapping("/acPeriod")
     public Object readACPeriod(String address) {
         CodecAPDU request = TempEquipment.autoControlPeriod(PROXY_ADDRESS);
         requestService.sendRequest(request, address);

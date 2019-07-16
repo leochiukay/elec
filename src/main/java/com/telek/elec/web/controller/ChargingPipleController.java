@@ -45,6 +45,7 @@ public class ChargingPipleController {
         return "ok";
     }
 
+    @PostMapping("/lct")
     public Object loadControlThreshold(String address) {
         ProxyGetRequestList apdu = ChargingPiple.loadControlThreshold(Const.PROXY_ADDRESS);
         requestService.sendRequest(apdu, address);

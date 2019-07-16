@@ -4,6 +4,7 @@ import com.telek.elec.protocal.apdu.action.request.ActionRequestNormal;
 import com.telek.elec.protocal.apdu.factory.ModBusOADFactory;
 import com.telek.elec.protocal.apdu.get.request.GetRequestNormal;
 import com.telek.elec.protocal.data.Datas;
+import com.telek.elec.protocal.data.model.Array;
 import com.telek.elec.protocal.data.model.Comdcb;
 import com.telek.elec.protocal.data.model.Enums;
 import com.telek.elec.protocal.data.model.OAD;
@@ -44,15 +45,17 @@ public class ModBus {
      * @return
      */
     public static ActionRequestNormal portParam(OAD port, Comdcb portParam, Enums portFunction) {
-        Datas<Structure> structureDatas = new Datas<>(new Structure());
-        Structure structure = structureDatas.getData();
+        Structure structure = new Structure();
         structure.addData(port);
         structure.addData(portParam);
         structure.addData(portFunction);
+
+        Datas<Array> datas = new Datas<>(new Array());
+        datas.getData().addData(structure);
         // omd
         OMD omd = ModBusOADFactory.portParam();
         // data
-        return RequestFactory.getActionRequestNormal(omd, structureDatas);
+        return RequestFactory.getActionRequestNormal(omd, datas);
     }
 
 }

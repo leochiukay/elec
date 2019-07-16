@@ -26,6 +26,14 @@ public class Selector7 extends Selector {
         this.id = 7;
     }
 
+    public Selector7(DateTimeS timeBegin, DateTimeS timeEnd, TI ti, MS ms) {
+        this();
+        this.timeBegin = timeBegin;
+        this.timeEnd = timeEnd;
+        this.ti = ti;
+        this.ms = ms;
+    }
+
     @Override
     protected String encodeSpecial() throws EncodeException {
         StrBuilder sb = new StrBuilder();
