@@ -54,17 +54,38 @@ public class TaskController {
         taskConfigModel.setFrequency(new Datas<>(new TI((byte) 1, 15)));
         taskConfigModel.setTaskType(new Datas<>(new Enums((short) 1)));
         taskConfigModel.setTaskNum(1);
-        Calendar cal = Calendar.getInstance();
-        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.HOUR_OF_DAY), 0, 0);
-        taskConfigModel.setBeginTime(cal);
-        cal.add(Calendar.DAY_OF_MONTH, 1);
-        taskConfigModel.setEndTime(cal);
+        Calendar begin = Calendar.getInstance();
+        begin.add(Calendar.MONTH, -1);
+        begin.set(Calendar.MINUTE, 0);
+        begin.set(Calendar.SECOND, 0);
+        taskConfigModel.setBeginTime(begin);
+        Calendar end = Calendar.getInstance();
+        end.set(Calendar.MINUTE, 0);
+        end.set(Calendar.SECOND, 0);
+        end.add(Calendar.MONTH, 1);
+        taskConfigModel.setEndTime(end);
         taskConfigModel.setDelay(new Datas<>(new TI((byte) 0, 15)));
         taskConfigModel.setPriority(0);
         taskConfigModel.setState(new Datas<>(new Enums((short) 1)));
         taskConfigModel.setBeginScriptId(0);
         taskConfigModel.setEndScriptId(0);
 
+        /************************************************************/
+        TaskConfigModel.TaskRunPeriod taskRunPeriod = new TaskConfigModel.TaskRunPeriod();
+        taskRunPeriod.setType(new Datas<>(new Enums((short) 3)));
+
+        List<TaskConfigModel.TaskConfigModelTime> list = new ArrayList<>();
+        TaskConfigModel.TaskConfigModelTime taskConfigModelTime = new TaskConfigModel.TaskConfigModelTime();
+        taskConfigModelTime.setBeginHour(1);
+        taskConfigModelTime.setBeginMinute(0);
+        taskConfigModelTime.setEndHour(23);
+        taskConfigModelTime.setEndMinute(0);
+
+        list.add(taskConfigModelTime);
+        taskRunPeriod.setModelTimes(list);
+
+        taskConfigModel.setTaskRunPeriod(taskRunPeriod);
+        /************************************************************/
         return taskConfigModel;
     }
 }

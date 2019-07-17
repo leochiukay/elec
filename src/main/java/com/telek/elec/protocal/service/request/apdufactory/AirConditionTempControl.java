@@ -69,18 +69,22 @@ public class AirConditionTempControl {
                                           short endHour, short endMinute) {
         Datas<Array> datas = new Datas<>(new Array());
         Array array = datas.getData();
+        // 顶层structure
+        Structure structure = new Structure();
+        array.addData(structure);
+
         // 温度阈值
         Structure tempTh = new Structure();
         tempTh.addData(new Long((short) (tempUp * 10)));
         tempTh.addData(new Long((short) (tempDown * 10)));
-        array.addData(tempTh);
+        structure.addData(tempTh);
         // 自动控制时段
         Structure autoControlPeriod = new Structure();
         autoControlPeriod.addData(new Unsigned(beginHour));
         autoControlPeriod.addData(new Unsigned(beginMinute));
         autoControlPeriod.addData(new Unsigned(endHour));
         autoControlPeriod.addData(new Unsigned(endMinute));
-        array.addData(autoControlPeriod);
+        structure.addData(autoControlPeriod);
         return RequestFactory.setRequestNormal(datas, AirConditionTempControlOADFactory.params());
     }
 

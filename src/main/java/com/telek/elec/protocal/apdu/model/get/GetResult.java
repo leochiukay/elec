@@ -51,12 +51,13 @@ public class GetResult extends AbsDataModel {
     protected int decodeSpecial(String hexString) throws DecodeException {
         // 数据类型
         int resultType = Integer.parseInt(hexString.substring(0, 2), 16);
-        for (DataResultType value : DataResultType.values()) {
+        /*for (DataResultType value : DataResultType.values()) {
             if (resultType == value.getCode()) {
                 this.getResultType = value;
                 break;
             }
-        }
+        }*/
+        this.getResultType = DataResultType.getByCode(resultType);
 
         // 解码数据
         String hex = hexString.substring(2);

@@ -14,7 +14,6 @@ import com.telek.elec.protocal.data.model.OAD;
 import com.telek.elec.protocal.data.model.OI;
 import com.telek.elec.protocal.service.request.RequestService;
 import com.telek.elec.protocal.service.request.apdufactory.Lora;
-import com.telek.elec.protocal.service.request.apdufactory.ModBus;
 
 /**
  * @Auther: wll
@@ -37,10 +36,9 @@ public class LoraController {
 
     @PostMapping("/port")
     public Object setPort(String address) {
-        OAD oad = new OAD(new OI(0xf220), 2, 0);
-        int i = 1;
-        Comdcb comdcb = new Comdcb(BAUDType.BAUD_2400bps, i, i, i, i);
-        CodecAPDU codecAPDU = ModBus.portParam(oad, comdcb, new Enums((short) 1));
+        OAD oad = new OAD(new OI(0xf221), 2, 0);
+        Comdcb comdcb = new Comdcb(BAUDType.BAUD_9600bps, 2, 8, 1, 0);
+        CodecAPDU codecAPDU = Lora.portParam(oad, comdcb, new Enums((short) 1));
         requestService.sendRequest(codecAPDU, address);
         return "ok";
     }

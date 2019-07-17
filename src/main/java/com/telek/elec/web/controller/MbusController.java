@@ -37,8 +37,7 @@ public class MbusController {
     @PostMapping("/port")
     public Object setPort(String address) {
         OAD oad = new OAD(new OI(0xf220), 2, 0);
-        int i = 1;
-        Comdcb comdcb = new Comdcb(BAUDType.BAUD_2400bps, i, i, i, i);
+        Comdcb comdcb = new Comdcb(BAUDType.BAUD_9600bps, 2, 8, 1, 0);
         CodecAPDU codecAPDU = ModBus.portParam(oad, comdcb, new Enums((short) 1));
         requestService.sendRequest(codecAPDU, address);
         return "ok";

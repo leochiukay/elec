@@ -1,8 +1,8 @@
 package com.telek.elec.protocal.apdu.get.response;
 
 import com.telek.elec.protocal.apdu.ResTypeCodecAPDU;
-import com.telek.elec.protocal.apdu.model.get.GetResultNormal;
 import com.telek.elec.protocal.apdu.get.Get;
+import com.telek.elec.protocal.apdu.model.get.GetResultNormal;
 import com.telek.elec.protocal.constant.APDUResType;
 import com.telek.elec.protocal.constant.APDUSequence;
 import com.telek.elec.protocal.exeception.DecodeException;
@@ -56,14 +56,13 @@ public class GetResponseNormal extends ResTypeCodecAPDU implements Get {
 
     @Override
     protected void decodeSpecialHexToThis(String hexString) throws DecodeException {
-        int hexLength = hexString.length();
         int index = this.decodeHexExcludeCommonBeginIndex;
         GetResultNormal getResultNormal = new GetResultNormal();
-        getResultNormal.decode(hexString.substring(index, hexLength - 4));
+        index += getResultNormal.decode(hexString.substring(index));
         this.getResultNormal = getResultNormal;
 
-        String followReport = hexString.substring(hexLength - 4, hexLength - 2);
-        String timeStamp = hexString.substring(hexLength - 2);
+        String followReport = hexString.substring(index, index += 2);
+        String timeStamp = hexString.substring(index, index += 2);
         this.followReport = Integer.parseInt(followReport, 16);
         this.timeStamp = Integer.parseInt(timeStamp, 16);
     }

@@ -66,103 +66,27 @@ public class CommonController {
         return "ok";
     }
 
-    private static Calendar NOW = Calendar.getInstance();
-
     private static Calendar BEGIN;
 
     private static Calendar END;
-
-    private static Selector SELECTOR5;
 
     private static Selector SELECTOR7;
 
     static {
         BEGIN = Calendar.getInstance();
-        BEGIN.add(Calendar.DAY_OF_MONTH, -2);
+        BEGIN.set(2019, Calendar.JULY, 16, 1, 0, 0);
         END = Calendar.getInstance();
-        END.add(Calendar.DAY_OF_MONTH, 2);
-
-        SELECTOR5 = new Selector5(new DateTimeS(NOW), new MS(1, null));
-        SELECTOR7 = new Selector7(new DateTimeS(BEGIN), new DateTimeS(END), new TI((byte) 0, 30), new MS(1, null));
+        END.set(2019, Calendar.JULY, 16, 1, 30, 0);
+        SELECTOR7 = new Selector7(new DateTimeS(BEGIN), new DateTimeS(END), new TI((byte) 1, 15), new MS(1, null));
     }
 
     /**
      * 获取发电时间
      */
-    @PostMapping("/gt")
-    public Object generationTime(String address) {
-        GetRequestRecord apdu = Common.generationTime(SELECTOR7);
-        requestService.sendRequest(apdu, address);
-        return "ok";
-    }
-
-    /**
-     * 环境温度
-     */
-    @PostMapping("/at")
-    public Object ambientTemperature(String address) {
-        GetRequestRecord apdu = Common.ambientTemperature(SELECTOR5);
-        requestService.sendRequest(apdu, address);
-        return "ok";
-    }
-
-    /**
-     * 组件温度
-     */
-    @PostMapping("/ct")
-    public Object componentTemperature(String address) {
-        GetRequestRecord apdu = Common.componentTemperature(SELECTOR5);
-        requestService.sendRequest(apdu, address);
-        return "ok";
-    }
-
-    /**
-     * 湿度
-     */
-    @PostMapping("/humidity")
-    public Object humidity(String address) {
-        GetRequestRecord apdu = Common.humidity(SELECTOR5);
-        requestService.sendRequest(apdu, address);
-        return "ok";
-    }
-
-    /**
-     * 辐射
-     */
-    @PostMapping("/radiation")
-    public Object radiation(String address) {
-        GetRequestRecord apdu = Common.radiation(SELECTOR5);
-        requestService.sendRequest(apdu, address);
-        return "ok";
-    }
-
-    /**
-     * 风速
-     */
-    @PostMapping("/ws")
-    public Object windSpeed(String address) {
-        GetRequestRecord apdu = Common.windSpeed(SELECTOR5);
-        requestService.sendRequest(apdu, address);
-        return "ok";
-    }
-
-    /**
-     * 风向
-     */
-    @PostMapping("/wd")
-    public Object windDirection(String address) {
-        GetRequestRecord apdu = Common.windDirection(SELECTOR5);
-        requestService.sendRequest(apdu, address);
-        return "ok";
-    }
-
-    /**
-     * 转速
-     */
-    @PostMapping("/speed")
-    public Object speed(String address) {
-        GetRequestRecord apdu = Common.speed(SELECTOR5);
-        requestService.sendRequest(apdu, address);
+    @PostMapping("/all")
+    public Object all(String address) {
+        GetRequestRecord getRequestRecord = Common.getGetRequestRecord(SELECTOR7);
+        requestService.sendRequest(getRequestRecord, address);
         return "ok";
     }
 }

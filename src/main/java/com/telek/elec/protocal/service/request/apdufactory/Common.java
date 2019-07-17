@@ -1,77 +1,51 @@
 package com.telek.elec.protocal.service.request.apdufactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.telek.elec.protocal.apdu.factory.CommonOADFactory;
 import com.telek.elec.protocal.apdu.get.request.GetRequestRecord;
 import com.telek.elec.protocal.apdu.model.Selector;
+import com.telek.elec.protocal.apdu.model.get.GetRequestRecordData;
+import com.telek.elec.protocal.data.model.CSD;
+import com.telek.elec.protocal.data.model.OAD;
+import com.telek.elec.protocal.data.model.OI;
 import com.telek.elec.protocal.data.model.RCSD;
+import com.telek.elec.protocal.data.model.ROAD;
 import com.telek.elec.protocal.data.model.RSD;
-import com.telek.elec.protocal.service.RequestFactory;
 
 /**
  * 发送请求的service
  */
 public class Common {
 
-    /**
-     * 获取发电时间
-     */
-    public static GetRequestRecord generationTime(Selector selector) {
-        return RequestFactory.getRequestRecord(CommonOADFactory.generationTime(), new RSD(selector), new RCSD());
-    }
+    public static GetRequestRecord getGetRequestRecord(Selector selector) {
+        GetRequestRecord getRequestRecord = new GetRequestRecord();
 
-    /**
-     * 环境温度：2601
-     * @return
-     */
-    public static GetRequestRecord ambientTemperature(Selector selector) {
-        return RequestFactory.getRequestRecord(CommonOADFactory.ambientTemperature(), new RSD(selector), new RCSD());
-    }
+        GetRequestRecordData getRequestRecordData = new GetRequestRecordData();
+        getRequestRecordData.setOad(new OAD(new OI(0x6012), 03, 00));
+        getRequestRecordData.setRsd(new RSD(selector));
 
-    /**
-     * 组件温度：2602
-     * @return
-     */
-    public static GetRequestRecord componentTemperature(Selector selector) {
-        return RequestFactory.getRequestRecord(CommonOADFactory.componentTemperature(), new RSD(selector), new RCSD());
-    }
+        List<CSD> csds = new ArrayList<>();
+        ROAD road = new ROAD();
+        road.setOad(new OAD(new OI(0x5002), 02, 00));
+        List<OAD> oads = new ArrayList<>();
+        oads.add(CommonOADFactory.generationTime());
+        oads.add(CommonOADFactory.ambientTemperature());
+        oads.add(CommonOADFactory.componentTemperature());
+        oads.add(CommonOADFactory.humidity());
+        oads.add(CommonOADFactory.radiation());
+        oads.add(CommonOADFactory.windSpeed());
+        oads.add(CommonOADFactory.windDirection());
+        oads.add(CommonOADFactory.speed());
+        oads.add(CommonOADFactory.pitchAngle());
+        road.setSequenceOfData(oads);
+        CSD csd = new CSD(road);
+        csds.add(csd);
+        RCSD rcsd = new RCSD(csds);
+        getRequestRecordData.setRcsd(rcsd);
 
-    /**
-     * 湿度：2603
-     * @return
-     */
-    public static GetRequestRecord humidity(Selector selector) {
-        return RequestFactory.getRequestRecord(CommonOADFactory.humidity(), new RSD(selector), new RCSD());
-    }
-
-    /**
-     * 辐射：2604
-     * @return
-     */
-    public static GetRequestRecord radiation(Selector selector) {
-        return RequestFactory.getRequestRecord(CommonOADFactory.radiation(), new RSD(selector), new RCSD());
-    }
-
-    /**
-     * 风速：2605
-     * @return
-     */
-    public static GetRequestRecord windSpeed(Selector selector) {
-        return RequestFactory.getRequestRecord(CommonOADFactory.windSpeed(), new RSD(selector), new RCSD());
-    }
-
-    /**
-     * 风向：2606
-     * @return
-     */
-    public static GetRequestRecord windDirection(Selector selector) {
-        return RequestFactory.getRequestRecord(CommonOADFactory.windDirection(), new RSD(selector), new RCSD());
-    }
-
-    /**
-     * 转速：2607
-     * @return
-     */
-    public static GetRequestRecord speed(Selector selector) {
-        return RequestFactory.getRequestRecord(CommonOADFactory.speed(), new RSD(selector), new RCSD());
+        getRequestRecord.setGetRecord(getRequestRecordData);
+        return getRequestRecord;
     }
 }

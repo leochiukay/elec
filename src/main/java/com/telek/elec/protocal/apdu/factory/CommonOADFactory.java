@@ -97,4 +97,14 @@ public class CommonOADFactory {
         OAD oad = new OAD(oi, 0x02, 0x00);
         return oad;
     }
+
+    /**
+     * 桨距角：2608
+     * @return
+     */
+    public static OAD pitchAngle() {
+        OI oi = new OI(0x2608);
+        OAD oad = new OAD(oi, 0x02, 0x00);
+        return oad;
+    }
 }
